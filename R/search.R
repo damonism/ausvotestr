@@ -40,7 +40,7 @@ recipient_returns_search <- function(donor_name, approximate = FALSE) {
   } else {
     return_data <- returns_receipts_details[agrep(donor_name, returns_receipts_details$ReceivedFromClientName),]
   }
-  colnames(return_data) <- gsub("Value", "Amount", colnames(return_data), fixed = TRUE)
+  # colnames(return_data) <- gsub("Value", "Amount", colnames(return_data), fixed = TRUE)
   colnames(return_data) <- gsub("ReceivedFromClientName", "DonorName", colnames(return_data), fixed = TRUE)
   rownames(return_data) <- NULL
   return_data[c("FinancialYear", "ReturnTypeDescription", "DonorName", "RecipientName", "PartyGroupName", "ReceiptType", "Amount")]

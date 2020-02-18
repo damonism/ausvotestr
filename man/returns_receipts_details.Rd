@@ -4,7 +4,7 @@
 \name{returns_receipts_details}
 \alias{returns_receipts_details}
 \title{Detailed receipts}
-\format{An object of class \code{data.frame} with 86281 rows and 19 columns.}
+\format{An object of class \code{data.frame} with 86283 rows and 19 columns.}
 \source{
 \url{https://transparency.aec.gov.au/AnnualDetailedReceipts}
 }

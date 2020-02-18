@@ -57,7 +57,21 @@ returns_party <- returns_party %>%
                      AddressLine1 = Address.Line.1,
                      AddressLine2 = Address.Line.2,
                      Suburb, State, Postcode),
-            by = c("FinancialYear", "CurrentClientName"))
+            by = c("FinancialYear", "CurrentClientName")) %>%
+  mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
+                                ifelse(FinancialYear == "1999-2000", "1999-00",
+                                       ifelse(FinancialYear == "2000-2001", "2000-01",
+                                              ifelse(FinancialYear == "2001-2002", "2001-02",
+                                                     ifelse(FinancialYear == "2002-2003", "2002-03",
+                                                            ifelse(FinancialYear == "2003-2004", "2003-04",
+                                                                   ifelse(FinancialYear == "2004-2005", "2004-05",
+                                                                          ifelse(FinancialYear == "2005-2006", "2005-06",
+                                                                                 ifelse(FinancialYear == "2006-2007", "2006-07",
+                                                                                        ifelse(FinancialYear == "2007-2008", "2007-08",
+                                                                                               ifelse(FinancialYear == "2008-2009", "2008-09",
+                                                                                                      ifelse(FinancialYear == "2009-2010", "2009-10",
+                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
+
 rm(tmp_party_returns)
 
 devtools::use_data(returns_party, overwrite = TRUE)
@@ -74,7 +88,20 @@ returns_campaigner <- returns_campaigner %>%
                      AddressLine1 = Address.Line.1,
                      AddressLine2 = Address.Line.2,
                      Suburb, State, Postcode),
-            by = c("FinancialYear", "CurrentClientName"))
+            by = c("FinancialYear", "CurrentClientName")) %>%
+  mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
+                                ifelse(FinancialYear == "1999-2000", "1999-00",
+                                       ifelse(FinancialYear == "2000-2001", "2000-01",
+                                              ifelse(FinancialYear == "2001-2002", "2001-02",
+                                                     ifelse(FinancialYear == "2002-2003", "2002-03",
+                                                            ifelse(FinancialYear == "2003-2004", "2003-04",
+                                                                   ifelse(FinancialYear == "2004-2005", "2004-05",
+                                                                          ifelse(FinancialYear == "2005-2006", "2005-06",
+                                                                                 ifelse(FinancialYear == "2006-2007", "2006-07",
+                                                                                        ifelse(FinancialYear == "2007-2008", "2007-08",
+                                                                                               ifelse(FinancialYear == "2008-2009", "2008-09",
+                                                                                                      ifelse(FinancialYear == "2009-2010", "2009-10",
+                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
 rm(tmp_camp_returns)
 
 devtools::use_data(returns_campaigner, overwrite = TRUE)
@@ -91,7 +118,20 @@ returns_associatedentity <- returns_associatedentity %>%
                      AddressLine1 = Address.Line.1,
                      AddressLine2 = Address.Line.2,
                      Suburb, State, Postcode),
-            by = c("FinancialYear", "CurrentClientName"))
+            by = c("FinancialYear", "CurrentClientName")) %>%
+  mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
+                                ifelse(FinancialYear == "1999-2000", "1999-00",
+                                       ifelse(FinancialYear == "2000-2001", "2000-01",
+                                              ifelse(FinancialYear == "2001-2002", "2001-02",
+                                                     ifelse(FinancialYear == "2002-2003", "2002-03",
+                                                            ifelse(FinancialYear == "2003-2004", "2003-04",
+                                                                   ifelse(FinancialYear == "2004-2005", "2004-05",
+                                                                          ifelse(FinancialYear == "2005-2006", "2005-06",
+                                                                                 ifelse(FinancialYear == "2006-2007", "2006-07",
+                                                                                        ifelse(FinancialYear == "2007-2008", "2007-08",
+                                                                                               ifelse(FinancialYear == "2008-2009", "2008-09",
+                                                                                                      ifelse(FinancialYear == "2009-2010", "2009-10",
+                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
 rm(tmp_ae_returns)
 
 devtools::use_data(returns_associatedentity, overwrite = TRUE)
@@ -110,7 +150,20 @@ returns_donor <- returns_donor %>%
                      AddressLine1 = Address.Line.1,
                      AddressLine2 = Address.Line.2,
                      Suburb, State, Postcode),
-            by = c("FinancialYear", "CurrentClientName"))
+            by = c("FinancialYear", "CurrentClientName")) %>%
+  mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
+                                ifelse(FinancialYear == "1999-2000", "1999-00",
+                                       ifelse(FinancialYear == "2000-2001", "2000-01",
+                                              ifelse(FinancialYear == "2001-2002", "2001-02",
+                                                     ifelse(FinancialYear == "2002-2003", "2002-03",
+                                                            ifelse(FinancialYear == "2003-2004", "2003-04",
+                                                                   ifelse(FinancialYear == "2004-2005", "2004-05",
+                                                                          ifelse(FinancialYear == "2005-2006", "2005-06",
+                                                                                 ifelse(FinancialYear == "2006-2007", "2006-07",
+                                                                                        ifelse(FinancialYear == "2007-2008", "2007-08",
+                                                                                               ifelse(FinancialYear == "2008-2009", "2008-09",
+                                                                                                      ifelse(FinancialYear == "2009-2010", "2009-10",
+                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
 rm(tmp_donor_returns)
 
 devtools::use_data(returns_donor, returns_donor_details, overwrite = TRUE)
@@ -119,7 +172,20 @@ devtools::use_data(returns_donor, returns_donor_details, overwrite = TRUE)
 # NOTE: there does not seem to be any way to get the donations to third parties via the web
 # interface (although they are in the CSV files).
 returns_thirdparty <- get_returns_data("https://transparency.aec.gov.au/AnnualThirdParty",
-                               "https://transparency.aec.gov.au/AnnualThirdParty/ThirdPartyReturnsRead")
+                               "https://transparency.aec.gov.au/AnnualThirdParty/ThirdPartyReturnsRead") %>%
+  mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
+                                ifelse(FinancialYear == "1999-2000", "1999-00",
+                                       ifelse(FinancialYear == "2000-2001", "2000-01",
+                                              ifelse(FinancialYear == "2001-2002", "2001-02",
+                                                     ifelse(FinancialYear == "2002-2003", "2002-03",
+                                                            ifelse(FinancialYear == "2003-2004", "2003-04",
+                                                                   ifelse(FinancialYear == "2004-2005", "2004-05",
+                                                                          ifelse(FinancialYear == "2005-2006", "2005-06",
+                                                                                 ifelse(FinancialYear == "2006-2007", "2006-07",
+                                                                                        ifelse(FinancialYear == "2007-2008", "2007-08",
+                                                                                               ifelse(FinancialYear == "2008-2009", "2008-09",
+                                                                                                      ifelse(FinancialYear == "2009-2010", "2009-10",
+                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
 devtools::use_data(returns_thirdparty, overwrite = TRUE)
 
 # Detailed receipts
@@ -131,7 +197,21 @@ returns_receipts_details <- returns_receipts_details %>%
                              "https://transparency.aec.gov.au/AnnualDetailedReceipts/DetailedReceiptsPartyGroupsRead") %>%
               select(PartyGroupName = Name, PartyGroupId) %>%
               mutate(PartyGroupId = as.integer(PartyGroupId)),
-            by = "PartyGroupId")
+            by = "PartyGroupId") %>%
+  rename(Amount = Value) %>%
+  mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
+                                ifelse(FinancialYear == "1999-2000", "1999-00",
+                                       ifelse(FinancialYear == "2000-2001", "2000-01",
+                                              ifelse(FinancialYear == "2001-2002", "2001-02",
+                                                     ifelse(FinancialYear == "2002-2003", "2002-03",
+                                                            ifelse(FinancialYear == "2003-2004", "2003-04",
+                                                                   ifelse(FinancialYear == "2004-2005", "2004-05",
+                                                                          ifelse(FinancialYear == "2005-2006", "2005-06",
+                                                                                 ifelse(FinancialYear == "2006-2007", "2006-07",
+                                                                                        ifelse(FinancialYear == "2007-2008", "2007-08",
+                                                                                               ifelse(FinancialYear == "2008-2009", "2008-09",
+                                                                                                      ifelse(FinancialYear == "2009-2010", "2009-10",
+                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
 
 devtools::use_data(returns_receipts_details, overwrite = TRUE)
 
