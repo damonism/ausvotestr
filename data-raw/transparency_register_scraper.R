@@ -47,18 +47,21 @@ unlink(tmp_zip)
 #### Import the data into R ####
 
 # Political party returns
-returns_party <- get_returns_data("https://transparency.aec.gov.au/AnnualPoliticalParty",
+returns_party_web <- get_returns_data("https://transparency.aec.gov.au/AnnualPoliticalParty",
                                          "https://transparency.aec.gov.au/AnnualPoliticalParty/PoliticalPartyReturnsRead")
 
 tmp_party_returns <- read.csv("data-raw/csv/Party Returns.csv", stringsAsFactors = FALSE)
-returns_party <- returns_party %>%
+returns_party <- returns_party_web %>%
   left_join(tmp_party_returns %>%
               select(FinancialYear = Financial.Year,
                      CurrentClientName = Name,
+                     TotalReceipts = Total.Receipts,
+                     TotalPayments = Total.Payments,
+                     TotalDebts = Total.Debts,
                      AddressLine1 = Address.Line.1,
                      AddressLine2 = Address.Line.2,
                      Suburb, State, Postcode),
-            by = c("FinancialYear", "CurrentClientName")) %>%
+            by = c("FinancialYear", "CurrentClientName", "TotalReceipts", "TotalPayments", "TotalDebts")) %>%
   mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
                                 ifelse(FinancialYear == "1999-2000", "1999-00",
                                        ifelse(FinancialYear == "2000-2001", "2000-01",
@@ -71,11 +74,20 @@ returns_party <- returns_party %>%
                                                                                         ifelse(FinancialYear == "2007-2008", "2007-08",
                                                                                                ifelse(FinancialYear == "2008-2009", "2008-09",
                                                                                                       ifelse(FinancialYear == "2009-2010", "2009-10",
-                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
+                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear)))))))))))))) %>%
+  filter(!(RegistrationCode == "P0083" & State == "TAS")) %>%  # These confuse the merge because they are 0 Totals.
+  filter(!(RegistrationCode == "P0091" & State == "NT"))
 
-rm(tmp_party_returns)
+if(nrow(returns_party) == nrow(returns_party_web)) {
 
-devtools::use_data(returns_party, overwrite = TRUE)
+  rm(tmp_party_returns)
+  devtools::use_data(returns_party, overwrite = TRUE)
+
+} else {
+
+  stop("Merge of address CSV and returns_party have different numbers of rows.")
+
+}
 
 # Political campaigner returns
 returns_campaigner <- get_returns_data("https://transparency.aec.gov.au/AnnualPoliticalCampaigner",
@@ -152,20 +164,22 @@ devtools::use_data(returns_associatedentity_associatedparty, overwrite = TRUE)
 devtools::use_data(returns_associatedentity, overwrite = TRUE)
 
 # Donor returns
-returns_donor <- get_returns_data("https://transparency.aec.gov.au/AnnualDonor",
+# NOTE: There is some duplication with the returns_donor file due to
+# insufficient detail for matching the CSV files to the JSON data.
+returns_donor_web <- get_returns_data("https://transparency.aec.gov.au/AnnualDonor",
                                   "https://transparency.aec.gov.au/AnnualDonor/DonorReturnsRead")
 returns_donor_details <- get_returns_data("https://transparency.aec.gov.au/AnnualDonor",
                                           "https://transparency.aec.gov.au/AnnualDonor/DonationsMadeRead")
 
-tmp_donor_returns <- read.csv("data-raw/csv/Donor Returns.csv", stringsAsFactors = FALSE)
-returns_donor <- returns_donor %>%
-  left_join(tmp_donor_returns %>%
-              select(FinancialYear = Financial.Year,
-                     CurrentClientName = Name,
-                     AddressLine1 = Address.Line.1,
-                     AddressLine2 = Address.Line.2,
-                     Suburb, State, Postcode),
-            by = c("FinancialYear", "CurrentClientName")) %>%
+returns_donor <- returns_donor_web %>%
+  # left_join(tmp_donor_returns %>%
+  #             select(FinancialYear = Financial.Year,
+  #                    CurrentClientName = Name,
+  #                    TotalDonationsReceived = Total.Donations.Received,
+  #                    AddressLine1 = Address.Line.1,
+  #                    AddressLine2 = Address.Line.2,
+  #                    Suburb, State, Postcode),
+  #           by = c("FinancialYear", "CurrentClientName", "TotalDonationsReceived")) %>%
   mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
                                 ifelse(FinancialYear == "1999-2000", "1999-00",
                                        ifelse(FinancialYear == "2000-2001", "2000-01",
@@ -179,9 +193,36 @@ returns_donor <- returns_donor %>%
                                                                                                ifelse(FinancialYear == "2008-2009", "2008-09",
                                                                                                       ifelse(FinancialYear == "2009-2010", "2009-10",
                                                                                                              ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
-rm(tmp_donor_returns)
 
-devtools::use_data(returns_donor, returns_donor_details, overwrite = TRUE)
+tmp_donor_returns <- read.csv("data-raw/csv/Donor Returns.csv", stringsAsFactors = FALSE)
+
+returns_donor_address <- tmp_donor_returns %>%
+  select(FinancialYear = Financial.Year,
+         CurrentClientName = Name,
+         AddressLine1 = Address.Line.1,
+         AddressLine2 = Address.Line.2,
+         Suburb, State, Postcode,
+         LodgedOnBehalfOf = Lodged.on.behalf.of,
+         TotalDonationsMade = Total.Donations.Made,
+         TotalDonationsReceived = Total.Donations.Received) %>%
+  mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
+                                ifelse(FinancialYear == "1999-2000", "1999-00",
+                                       ifelse(FinancialYear == "2000-2001", "2000-01",
+                                              ifelse(FinancialYear == "2001-2002", "2001-02",
+                                                     ifelse(FinancialYear == "2002-2003", "2002-03",
+                                                            ifelse(FinancialYear == "2003-2004", "2003-04",
+                                                                   ifelse(FinancialYear == "2004-2005", "2004-05",
+                                                                          ifelse(FinancialYear == "2005-2006", "2005-06",
+                                                                                 ifelse(FinancialYear == "2006-2007", "2006-07",
+                                                                                        ifelse(FinancialYear == "2007-2008", "2007-08",
+                                                                                               ifelse(FinancialYear == "2008-2009", "2008-09",
+                                                                                                      ifelse(FinancialYear == "2009-2010", "2009-10",
+                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
+
+rm(tmp_donor_returns)
+# returns_donor <- unique(returns_donor)
+
+devtools::use_data(returns_donor, returns_donor_details, returns_donor_address, overwrite = TRUE)
 
 # Third partry returns
 # NOTE: there does not seem to be any way to get the donations to third parties via the web
@@ -204,10 +245,10 @@ returns_thirdparty <- get_returns_data("https://transparency.aec.gov.au/AnnualTh
 devtools::use_data(returns_thirdparty, overwrite = TRUE)
 
 # Detailed receipts
-returns_receipts_details <- get_returns_data("https://transparency.aec.gov.au/AnnualDetailedReceipts",
+returns_receipts_details_web <- get_returns_data("https://transparency.aec.gov.au/AnnualDetailedReceipts",
                                         "https://transparency.aec.gov.au/AnnualDetailedReceipts/DetailedReceiptsRead")
 
-returns_receipts_details <- returns_receipts_details %>%
+returns_receipts_details <- returns_receipts_details_web %>%
   left_join(get_returns_data("https://transparency.aec.gov.au/AnnualDetailedReceipts",
                              "https://transparency.aec.gov.au/AnnualDetailedReceipts/DetailedReceiptsPartyGroupsRead") %>%
               select(PartyGroupName = Name, PartyGroupId) %>%
@@ -229,10 +270,6 @@ returns_receipts_details <- returns_receipts_details %>%
                                                                                                              ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
 
 devtools::use_data(returns_receipts_details, overwrite = TRUE)
-
-# get_returns_data("https://transparency.aec.gov.au/AnnualDetailedReceipts",
-#                  "https://transparency.aec.gov.au/AnnualDetailedReceipts/DetailedReceiptsPoliticalPartiesRead")
-
 
 #### Make the files portable ####
 

@@ -23,6 +23,17 @@
 #' @docType data
 "returns_donor"
 
+#' Donor annual returns addresses
+#'
+#' AEC-provided addresses for the donors listed in the \code{returns_donor} file.
+#'
+#' The AEC provides CSV files with the addresses of donors who have made returns, however because those records in the CSV files do not have unique identifiers it is not possible to definitively match the addresses to the records in the \code{returns_donor} data.
+#'
+#' As of the 2018-19 data, matching on \code{c("FinancialYear", "CurrentClientName", "TotalDonationsReceived"))} duplicates about 40-odd records (or about 11,000), which may be sufficient precision, depending on what you want to do.
+#'
+#' @docType data
+"returns_donor_address"
+
 #' Donations made details
 #'
 #' @docType data
