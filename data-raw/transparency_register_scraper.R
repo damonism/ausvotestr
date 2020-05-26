@@ -1,6 +1,7 @@
 library(httr)
 library(jsonlite)
 library(dplyr)
+library(tidyr)
 
 # This script imports all of the data from the AEC transparency register, located at:
 #
@@ -115,10 +116,13 @@ returns_associatedentity <- returns_associatedentity %>%
   left_join(tmp_ae_returns %>%
               select(FinancialYear = Financial.Year,
                      CurrentClientName = Name,
+                     TotalReceipts = Total.Receipts,
+                     TotalPayments = Total.Payments,
+                     TotalDebts = Total.Debts,
                      AddressLine1 = Address.Line.1,
                      AddressLine2 = Address.Line.2,
                      Suburb, State, Postcode),
-            by = c("FinancialYear", "CurrentClientName")) %>%
+            by = c("FinancialYear", "CurrentClientName", "TotalReceipts", "TotalPayments", "TotalDebts")) %>%
   mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
                                 ifelse(FinancialYear == "1999-2000", "1999-00",
                                        ifelse(FinancialYear == "2000-2001", "2000-01",
