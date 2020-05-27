@@ -22,6 +22,22 @@ party_to_group <- function(.data) {
 #' disclosure_threshold()
 disclosure_threshold <- function() {
 
-  unique(returns_donor[c("FinancialYear", "ReportingThreshold")])
+  rbind(unique(returns_donor[c("FinancialYear", "ReportingThreshold")]), make.row.names = FALSE)
+
+}
+
+#' Party and group table
+#'
+#' @return A \code{data.frame} of party IDs and party group IDs and names.
+#' @export
+#'
+#' @examples
+#' party_by_group()
+party_by_group <- function() {
+
+  tmp_df <- unique(returns_party[!is.na(returns_party$PartyGroupId),][c("ClientFileId", "PartyGroupId", "PartyGroupName")])
+  tmp_df <- tmp_df[order(tmp_df$PartyGroupId, tmp_df$ClientFileId),]
+  rownames(tmp_df) <- NULL
+  return(tmp_df)
 
 }
