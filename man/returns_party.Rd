@@ -4,7 +4,7 @@
 \name{returns_party}
 \alias{returns_party}
 \title{Parties annual returns}
-\format{An object of class \code{data.frame} with 2015 rows and 24 columns.}
+\format{An object of class \code{data.frame} with 1717 rows and 24 columns.}
 \usage{
 returns_party
 }

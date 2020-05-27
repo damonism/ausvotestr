@@ -2,4 +2,5 @@
 
 export(disclosure_threshold)
 export(donor_returns_search)
+export(party_by_group)
 export(recipient_returns_search)

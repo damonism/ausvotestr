@@ -4,7 +4,7 @@
 \name{returns_donor_details}
 \alias{returns_donor_details}
 \title{Donations made details}
-\format{An object of class \code{data.frame} with 53394 rows and 15 columns.}
+\format{An object of class \code{data.frame} with 53477 rows and 15 columns.}
 \usage{
 returns_donor_details
 }
