@@ -3,6 +3,14 @@
 #' @docType data
 "returns_associatedentity"
 
+#' Associated parties of associated entities
+#'
+#' An associated entity may have multiple associated parties, which are
+#' listed in this \code{data.frame}.
+#'
+#' @docType data
+"returns_associatedentity_associatedparty"
+
 #' Third party expenditure returns
 #'
 #' @docType data
@@ -55,6 +63,33 @@
 
 #' Donor annual returns
 #'
+#' List of annual returns from political donors (1998-99 to 2018-19),
+#'
+#' During the period covered by this data the reporting requirements in the
+#' Commonwealth Electoral Act 1918 changed, which led to the discrepency
+#' between the \code{TotalDonationsMadeToPoliticalPartiesAndCampaigners} and
+#' \code{TotalDonationsMadeToPoliticalParties} variables.
+#'
+#'@format A \code{data.frame} with 11204 rows and 16 variables:
+#' \describe{
+#'   \item{ViewName}{String of "Donor Return" (Chr).}
+#'   \item{ReturnTypeCode}{String of either "federaldonororganisation" or "federaldonorindividual" (Chr).}
+#'   \item{RegistrationCode}{Unique code for each individual return (Chr).}
+#'   \item{ReturnId}{Unique code for each individual return (Int) -- Not clear why both this and \code{RegistrationCode} both exist but may be an internal AEC thing.}
+#'   \item{FinancialYear}{Financial year of the return in the format of \code{YYYY-YY} (Chr).}
+#'   \item{DisclosurePeriodEndDate}{End date of the financial year as a date object (easier to use for plotting) (Date).}
+#'   \item{ReportingPeriodThreshold}{The threshold, in whole Australian follars, above which donations must be reported in that reporting period (Int).}
+#'   \item{ReturnTypeDescription}{String of either "Organisation Donor Return" or "Individual Donor Return" (Chr).}
+#'   \item{ClientFileId}{Unique identifier of the party filing the return (Int).}
+#'   \item{CurrentClientName}{Name that the party filed the current return under (Chr).}
+#'   \item{ReturnClientName}{Party name that should be consistent across the dataset (Chr).}
+#'   \item{TotalDonationsMadeToPoliticalPartiesAndCampaigners}{Sum of donations to political parties and political campaigners, in whole Australian dollars (Int).}
+#'   \item{TotalDonationsMadeToPoliticalParties}{Sum of donations to political parties, in whole Australian dollars (Int).}
+#'   \item{TotalDonationsMadeToPoliticalCampaigners}{Sum of donations to political campaigners (the legislative requirement to report this was only introduced in 2018-19) (Int).}
+#'   \item{TotalDonationsReceived}{Sum of donations received, in whole Australian dollars (Int).}
+#'   \item{LodgedOnBehalfOf}{Usually blank (Chr).}
+#' }
+#' @source \url{https://transparency.aec.gov.au/AnnualDonor}
 #' @docType data
 "returns_donor"
 
@@ -135,9 +170,13 @@
 
 #' Detailed receipts
 #'
-#' Itemised details of receipts from annual returns of parties, political campaigners and associated entities.
+#' Itemised details of receipts from annual returns of parties, political
+#' campaigners and associated entities.
 #'
-#' Part XX of the Commonwealth Electoral Act 1918 requires all political parties, political campaigners and associated entities to set out the details of all receipts above the disclosure threshold each financial year.
+#' Part XX of the Commonwealth Electoral Act 1918 requires all political
+#' parties, political campaigners and associated entities to set out the
+#' details of all receipts above the disclosure threshold each financial
+#' year.
 #'
 #' These details set out:
 #'
@@ -146,7 +185,35 @@
 #' * the amount received from that person/entity
 #' * the type of funds that were received
 #'
-#' All detailed receipts disclosed on political party, political campaigner and associated entity returns from 1998-99 onwards are listed.
+#' All detailed receipts disclosed on political party, political campaigner
+#' and associated entity returns from 1998-99 onwards are listed.
+#'
+#' Returns may be listed as donations ("Donation Received") or as an "Other
+#' Receipt". While there are other types listed in \code{ReceiptType} these
+#' are either a historical anomaly or an error.
+#'
+#'@format A \code{data.frame} with 86283 rows and 19 variables:
+#' \describe{
+#'   \item{ViewName}{String of "Annual Detailed Receipt" (Chr).}
+#'   \item{RegistrationCode}{Unique code for each individual return (Chr).}
+#'   \item{ReturnId}{Unique code for each individual return (Int) -- Not clear why both this and \code{RegistrationCode} both exist but may be an internal AEC thing.}
+#'   \item{ReturnTypeCode}{String of either "federalpoliticalparty", "federalpoliticalcampaigner" or "federalassociatedentity" (Chr).}
+#'   \item{ReturnTypeDescription}{String of either "Political Party Return", "Political Campaigner Return" or "Associated Entity Return" (Chr).}
+#'   \item{AmendmentNumber}{The number of times the return has been amended (Int).}
+#'   \item{FinancialYear}{Financial year of the return in the format of \code{YYYY-YY}.}
+#'   \item{UniqueReferenceNumber}{Unique code (as per \code{RegistrationCode}) for each amendment of each return (Chr).}
+#'   \item{RecipientClientId}{Unique identifier (\code{ClientFileId} of the recipient of the donation (Int).}
+#'   \item{RecipientName}{Name of the receipient of the money (Chr).}
+#'   \item{RecipientClientType}{One of "Political Party", "Political Campaigner", "Third Party", "Organisation Donor" or "Associated Entity" (Chr).}
+#'   \item{PartyGroupId}{ID if party is a member of a party group (see \code{\link{party_by_group()}}) (Int).}
+#'   \item{PoliticalPartyId}{List of IDs of political parties (List).}
+#'   \item{ReceivedFromClientName}{Name that the donor (Chr).}
+#'   \item{RecivedFromClientId}{\code{ClientFileId} of the donor (Int).}
+#'   \item{RecieptType}{One of "Donation Received", "Other Receipt, Subscription", "Unspecified" or "Public Funding" (note that anything other than "Donation Received" or "Other Receipt" is no longer used) (Chr).}
+#'   \item{TransactionDate}{Date object of transaction date (Date).}
+#'   \item{Amount}{Donation amount in whole Australian dollars (Int).}
+#'   \item{PartyGroupName}{If party is a member of a party group, the name of the group (see \code{\link{party_by_group()}}) (Chr).}
+#' }
 #'
 #' @source \url{https://transparency.aec.gov.au/AnnualDetailedReceipts}
 #'
