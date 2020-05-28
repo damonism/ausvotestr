@@ -4,7 +4,7 @@
 \name{returns_donor_address}
 \alias{returns_donor_address}
 \title{Donor annual returns addresses}
-\format{A data frame with 11166 rows and 10 variables:
+\format{A \code{data.frame} with 11166 rows and 10 variables:
 \describe{
 \item{FinancialYear}{Financial year of the return in the format of \code{YYYY-YY}.}
 \item{CurrentClientName}{Name that the party filed the current return under (Chr).}

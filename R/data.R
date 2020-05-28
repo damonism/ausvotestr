@@ -104,7 +104,7 @@
 #' and associated entity returns from 1998-99 to 2018-19 are listed.
 #'
 #' Note that recipients, who are identfied by name (\code{CurrentClientName}
-#' and \code{ReturnClientName}) or ID (\code(ClientFileId)), may or may not
+#' and \code{ReturnClientName}) or ID (\code{ClientFileId}), may or may not
 #' be a political party, as indicated by \code{DonationMadeToClientType}. As
 #' such matches may need to be made across one of a number of datasets
 #' (\code{\link{returns_party}}, \code{\link{returns_campaigner}},

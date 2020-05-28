@@ -4,7 +4,7 @@
 \name{returns_party}
 \alias{returns_party}
 \title{Parties annual returns}
-\format{A data frame with 1717 rows and 24 variables:
+\format{A \code{data.frame} with 1717 rows and 24 variables:
 \describe{
 \item{ViewName}{String of "Political Party Annual Return".}
 \item{ReturnTypeCode}{String of "federalpoliticalparty".}

@@ -4,7 +4,7 @@
 \name{returns_donor_details}
 \alias{returns_donor_details}
 \title{Donations made details}
-\format{A data frame with 53477 rows and 15 variables:
+\format{A \code{data.frame} with 53477 rows and 15 variables:
 \describe{
 \item{ViewName}{String of "Annual Donor Donation Made" (Chr).}
 \item{RegistrationCode}{Unique code for each individual return (Chr).}
@@ -48,7 +48,7 @@ All detailed receipts disclosed on political party, political campaigner
 and associated entity returns from 1998-99 to 2018-19 are listed.
 
 Note that recipients, who are identfied by name (\code{CurrentClientName}
-and \code{ReturnClientName}) or ID (\code(ClientFileId)), may or may not
+and \code{ReturnClientName}) or ID (\code{ClientFileId}), may or may not
 be a political party, as indicated by \code{DonationMadeToClientType}. As
 such matches may need to be made across one of a number of datasets
 (\code{\link{returns_party}}, \code{\link{returns_campaigner}},
