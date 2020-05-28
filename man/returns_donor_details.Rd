@@ -4,11 +4,54 @@
 \name{returns_donor_details}
 \alias{returns_donor_details}
 \title{Donations made details}
-\format{An object of class \code{data.frame} with 53477 rows and 15 columns.}
+\format{A data frame with 53477 rows and 15 variables:
+\describe{
+\item{ViewName}{String of "Annual Donor Donation Made" (Chr).}
+\item{RegistrationCode}{Unique code for each individual return (Chr).}
+\item{ReturnId}{Unique code for each individual return (Int) -- Not clear why both this and \code{RegistrationCode} both exist but may be an internal AEC thing.}
+\item{ReturnTypeCode}{String of either "federaldonororganisation" or "federaldonorindividual" (Chr).}
+\item{ReturnTypeDescription}{String of either "Organisation Donor Return" or "Individual Donor Return" (Chr).}
+\item{FinancialYear}{Financial year of the return in the format of \code{YYYY-YY}.}
+\item{ClientFileId}{Unique identifier of the party filing the return (Int).}
+\item{CurrentClientName}{Name that the donor filed the current return under (Chr).}
+\item{ReturnClientName}{Donor name that should be consistent across the dataset (Chr).}
+\item{DonationMadeToName}{Name of recipient of donation as written on return (Chr).}
+\item{DonationMadeToClientFileId}{ID of recipient (Int).}
+\item{DonationMadeToClientType}{String of one of "politicalparty", "politicalcampaigner", "thirdparty", "general", "associatedentity" or "organisationdonor". Used to determine the appropriate dataset to search for \code{ClientFileId} of recipient (Chr).}
+\item{TransactionDate}{Date object of transaction date (Date).}
+\item{Amount}{Donation amount in whole Australian dollars (Int).}
+\item{FinancialRecordType}{A string of either "donationmade" or "campaignerdonation" (Chr).}
+}}
+\source{
+\url{https://transparency.aec.gov.au/AnnualDonor}
+}
 \usage{
 returns_donor_details
 }
 \description{
-Donations made details
+Itemised details of receipts from political donors (1998-99 to 2018-19).
+}
+\details{
+Part XX of the Commonwealth Electoral Act 1918 requires all donors to set
+out the details of all receipts above the disclosure threshold each
+financial year.
+
+These details set out:
+\itemize{
+\item the name of the person/entity that provided the funds
+\item the address of the person/entity
+\item the amount donated
+\item the date on which the donation was made
+}
+
+All detailed receipts disclosed on political party, political campaigner
+and associated entity returns from 1998-99 to 2018-19 are listed.
+
+Note that recipients, who are identfied by name (\code{CurrentClientName}
+and \code{ReturnClientName}) or ID (\code(ClientFileId)), may or may not
+be a political party, as indicated by \code{DonationMadeToClientType}. As
+such matches may need to be made across one of a number of datasets
+(\code{\link{returns_party}}, \code{\link{returns_campaigner}},
+\code{\link{returns_thirdparty}} or \code{\link{returns_associatedentity}}).
 }
 \keyword{datasets}
