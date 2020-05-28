@@ -41,3 +41,41 @@ party_by_group <- function() {
   return(tmp_df)
 
 }
+
+#' Returns donor merged
+#'
+#' Return a \code{data.frame} of \code{\link{returns_donor}} with the address
+#' fields (\code{AddressLine1}, \code{AddressLine2}, \code{Suburb},
+#' \code{State} and \code{Postcode}) from \code{\link{returns_donor_address}}.
+#'
+#' The AEC's Transparency Register contains \code{\link{returns_donor}} and
+#' \code{\link{returns_donor_address}} as separate files, but without a unique
+#' identifier to link them.
+#'
+#' This function merges the two datasets on the \code{FinancialYear},
+#' \code{CurrentClientName} and \code{TotalDonationsReceived} fields
+#' (\code{TotalDonationsMade} is not present in \code{\link{returns_donor}}
+#' in the same format so can't be linked on.)
+#'
+#' Note that these three fields do not provide a perfect match, which
+#' potentially results in the repition of some rows of
+#' \code{\link{returns_donor}}. Over the total dataset this involves a
+#' duplication of 38 records (out of 11,204), so may be a justifiable
+#' trade-off, depending on the analysis.
+#'
+#' @return A \code{data.frame}.
+#'
+#' @export
+#'
+#' @examples
+#' head(returns_donors_merged())
+returns_donor_merged <- function() {
+
+  message("Warning: The address data does not merge cleanly with the donor data, leading to possible repition of rows from returns_data.")
+  tmp_data <- merge(returns_donor,
+               returns_donor_address[c("FinancialYear", "CurrentClientName", "AddressLine1", "AddressLine2", "Suburb", "Postcode", "TotalDonationsReceived")],
+               by = c("FinancialYear", "CurrentClientName", "TotalDonationsReceived"), all.x = TRUE, sort = FALSE)
+  tmp_data <- unique(tmp_data)
+  tmp_data[order(tmp_data$FinancialYear, tmp_data$ReturnId),]
+
+}
