@@ -22,13 +22,19 @@ identifier to link them.
 This function merges the two datasets on the \code{FinancialYear},
 \code{CurrentClientName} and \code{TotalDonationsReceived} fields
 (\code{TotalDonationsMade} is not present in \code{\link{returns_donor}}
-in the same format so can't be linked on.)
+in the same format so can't be linked on.).
 
 Note that these three fields do not provide a perfect match, which
 potentially results in the repition of some rows of
 \code{\link{returns_donor}}. Over the total dataset this involves a
 duplication of 38 records (out of 11,204), so may be a justifiable
 trade-off, depending on the analysis.
+
+Note that this function includes all records in \code{\link{returns_donor}}
+and matching records in \code{\link{returns_donor_address}}, so includes
+all donors regardless of whether an address is listed (some number of
+donors appear not be listed in the \code{\link{returns_donor_address}}
+data).
 }
 \examples{
 head(returns_donors_merged())
