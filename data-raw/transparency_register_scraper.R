@@ -168,7 +168,7 @@ devtools::use_data(returns_associatedentity, overwrite = TRUE)
 # insufficient detail for matching the CSV files to the JSON data.
 returns_donor_web <- get_returns_data("https://transparency.aec.gov.au/AnnualDonor",
                                   "https://transparency.aec.gov.au/AnnualDonor/DonorReturnsRead")
-returns_donor_details <- get_returns_data("https://transparency.aec.gov.au/AnnualDonor",
+returns_donor_details_web <- get_returns_data("https://transparency.aec.gov.au/AnnualDonor",
                                           "https://transparency.aec.gov.au/AnnualDonor/DonationsMadeRead")
 
 returns_donor <- returns_donor_web %>%
@@ -193,6 +193,22 @@ returns_donor <- returns_donor_web %>%
                                                                                                ifelse(FinancialYear == "2008-2009", "2008-09",
                                                                                                       ifelse(FinancialYear == "2009-2010", "2009-10",
                                                                                                              ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
+
+returns_donor_details <- returns_donor_details_web %>%
+  mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
+                                ifelse(FinancialYear == "1999-2000", "1999-00",
+                                       ifelse(FinancialYear == "2000-2001", "2000-01",
+                                              ifelse(FinancialYear == "2001-2002", "2001-02",
+                                                     ifelse(FinancialYear == "2002-2003", "2002-03",
+                                                            ifelse(FinancialYear == "2003-2004", "2003-04",
+                                                                   ifelse(FinancialYear == "2004-2005", "2004-05",
+                                                                          ifelse(FinancialYear == "2005-2006", "2005-06",
+                                                                                 ifelse(FinancialYear == "2006-2007", "2006-07",
+                                                                                        ifelse(FinancialYear == "2007-2008", "2007-08",
+                                                                                               ifelse(FinancialYear == "2008-2009", "2008-09",
+                                                                                                      ifelse(FinancialYear == "2009-2010", "2009-10",
+                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
+
 
 tmp_donor_returns <- read.csv("data-raw/csv/Donor Returns.csv", stringsAsFactors = FALSE)
 
