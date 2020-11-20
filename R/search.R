@@ -62,3 +62,91 @@ donor_id_search <- function(donor_name) {
 
 }
 
+returns_search <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
+
+  tmp_groups <- unique(returns_party[c('ClientFileId', 'PartyGroupId', 'PartyGroupName')])
+
+  tmp_common_cols <- c('FinancialYear', 'ReturnId', 'RegistrationCode',
+                       'DonorName', 'RecipientName', 'PartyGroupName',
+                       'ReceiptType', 'ReturnTypeDescription', 'TransactionDate', 'Amount')
+
+  if(approximate == FALSE) {
+    tmp_donor <- returns_donor_details[grep(donor_name, returns_donor_details$ReturnClientName),]
+  } else {
+    tmp_donor <- returns_donor_details[agrep(donor_name, returns_donor_details$ReturnClientName),]
+  }
+
+  tmp_donor <- merge(tmp_donor, tmp_groups, by.x = "DonationMadeToClientFileId", by.y = "ClientFileId", all.x = TRUE)
+
+  colnames(tmp_donor) <- gsub('DonationMadeToName', 'RecipientName', colnames(tmp_donor), fixed = TRUE)
+  colnames(tmp_donor) <- gsub('ReturnClientName', 'DonorName', colnames(tmp_donor), fixed = TRUE)
+
+  # You can't add a new column to an empty data.frame
+  if(nrow(tmp_donor) > 0) {
+    tmp_donor$ReceiptType <- 'Donation'
+  } else {
+    message("No donor returns for search: ", donor_name)
+  }
+
+  if(donor_only == FALSE) {
+
+    if(approximate == FALSE) {
+      tmp_recipient <- returns_receipts_details[grep(donor_name, returns_receipts_details$ReceivedFromClientName),]
+    } else {
+      tmp_recipient <- returns_receipts_details[agrep(donor_name, returns_receipts_details$ReceivedFromClientName),]
+    }
+    colnames(tmp_recipient) <- gsub('ReceivedFromClientName', 'DonorName', colnames(tmp_recipient), fixed = TRUE)
+
+    # TODO: Associated entities should have a party
+    # tmp_ae <- tmp_recipient[tmp_recipient$ReturnTypeCode == 'federalassociatedentity',]
+
+    if(nrow(tmp_recipient) == 0) {
+      message("No recipient returns for search: ", donor_name)
+    }
+
+    tmp_return <- rbind(tmp_donor[tmp_common_cols], tmp_recipient[tmp_common_cols])
+
+  } else {
+
+    tmp_return <- tmp_donor[tmp_common_cols]
+
+  }
+
+  tmp_return <- tmp_return[order(tmp_return$FinancialYear),]
+  rownames(tmp_return) <- NULL
+
+  return(tmp_return)
+}
+
+returns_search_date <- function(donor_name, from_date, ...) {
+
+  tmp_data <- returns_search(donor_name = donor_name, ...)
+  tmp_data <- tmp_data[!is.na(tmp_data$TransactionDate),]
+  tmp_data[tmp_data$TransactionDate > from_date,]
+
+}
+
+returns_search_summary <- function(donor_name, by_year = FALSE, from_date = NA, approximate = FALSE) {
+
+  tmp_data <- returns_search(donor_name, approximate = approximate, donor_only = TRUE)
+
+  if(nrow(tmp_data) == 0) {
+    stop("No entries returned.")
+  }
+
+  if(!is.na(from_date)) {
+
+    tmp_data <- tmp_data[tmp_data$TransactionDate > as.Date(from_date),]
+
+  }
+
+  if(by_year == FALSE) {
+    tmp_table <- aggregate(Amount ~ PartyGroupName + DonorName, tmp_data, sum)
+  } else {
+    tmp_table <- aggregate(Amount ~ FinancialYear + PartyGroupName + DonorName, tmp_data, sum)
+
+  }
+
+  return(tmp_table[order(tmp_table$PartyGroupName),])
+
+}
