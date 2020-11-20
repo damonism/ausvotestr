@@ -287,6 +287,10 @@ returns_receipts_details <- returns_receipts_details_web %>%
 
 devtools::use_data(returns_receipts_details, overwrite = TRUE)
 
+# Make a record of when the data was last updated.
+returns_updated <- data.frame(Updated = Sys.time(), stringsAsFactors = FALSE)
+devtools::use_data(returns_updated, overwrite = TRUE)
+
 #### Make the files portable ####
 
 rm(list = ls())

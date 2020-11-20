@@ -219,3 +219,10 @@
 #'
 #' @docType data
 "returns_receipts_details"
+
+#' Data update date
+#'
+#' The date and time the data was last updated, as a \code{POSIXct} object.
+#'
+#' @docType data
+"returns_updated"
