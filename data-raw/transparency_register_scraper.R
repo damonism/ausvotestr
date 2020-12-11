@@ -150,18 +150,41 @@ returns_associatedentity <- returns_associatedentity %>%
                                                                                                              ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
 rm(tmp_ae_returns)
 
-# Remove ClientFileIdsOfAssociatedParties into its own data.frame to normalise
-returns_associatedentity_associatedparty <- returns_associatedentity[c("FinancialYear", "RegistrationCode", "ClientFileIdsOfAssociatedParties")] %>%
-  filter(!is.na(ClientFileIdsOfAssociatedParties)) %>%
-  mutate(ClientFileIdsOfAssociatedParties = strsplit(ClientFileIdsOfAssociatedParties, ";")) %>%
-  unnest(ClientFileIdsOfAssociatedParties)
-
-returns_associatedentity_associatedparty$ClientFileIdsOfAssociatedParties <- as.integer(trimws(returns_associatedentity_associatedparty$ClientFileIdsOfAssociatedParties))
-returns_associatedentity$ClientFileIdsOfAssociatedParties <- NULL
-
-devtools::use_data(returns_associatedentity_associatedparty, overwrite = TRUE)
-
 devtools::use_data(returns_associatedentity, overwrite = TRUE)
+
+# Remove ClientFileIdsOfAssociatedParties into its own data.frame to normalise
+# (At some point they stopped using ClientFileIdsOfAssociatedParties so now we guestimate using
+# AssociatedParties, which is a text field and doesn't match perfectly in all cases.)
+#
+# returns_associatedentity_associatedparty <- returns_associatedentity[c("FinancialYear", "RegistrationCode", "ClientFileIdsOfAssociatedParties")] %>%
+#   filter(!is.na(ClientFileIdsOfAssociatedParties)) %>%
+#   mutate(ClientFileIdsOfAssociatedParties = strsplit(ClientFileIdsOfAssociatedParties, ";")) %>%
+#   unnest(ClientFileIdsOfAssociatedParties)
+#
+# returns_associatedentity_associatedparty$ClientFileIdsOfAssociatedParties <- as.integer(trimws(returns_associatedentity_associatedparty$ClientFileIdsOfAssociatedParties))
+# returns_associatedentity$ClientFileIdsOfAssociatedParties <- NULL
+#
+
+returns_associatedentity_associatedparty <- returns_associatedentity %>%
+  select(FinancialYear, RegistrationCode, AssociatedParties) %>%
+  filter(!is.na(AssociatedParties)) %>%
+  mutate(AssociatedParties = strsplit(AssociatedParties, "; ")) %>%
+  unnest(AssociatedParties) %>%
+  left_join(returns_party %>%
+              select(FinancialYear, AssociatedParties = ReturnClientName, ClientFileId),
+            by = c("FinancialYear", "AssociatedParties"))
+
+# It had 2311 when I knew it was working
+if(nrow(returns_associatedentity_associatedparty) < 2000) {
+
+  stop("Something has gone wrong with generating returns_associatedentity_associatedparty")
+
+} else {
+
+  devtools::use_data(returns_associatedentity_associatedparty, overwrite = TRUE)
+
+}
+
 
 # Donor returns
 # NOTE: There is some duplication with the returns_donor file due to
