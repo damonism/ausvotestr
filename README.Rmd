@@ -1,8 +1,6 @@
 ---
 title: "ausvotesTR"
-output: 
-  html_document: 
-    keep_md: yes
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -46,9 +44,7 @@ The disclosure threshold for each year was:
 
 ```{r echo=FALSE, results='asis'}
 library(knitr)
-library(kableExtra)
-kable(disclosure_threshold(), format.args = list(big.mark = ',')) %>%
-  kable_styling(full_width = FALSE)
+kable(disclosure_threshold(), format.args = list(big.mark = ','))
 ```
 
 ## Changelog
