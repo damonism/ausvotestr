@@ -46,15 +46,21 @@ The disclosure threshold for each year was:
 
 ```{r echo=FALSE, results='asis'}
 library(knitr)
-kable(disclosure_threshold(), format.args = list(big.mark = ','))
+library(kableExtra)
+kable(disclosure_threshold(), format.args = list(big.mark = ',')) %>%
+  kable_styling(full_width = FALSE)
 ```
 
 ## Changelog
 
 ### 16 December 2020
 
+- Added this ReadMe
 - Added DisclosurePeriodEndDate to returns_receipts_details, returns_donor_details
 - Implemented a more memory efficient way to standardise the FinancialYear field
 - Update the data
+- Moved search functions from the Shiny app and exported them
+- Updated version number to 0.1.4
 
 ## Todo
+- Combine `returns_search` and `returns_search_date`
