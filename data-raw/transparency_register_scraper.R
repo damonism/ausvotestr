@@ -6,8 +6,33 @@ library(tidyr)
 # This script imports all of the data from the AEC transparency register, located at:
 #
 # https://transparency.aec.gov.au/
-#
-# Last updated 4 February 2020.
+
+tmp_FinancialYear <- read.table(header = TRUE, text = "
+FinancialYear FinancialYearNew DisclosurePeriodEndDate
+2018-19          2018-19              2019-06-30
+2017-18          2017-18              2018-06-30
+2016-17          2016-17              2017-06-30
+2015-16          2015-16              2016-06-30
+2014-15          2014-15              2015-06-30
+2013-14          2013-14              2014-06-30
+2012-13          2012-13              2013-06-30
+2011-12          2011-12              2012-06-30
+2010-2011          2010-11              2011-06-30
+2009-2010          2009-10              2010-06-30
+2008-2009          2008-09              2009-06-30
+2007-2008          2007-08              2008-06-30
+2006-2007          2006-07              2007-06-30
+2005-2006          2005-06              2006-06-30
+2004-2005          2004-05              2005-06-30
+2003-2004          2003-04              2004-06-30
+2002-2003          2002-03              2003-06-30
+2001-2002          2001-02              2002-06-30
+2000-2001          2000-01              2001-06-30
+1999-2000          1999-00              2000-06-30
+1998-1999          1998-99              1999-06-30
+", stringsAsFactors = FALSE)
+
+tmp_FinancialYear$DisclosurePeriodEndDate <- as.Date(as.character(tmp_FinancialYear$DisclosurePeriodEndDate))
 
 get_returns_data <- function(page_url, json_url) {
 
@@ -82,6 +107,7 @@ if(nrow(returns_party) == nrow(returns_party_web)) {
 
   rm(tmp_party_returns)
   devtools::use_data(returns_party, overwrite = TRUE)
+  rm(returns_party_web)  # returns_party is needed (and deleted) later.
 
 } else {
 
@@ -118,6 +144,7 @@ returns_campaigner <- returns_campaigner %>%
 rm(tmp_camp_returns)
 
 devtools::use_data(returns_campaigner, overwrite = TRUE)
+rm(returns_campaigner)
 
 # Associated entity returns
 returns_associatedentity <- get_returns_data("https://transparency.aec.gov.au/AnnualAssociatedEntity",
@@ -182,6 +209,8 @@ if(nrow(returns_associatedentity_associatedparty) < 2000) {
 } else {
 
   devtools::use_data(returns_associatedentity_associatedparty, overwrite = TRUE)
+  rm(returns_associatedentity, returns_associatedentity_associatedparty, returns_party)
+
 
 }
 
@@ -218,20 +247,9 @@ returns_donor <- returns_donor_web %>%
                                                                                                              ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
 
 returns_donor_details <- returns_donor_details_web %>%
-  mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
-                                ifelse(FinancialYear == "1999-2000", "1999-00",
-                                       ifelse(FinancialYear == "2000-2001", "2000-01",
-                                              ifelse(FinancialYear == "2001-2002", "2001-02",
-                                                     ifelse(FinancialYear == "2002-2003", "2002-03",
-                                                            ifelse(FinancialYear == "2003-2004", "2003-04",
-                                                                   ifelse(FinancialYear == "2004-2005", "2004-05",
-                                                                          ifelse(FinancialYear == "2005-2006", "2005-06",
-                                                                                 ifelse(FinancialYear == "2006-2007", "2006-07",
-                                                                                        ifelse(FinancialYear == "2007-2008", "2007-08",
-                                                                                               ifelse(FinancialYear == "2008-2009", "2008-09",
-                                                                                                      ifelse(FinancialYear == "2009-2010", "2009-10",
-                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
-
+  left_join(tmp_FinancialYear, by = "FinancialYear") %>%
+  select(-FinancialYear) %>%
+  rename(FinancialYear = FinancialYearNew)
 
 tmp_donor_returns <- read.csv("data-raw/csv/Donor Returns.csv", stringsAsFactors = FALSE)
 
@@ -262,6 +280,7 @@ rm(tmp_donor_returns)
 # returns_donor <- unique(returns_donor)
 
 devtools::use_data(returns_donor, returns_donor_details, returns_donor_address, overwrite = TRUE)
+rm(returns_donor, returns_donor_details, returns_donor_address, returns_donor_web, returns_donor_details_web)
 
 # Third partry returns
 # NOTE: there does not seem to be any way to get the donations to third parties via the web
@@ -282,6 +301,7 @@ returns_thirdparty <- get_returns_data("https://transparency.aec.gov.au/AnnualTh
                                                                                                       ifelse(FinancialYear == "2009-2010", "2009-10",
                                                                                                              ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
 devtools::use_data(returns_thirdparty, overwrite = TRUE)
+rm(returns_thirdparty)
 
 # Detailed receipts
 returns_receipts_details_web <- get_returns_data("https://transparency.aec.gov.au/AnnualDetailedReceipts",
@@ -294,21 +314,12 @@ returns_receipts_details <- returns_receipts_details_web %>%
               mutate(PartyGroupId = as.integer(PartyGroupId)),
             by = "PartyGroupId") %>%
   rename(Amount = Value) %>%
-  mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
-                                ifelse(FinancialYear == "1999-2000", "1999-00",
-                                       ifelse(FinancialYear == "2000-2001", "2000-01",
-                                              ifelse(FinancialYear == "2001-2002", "2001-02",
-                                                     ifelse(FinancialYear == "2002-2003", "2002-03",
-                                                            ifelse(FinancialYear == "2003-2004", "2003-04",
-                                                                   ifelse(FinancialYear == "2004-2005", "2004-05",
-                                                                          ifelse(FinancialYear == "2005-2006", "2005-06",
-                                                                                 ifelse(FinancialYear == "2006-2007", "2006-07",
-                                                                                        ifelse(FinancialYear == "2007-2008", "2007-08",
-                                                                                               ifelse(FinancialYear == "2008-2009", "2008-09",
-                                                                                                      ifelse(FinancialYear == "2009-2010", "2009-10",
-                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
+  left_join(tmp_FinancialYear, by = "FinancialYear") %>%
+  select(-FinancialYear) %>%
+  rename(FinancialYear = FinancialYearNew)
 
 devtools::use_data(returns_receipts_details, overwrite = TRUE)
+rm(returns_receipts_details, returns_receipts_details_web)
 
 # Make a record of when the data was last updated.
 returns_updated <- data.frame(Updated = Sys.time(), stringsAsFactors = FALSE)
@@ -316,7 +327,7 @@ devtools::use_data(returns_updated, overwrite = TRUE)
 
 #### Make the files portable ####
 
-rm(list = ls())
+# rm(list = ls())
 
 data_files <- list.files("data")
 
