@@ -4,7 +4,7 @@
 \name{returns_associatedentity_associatedparty}
 \alias{returns_associatedentity_associatedparty}
 \title{Associated parties of associated entities}
-\format{An object of class \code{data.frame} with 673 rows and 3 columns.}
+\format{An object of class \code{data.frame} with 2311 rows and 4 columns.}
 \usage{
 returns_associatedentity_associatedparty
 }

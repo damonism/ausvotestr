@@ -4,7 +4,7 @@
 \name{returns_associatedentity}
 \alias{returns_associatedentity}
 \title{Associated entities annual returns}
-\format{An object of class \code{data.frame} with 3285 rows and 26 columns.}
+\format{An object of class \code{data.frame} with 3286 rows and 27 columns.}
 \usage{
 returns_associatedentity
 }
