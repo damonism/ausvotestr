@@ -62,6 +62,37 @@ donor_id_search <- function(donor_name) {
 
 }
 
+#' Search donor and recipient returns for the named donor(s).
+#'
+#' This provides a quick way to search for named donors in either the donor
+#' returns or the donor and recipient returns.
+#'
+#' The search is via a string search (using either \code{grep} or
+#' \code{agrep}, depending on arguments) of the \code{DonorName} field. As
+#' such, the \code{donor_name} argument supports regular expressions.
+#'
+#' If the \code{donor_only} argument is \code{FALSE}, the function also
+#' searchers the recipient returns, which is good from the sake of
+#' completeness, but also includes 'Other Receipts' (ie., receipts which
+#' are not donations), which may lead to interpretation difficulties.
+#'
+#' The companion function \code{returns_search_summary()} provides the
+#' output of this function aggregated by donor name (and optionally by
+#' year).
+#'
+#' @param donor_name Donor name as a regular expression.
+#' @param approximate (\code{BOOL}) If \code{TRUE}, use \code{agrep} for an
+#'   appoximate match, rather than \code{grep}. Defaults to \code{FALSE}
+#'   (\code{grep}).
+#' @param donor_only (\code{BOOL}) Only search donor returns (useful for
+#'   avoiding 'Other Receipts' in recipient returns). Defaults to
+#'   \code{TRUE}.
+#'
+#' @return A \code{data.frame}.
+#' @export
+#'
+#' @examples
+#' returns_search("Woodside|AGL")
 returns_search <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
 
   tmp_groups <- unique(returns_party[c('ClientFileId', 'PartyGroupId', 'PartyGroupName')])
@@ -97,7 +128,6 @@ returns_search <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
     }
     colnames(tmp_recipient) <- gsub('ReceivedFromClientName', 'DonorName', colnames(tmp_recipient), fixed = TRUE)
 
-    # TODO: Associated entities should have a party
     # tmp_ae <- tmp_recipient[tmp_recipient$ReturnTypeCode == 'federalassociatedentity',]
 
     if(nrow(tmp_recipient) == 0) {
@@ -118,6 +148,22 @@ returns_search <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
   return(tmp_return)
 }
 
+#' Search donor and recipient returns by date
+#'
+#' This function is simply a wrapper around \code{returns_search()},
+#' allowing filtering of results by date.
+#'
+#' It will eventually be rolled into the former function.
+#'
+#' @param donor_name Donor name as a regular expression.
+#' @param from_date Date in 'YYYY-MM-DD' format.
+#' @param ...
+#'
+#' @return A \code{data.frame}.
+#' @export
+#'
+#' @examples
+#' returns_search_date("Woodside|AGL", from_date = "2010-01-01")
 returns_search_date <- function(donor_name, from_date, ...) {
 
   tmp_data <- returns_search(donor_name = donor_name, ...)
@@ -126,6 +172,26 @@ returns_search_date <- function(donor_name, from_date, ...) {
 
 }
 
+#' Cross-tab of donations by donor
+#'
+#' Returns a \code{data.frame} of donations by named donor(s) aggregated by
+#' recipient party group and (optionally) year of return.
+#'
+#' This is mainly a convenience function for the Shiny app.
+#'
+#' @param donor_name Donor name as a regular expression.
+#' @param by_year (\code{BOOL}) Aggregate donation amounts by financial year.
+#'   Defaults to \code{FALSE}.
+#' @param from_date (Optional) Date in 'YYYY-MM-DD' format.
+#' @param approximate (\code{BOOL}) If \code{TRUE}, use \code{agrep} for an
+#'   appoximate match, rather than \code{grep}. Defaults to \code{FALSE}
+#'   (\code{grep}).
+#'
+#' @return A \code{data.frame}.
+#' @export
+#'
+#' @examples
+#' returns_search_summary("Woodside|AGL", from_date = "2010-01-01", by_year = TRUE)
 returns_search_summary <- function(donor_name, by_year = FALSE, from_date = NA, approximate = FALSE) {
 
   tmp_data <- returns_search(donor_name, approximate = approximate, donor_only = TRUE)
