@@ -9,6 +9,7 @@ library(tidyr)
 
 tmp_FinancialYear <- read.table(header = TRUE, text = "
 FinancialYear FinancialYearNew DisclosurePeriodEndDate
+2019-20          2019-20              2020-06-30
 2018-19          2018-19              2019-06-30
 2017-18          2017-18              2018-06-30
 2016-17          2016-17              2017-06-30
@@ -72,6 +73,7 @@ unlink(tmp_zip)
 #### Import the data into R ####
 
 # Political party returns
+message('#### returns_party ####')
 returns_party_web <- get_returns_data("https://transparency.aec.gov.au/AnnualPoliticalParty",
                                          "https://transparency.aec.gov.au/AnnualPoliticalParty/PoliticalPartyReturnsRead")
 
@@ -116,6 +118,7 @@ if(nrow(returns_party) == nrow(returns_party_web)) {
 }
 
 # Political campaigner returns
+message('#### returns_campaigner ####')
 returns_campaigner <- get_returns_data("https://transparency.aec.gov.au/AnnualPoliticalCampaigner",
                                        "https://transparency.aec.gov.au/AnnualPoliticalCampaigner/PoliticalCampaignerReturnsRead")
 
@@ -147,6 +150,7 @@ devtools::use_data(returns_campaigner, overwrite = TRUE)
 rm(returns_campaigner)
 
 # Associated entity returns
+message('#### returns_associatedentity ####')
 returns_associatedentity <- get_returns_data("https://transparency.aec.gov.au/AnnualAssociatedEntity",
                                "https://transparency.aec.gov.au/AnnualAssociatedEntity/AssociatedEntityReturnsRead")
 
@@ -176,6 +180,19 @@ returns_associatedentity <- returns_associatedentity %>%
                                                                                                       ifelse(FinancialYear == "2009-2010", "2009-10",
                                                                                                              ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
 rm(tmp_ae_returns)
+
+returns_associatedentity %>%
+  group_by(FinancialYear) %>%
+  summarise(Rows = n(),
+            Returns = length(unique(ReturnId)),
+            DetailsCapital = sum(DetailsOfCapitalContributionsTotal, na.rm = TRUE),
+            DetailsDebts = sum(DetailsOfDebtsTotal, na.rm = TRUE),
+            DetailsDisc = sum(DetailsOfDiscretionaryBenefitsTotal, na.rm = TRUE),
+            DetailsReceipts = sum(DetailsOfReceiptsTotal, na.rm = TRUE),
+            TotalDebts = sum(TotalDebts, na.rm = TRUE),
+            TotalPayments = sum(TotalPayments, na.rm = TRUE),
+            TotalReceipts = sum(TotalReceipts)) %>%
+  arrange(desc(FinancialYear))
 
 devtools::use_data(returns_associatedentity, overwrite = TRUE)
 
@@ -218,6 +235,7 @@ if(nrow(returns_associatedentity_associatedparty) < 2000) {
 # Donor returns
 # NOTE: There is some duplication with the returns_donor file due to
 # insufficient detail for matching the CSV files to the JSON data.
+message('#### returns_donor, returns_donor_details, returns_donor_address ####')
 returns_donor_web <- get_returns_data("https://transparency.aec.gov.au/AnnualDonor",
                                   "https://transparency.aec.gov.au/AnnualDonor/DonorReturnsRead")
 returns_donor_details_web <- get_returns_data("https://transparency.aec.gov.au/AnnualDonor",
@@ -279,12 +297,38 @@ returns_donor_address <- tmp_donor_returns %>%
 rm(tmp_donor_returns)
 # returns_donor <- unique(returns_donor)
 
+returns_donor %>%
+  group_by(FinancialYear) %>%
+  summarise(Rows = n(),
+            PartiesAndCampaigners = sum(TotalDonationsMadeToPoliticalPartiesAndCampaigners, na.rm = TRUE),
+            PoliticalParties = sum(TotalDonationsMadeToPoliticalParties, na.rm = TRUE),
+            PoliticalCampaigners = sum(TotalDonationsMadeToPoliticalCampaigners, na.rm = TRUE),
+            Received = sum(TotalDonationsReceived, na.rm = TRUE)) %>%
+  arrange(desc(FinancialYear))
+
+returns_donor_details %>%
+  group_by(FinancialYear) %>%
+  summarise(Rows = n(),
+            Amount = sum(Amount, na.rm = TRUE),
+            Returns = length(unique(ReturnId)),
+            Donors = length(unique(ClientFileId)),
+            Recipients = length(unique(DonationMadeToClientFileId))) %>%
+  arrange(desc(FinancialYear))
+
+returns_donor_address %>%
+  group_by(FinancialYear) %>%
+  summarise(Rows = n(),
+            TotalDonationsMade = sum(TotalDonationsMade, na.rm = TRUE),
+            TotalDonationsReceived = sum(TotalDonationsReceived, na.rm = TRUE)) %>%
+  arrange(desc(FinancialYear))
+
 devtools::use_data(returns_donor, returns_donor_details, returns_donor_address, overwrite = TRUE)
 rm(returns_donor, returns_donor_details, returns_donor_address, returns_donor_web, returns_donor_details_web)
 
 # Third partry returns
 # NOTE: there does not seem to be any way to get the donations to third parties via the web
 # interface (although they are in the CSV files).
+message("#### returns_thirdparty #####")
 returns_thirdparty <- get_returns_data("https://transparency.aec.gov.au/AnnualThirdParty",
                                "https://transparency.aec.gov.au/AnnualThirdParty/ThirdPartyReturnsRead") %>%
   mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
@@ -300,10 +344,20 @@ returns_thirdparty <- get_returns_data("https://transparency.aec.gov.au/AnnualTh
                                                                                                ifelse(FinancialYear == "2008-2009", "2008-09",
                                                                                                       ifelse(FinancialYear == "2009-2010", "2009-10",
                                                                                                              ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
+
+returns_thirdparty %>%
+  group_by(FinancialYear) %>%
+  summarise(Rows = n(),
+            ElectoralExpenditure = sum(TotalElectoralExpenditure, na.rm = TRUE),
+            TotalExpenditure = sum(TotalExpenditure, na.rm = TRUE),
+            TotalGifts = sum(TotalGifts, na.rm = TRUE)) %>%
+  arrange(desc(FinancialYear))
+
 devtools::use_data(returns_thirdparty, overwrite = TRUE)
 rm(returns_thirdparty)
 
 # Detailed receipts
+message("#### returns_receipts_details #####")
 returns_receipts_details_web <- get_returns_data("https://transparency.aec.gov.au/AnnualDetailedReceipts",
                                         "https://transparency.aec.gov.au/AnnualDetailedReceipts/DetailedReceiptsRead")
 
@@ -317,6 +371,27 @@ returns_receipts_details <- returns_receipts_details_web %>%
   left_join(tmp_FinancialYear, by = "FinancialYear") %>%
   select(-FinancialYear) %>%
   rename(FinancialYear = FinancialYearNew)
+
+# Quick summary of data to check it has run correctly
+returns_receipts_details %>%
+  group_by(FinancialYear) %>%
+  summarise(Rows = n(),
+            Amount = sum(Amount, na.rm = TRUE),
+            Recipients = length(unique(RecipientClientId)),
+            Donors = length(unique(ReceivedFromClientId))) %>%
+  arrange(desc(FinancialYear)) %>%
+  left_join(returns_receipts_details %>%
+              filter(ReceiptType == "Donation Received") %>%
+              group_by(FinancialYear) %>%
+              summarise(Donor.Rows = n(),
+                        Donor.Amount = sum(Amount, na.rm = TRUE)),
+            by = "FinancialYear") %>%
+  left_join(returns_receipts_details %>%
+              filter(ReceiptType == "Other Receipt") %>%
+              group_by(FinancialYear) %>%
+              summarise(Other.Rows = n(),
+                        Other.Amount = sum(Amount, na.rm = TRUE)),
+            by = "FinancialYear")
 
 devtools::use_data(returns_receipts_details, overwrite = TRUE)
 rm(returns_receipts_details, returns_receipts_details_web)

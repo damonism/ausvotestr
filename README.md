@@ -9,6 +9,15 @@ Scripts to re-create all of the data used in the package are included in the `da
 
 The package also contains some convenience functions for analysing the data and a Shiny app for quickly searching for donations by donors.
 
+Installation
+------------
+
+To install from GitLab:
+
+``` r
+devtools::install_gitlab("damonism/ausvotesTR")
+```
+
 Data extraction date
 --------------------
 
@@ -16,7 +25,7 @@ The [*Commonwealth Electoral Act 1918*](https://www.legislation.gov.au/Latest/C2
 
 Regulated entities may submit an amendment to their returns to the AEC, and the data in the package will reflect all of the returns and any amendments at the time of extraction.
 
-The current data in the package was extracted on 16 December 2020.
+The current data in the package was extracted on 02 February 2021.
 
 Disclosure threshold
 --------------------
@@ -27,6 +36,7 @@ The disclosure threshold for each year was:
 
 | FinancialYear |  ReportingThreshold|
 |:--------------|-------------------:|
+| 2019-20       |              14,000|
 | 2018-19       |              13,800|
 | 2017-18       |              13,500|
 | 2016-17       |              13,200|
@@ -52,11 +62,17 @@ The disclosure threshold for each year was:
 Changelog
 ---------
 
+### 2 February 2021
+
+-   Updated the data with the 2019-2020 returns
+-   Added summary tables to `transparency_register_scraper.R` in order to provide some reassurance that the web scraping process continues to work properly (not yet complete for all tables)
+-   Bumped the version number to 0.1.5
+
 ### 16 December 2020
 
 -   Added this ReadMe
--   Added DisclosurePeriodEndDate to returns\_receipts\_details, returns\_donor\_details
--   Implemented a more memory efficient way to standardise the FinancialYear field
+-   Added `DisclosurePeriodEndDate` to `returns_receipts_details`, `returns_donor_details`
+-   Implemented a more memory efficient way to standardise the `FinancialYear` field
 -   Update the data
 -   Moved search functions from the Shiny app and exported them
 -   Updated version number to 0.1.4

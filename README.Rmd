@@ -20,6 +20,14 @@ the `data-raw` folder.
 The package also contains some convenience functions for analysing the data
 and a Shiny app for quickly searching for donations by donors.
 
+## Installation
+
+To install from GitLab:
+
+```R
+devtools::install_gitlab("damonism/ausvotesTR")
+```
+
 ## Data extraction date
 
 The [_Commonwealth Electoral Act 1918_](https://www.legislation.gov.au/Latest/C2019C00103) 
@@ -49,11 +57,21 @@ kable(disclosure_threshold(), format.args = list(big.mark = ','))
 
 ## Changelog
 
+### 2 February 2021
+
+- Updated the data with the 2019-2020 returns
+- Added summary tables to `transparency_register_scraper.R` in order to 
+  provide some reassurance that the web scraping process continues to work
+  properly (not yet complete for all tables)
+- Bumped the version number to 0.1.5
+
 ### 16 December 2020
 
 - Added this ReadMe
-- Added DisclosurePeriodEndDate to returns_receipts_details, returns_donor_details
-- Implemented a more memory efficient way to standardise the FinancialYear field
+- Added `DisclosurePeriodEndDate` to `returns_receipts_details`, 
+  `returns_donor_details`
+- Implemented a more memory efficient way to standardise the `FinancialYear` 
+  field
 - Update the data
 - Moved search functions from the Shiny app and exported them
 - Updated version number to 0.1.4
