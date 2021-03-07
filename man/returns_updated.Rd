@@ -4,7 +4,9 @@
 \name{returns_updated}
 \alias{returns_updated}
 \title{Data update date}
-\format{An object of class \code{data.frame} with 1 rows and 1 columns.}
+\format{
+An object of class \code{data.frame} with 1 rows and 1 columns.
+}
 \usage{
 returns_updated
 }

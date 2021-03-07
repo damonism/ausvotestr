@@ -74,7 +74,7 @@ party_by_group <- function() {
 #' @export
 #'
 #' @examples
-#' head(returns_donors_merged())
+#' head(returns_donor_merged())
 returns_donor_merged <- function() {
 
   message("Warning: The address data does not merge cleanly with the donor data, leading to possible repition of rows from returns_data.")

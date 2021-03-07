@@ -14,7 +14,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-devtools::load_all(".")
 ```
 
 # Undisclosed ('dark') funding in Australia
@@ -24,7 +23,7 @@ The following code replicated the analysis used in [_Undisclosed funding sources
 ## Figure 1: Total reported receipts by type (federal)
 
 ```{r receipts_by_type}
-
+library(ausvotesTR)
 library(dplyr)
 library(tidyr)
 library(ggplot2)

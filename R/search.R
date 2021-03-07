@@ -157,7 +157,7 @@ returns_search <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
 #'
 #' @param donor_name Donor name as a regular expression.
 #' @param from_date Date in 'YYYY-MM-DD' format.
-#' @param ...
+#' @param ... Passed to \code{returns_search()}.
 #'
 #' @return A \code{data.frame}.
 #' @export
@@ -192,6 +192,8 @@ returns_search_date <- function(donor_name, from_date, ...) {
 #'
 #' @examples
 #' returns_search_summary("Woodside|AGL", from_date = "2010-01-01", by_year = TRUE)
+#'
+#' @importFrom stats aggregate
 returns_search_summary <- function(donor_name, by_year = FALSE, from_date = NA, approximate = FALSE) {
 
   tmp_data <- returns_search(donor_name, approximate = approximate, donor_only = TRUE)

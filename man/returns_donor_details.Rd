@@ -4,7 +4,8 @@
 \name{returns_donor_details}
 \alias{returns_donor_details}
 \title{Donations made details}
-\format{A \code{data.frame} with 53477 rows and 15 variables:
+\format{
+A \code{data.frame} with 53477 rows and 15 variables:
 \describe{
 \item{ViewName}{String of "Annual Donor Donation Made" (Chr).}
 \item{RegistrationCode}{Unique code for each individual return (Chr).}
@@ -21,7 +22,8 @@
 \item{TransactionDate}{Date object of transaction date (Date).}
 \item{Amount}{Donation amount in whole Australian dollars (Int).}
 \item{FinancialRecordType}{A string of either "donationmade" or "campaignerdonation" (Chr).}
-}}
+}
+}
 \source{
 \url{https://transparency.aec.gov.au/AnnualDonor}
 }

@@ -37,5 +37,5 @@ donors appear not be listed in the \code{\link{returns_donor_address}}
 data).
 }
 \examples{
-head(returns_donors_merged())
+head(returns_donor_merged())
 }

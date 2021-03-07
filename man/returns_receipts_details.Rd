@@ -4,7 +4,8 @@
 \name{returns_receipts_details}
 \alias{returns_receipts_details}
 \title{Detailed receipts}
-\format{A \code{data.frame} with 86283 rows and 19 variables:
+\format{
+A \code{data.frame} with 86283 rows and 19 variables:
 \describe{
 \item{ViewName}{String of "Annual Detailed Receipt" (Chr).}
 \item{RegistrationCode}{Unique code for each individual return (Chr).}
@@ -17,15 +18,16 @@
 \item{RecipientClientId}{Unique identifier (\code{ClientFileId} of the recipient of the donation (Int).}
 \item{RecipientName}{Name of the receipient of the money (Chr).}
 \item{RecipientClientType}{One of "Political Party", "Political Campaigner", "Third Party", "Organisation Donor" or "Associated Entity" (Chr).}
-\item{PartyGroupId}{ID if party is a member of a party group (see \code{\link{party_by_group()}}) (Int).}
+\item{PartyGroupId}{ID if party is a member of a party group (see \code{\link{party_by_group}}) (Int).}
 \item{PoliticalPartyId}{List of IDs of political parties (List).}
 \item{ReceivedFromClientName}{Name that the donor (Chr).}
 \item{RecivedFromClientId}{\code{ClientFileId} of the donor (Int).}
 \item{RecieptType}{One of "Donation Received", "Other Receipt, Subscription", "Unspecified" or "Public Funding" (note that anything other than "Donation Received" or "Other Receipt" is no longer used) (Chr).}
 \item{TransactionDate}{Date object of transaction date (Date).}
 \item{Amount}{Donation amount in whole Australian dollars (Int).}
-\item{PartyGroupName}{If party is a member of a party group, the name of the group (see \code{\link{party_by_group()}}) (Chr).}
-}}
+\item{PartyGroupName}{If party is a member of a party group, the name of the group (see \code{\link{party_by_group}}) (Chr).}
+}
+}
 \source{
 \url{https://transparency.aec.gov.au/AnnualDetailedReceipts}
 }

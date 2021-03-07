@@ -4,7 +4,8 @@
 \name{returns_party}
 \alias{returns_party}
 \title{Parties annual returns}
-\format{A \code{data.frame} with 1717 rows and 24 variables:
+\format{
+A \code{data.frame} with 1717 rows and 24 variables:
 \describe{
 \item{ViewName}{String of "Political Party Annual Return".}
 \item{ReturnTypeCode}{String of "federalpoliticalparty".}
@@ -29,7 +30,8 @@
 \item{Suburb}{Suburb (merged from CSV file) (Chr).}
 \item{State}{State abbreviation (merged from CSV file) (Chr).}
 \item{Postcode}{Postcode (merged from CSV file) (Int).}
-}}
+}
+}
 \source{
 \url{https://transparency.aec.gov.au/AnnualPoliticalParty}
 }

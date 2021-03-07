@@ -11,7 +11,7 @@ returns_search_date(donor_name, from_date, ...)
 
 \item{from_date}{Date in 'YYYY-MM-DD' format.}
 
-\item{...}{}
+\item{...}{Passed to \code{returns_search()}.}
 }
 \value{
 A \code{data.frame}.

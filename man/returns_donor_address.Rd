@@ -4,7 +4,8 @@
 \name{returns_donor_address}
 \alias{returns_donor_address}
 \title{Donor annual returns addresses}
-\format{A \code{data.frame} with 11166 rows and 10 variables:
+\format{
+A \code{data.frame} with 11166 rows and 10 variables:
 \describe{
 \item{FinancialYear}{Financial year of the return in the format of \code{YYYY-YY}.}
 \item{CurrentClientName}{Name that the party filed the current return under (Chr).}
@@ -16,7 +17,8 @@
 \item{LodgedOnBehalfOf}{Usually blank (Chr).}
 \item{TotalDonationsMade}{Total reported donations, in whole Australian dollars (Int).}
 \item{TotalDonationsReceived}{Total reported receipts, in whole Australian dollars (Int).}
-}}
+}
+}
 \source{
 \url{https://transparency.aec.gov.au/Download}
 }

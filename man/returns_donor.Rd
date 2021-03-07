@@ -4,7 +4,8 @@
 \name{returns_donor}
 \alias{returns_donor}
 \title{Donor annual returns}
-\format{A \code{data.frame} with 11204 rows and 16 variables:
+\format{
+A \code{data.frame} with 11204 rows and 16 variables:
 \describe{
 \item{ViewName}{String of "Donor Return" (Chr).}
 \item{ReturnTypeCode}{String of either "federaldonororganisation" or "federaldonorindividual" (Chr).}
@@ -22,7 +23,8 @@
 \item{TotalDonationsMadeToPoliticalCampaigners}{Sum of donations to political campaigners (the legislative requirement to report this was only introduced in 2018-19) (Int).}
 \item{TotalDonationsReceived}{Sum of donations received, in whole Australian dollars (Int).}
 \item{LodgedOnBehalfOf}{Usually blank (Chr).}
-}}
+}
+}
 \source{
 \url{https://transparency.aec.gov.au/AnnualDonor}
 }

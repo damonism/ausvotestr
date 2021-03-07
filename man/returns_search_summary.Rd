@@ -4,8 +4,12 @@
 \alias{returns_search_summary}
 \title{Cross-tab of donations by donor}
 \usage{
-returns_search_summary(donor_name, by_year = FALSE, from_date = NA,
-  approximate = FALSE)
+returns_search_summary(
+  donor_name,
+  by_year = FALSE,
+  from_date = NA,
+  approximate = FALSE
+)
 }
 \arguments{
 \item{donor_name}{Donor name as a regular expression.}
@@ -31,4 +35,5 @@ This is mainly a convenience function for the Shiny app.
 }
 \examples{
 returns_search_summary("Woodside|AGL", from_date = "2010-01-01", by_year = TRUE)
+
 }
