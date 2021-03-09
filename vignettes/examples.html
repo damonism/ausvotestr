@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Damon Muller" />
+
+<meta name="date" content="2021-03-07" />
+
+<title>ausvotesTR Examples</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">ausvotesTR Examples</h1>
+<h4 class="author">Damon Muller</h4>
+<h4 class="date">2021-03-07</h4>
+
+
+
+<div id="undisclosed-dark-funding-in-australia" class="section level1">
+<h1>Undisclosed (‘dark’) funding in Australia</h1>
+<p>The following code replicated the analysis used in <a href="https://parlinfo.aph.gov.au/parlInfo/download/library/prspub/7248350/upload_binary/7248350.pdf;fileType=application/pdf"><em>Undisclosed funding sources in Australian federal politics: a quick guide</em></a>.</p>
+<div id="figure-1-total-reported-receipts-by-type-federal" class="section level2">
+<h2>Figure 1: Total reported receipts by type (federal)</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ausvotesTR)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;dplyr&#39;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:stats&#39;:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     filter, lag</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:base&#39;:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>Receipts_by_type <span class="ot">&lt;-</span> returns_party <span class="sc">%&gt;%</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(FinancialYear) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">TotalReceipts =</span> <span class="fu">sum</span>(TotalReceipts)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(returns_receipts_details <span class="sc">%&gt;%</span> </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>              <span class="fu">filter</span>(ReturnTypeDescription <span class="sc">==</span> <span class="st">&quot;Political Party Return&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">ReceiptType =</span> <span class="fu">ifelse</span>(ReceiptType <span class="sc">==</span> <span class="st">&quot;&quot;</span>, <span class="st">&quot;Unspecified&quot;</span>, ReceiptType),</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">ReceiptType =</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">&quot;Electoral Commission&quot;</span>, ReceivedFromClientName, <span class="at">fixed =</span> <span class="cn">TRUE</span>), <span class="st">&quot;Public Funding&quot;</span>, ReceiptType)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(FinancialYear, ReceiptType) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">Amount =</span> <span class="fu">sum</span>(Amount, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>              <span class="fu">bind_rows</span>(<span class="fu">group_by</span>(., FinancialYear) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">summarise</span>(<span class="at">Amount =</span> <span class="fu">sum</span>(Amount, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">mutate</span>(<span class="at">ReceiptType =</span> <span class="st">&quot;TotalDeclared&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>              <span class="fu">spread</span>(ReceiptType, Amount, <span class="at">fill =</span> <span class="dv">0</span>),</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">&quot;FinancialYear&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Undeclared =</span> TotalReceipts <span class="sc">-</span> TotalDeclared) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(ReceiptType, Amount, <span class="sc">-</span>FinancialYear) <span class="sc">%&gt;%</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>ReceiptType <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;TotalReceipts&quot;</span>, <span class="st">&quot;TotalDeclared&quot;</span>))</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;FinancialYear&#39;. You can override using the `.groups` argument.</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Receipts_by_type, <span class="fu">aes</span>(<span class="at">x =</span> FinancialYear, <span class="at">y =</span> Amount, <span class="at">fill =</span> ReceiptType)) <span class="sc">+</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">&quot;Amount ($)&quot;</span>, <span class="at">labels =</span> comma) <span class="sc">+</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Financial year (election years in red)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Receipt type&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="at">label =</span> <span class="st">&quot;Total receipts by type&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="fu">ifelse</span>(Receipts_by_type<span class="sc">$</span>FinancialYear <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;2018-19&quot;</span>, <span class="st">&quot;2015-16&quot;</span>, <span class="st">&quot;2013-14&quot;</span>, <span class="st">&quot;2010-11&quot;</span>, <span class="st">&quot;2007-08&quot;</span>, <span class="st">&quot;2004-05&quot;</span>, <span class="st">&quot;2001-02&quot;</span>, <span class="st">&quot;1998-99&quot;</span>), <span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>)))</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Vectorized input to `element_text()` is not officially supported.</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Results may be unexpected or may change in future versions of ggplot2.</span></span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="table-1-reported-and-unreported-income-by-party-in-201819" class="section level2">
+<h2>Table 1: Reported and unreported income by party in 2018–19</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Receipts_by_type <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(ReceiptType, Amount) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="18%" />
+<col width="14%" />
+<col width="15%" />
+<col width="13%" />
+<col width="11%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">FinancialYear</th>
+<th align="right">Donation Received</th>
+<th align="right">Other Receipt</th>
+<th align="right">Public Funding</th>
+<th align="right">Subscription</th>
+<th align="right">Undeclared</th>
+<th align="right">Unspecified</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1998-99</td>
+<td align="right">40395731</td>
+<td align="right">25895325</td>
+<td align="right">36295604</td>
+<td align="right">0</td>
+<td align="right">32452330</td>
+<td align="right">2174</td>
+</tr>
+<tr class="even">
+<td align="left">1999-00</td>
+<td align="right">15059555</td>
+<td align="right">17976723</td>
+<td align="right">1942002</td>
+<td align="right">0</td>
+<td align="right">21072794</td>
+<td align="right">4915437</td>
+</tr>
+<tr class="odd">
+<td align="left">2000-01</td>
+<td align="right">17800420</td>
+<td align="right">19495109</td>
+<td align="right">2355860</td>
+<td align="right">0</td>
+<td align="right">26557102</td>
+<td align="right">941564</td>
+</tr>
+<tr class="even">
+<td align="left">2001-02</td>
+<td align="right">25533363</td>
+<td align="right">28140705</td>
+<td align="right">39808088</td>
+<td align="right">0</td>
+<td align="right">34089521</td>
+<td align="right">19685342</td>
+</tr>
+<tr class="odd">
+<td align="left">2002-03</td>
+<td align="right">15851311</td>
+<td align="right">22477940</td>
+<td align="right">9758099</td>
+<td align="right">187631</td>
+<td align="right">29414661</td>
+<td align="right">13794118</td>
+</tr>
+<tr class="even">
+<td align="left">2003-04</td>
+<td align="right">23191068</td>
+<td align="right">34620871</td>
+<td align="right">4653184</td>
+<td align="right">2320025</td>
+<td align="right">26980980</td>
+<td align="right">267794</td>
+</tr>
+<tr class="odd">
+<td align="left">2004-05</td>
+<td align="right">36252024</td>
+<td align="right">46184116</td>
+<td align="right">44878809</td>
+<td align="right">1039003</td>
+<td align="right">30992914</td>
+<td align="right">417520</td>
+</tr>
+<tr class="even">
+<td align="left">2005-06</td>
+<td align="right">12799145</td>
+<td align="right">21596045</td>
+<td align="right">2013962</td>
+<td align="right">1547117</td>
+<td align="right">38679137</td>
+<td align="right">277741</td>
+</tr>
+<tr class="odd">
+<td align="left">2006-07</td>
+<td align="right">25915879</td>
+<td align="right">25961659</td>
+<td align="right">13328352</td>
+<td align="right">3125238</td>
+<td align="right">66937227</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">2007-08</td>
+<td align="right">45770653</td>
+<td align="right">53805207</td>
+<td align="right">51055041</td>
+<td align="right">3604400</td>
+<td align="right">60695790</td>
+<td align="right">72500</td>
+</tr>
+<tr class="odd">
+<td align="left">2008-09</td>
+<td align="right">20112894</td>
+<td align="right">18689424</td>
+<td align="right">6150224</td>
+<td align="right">0</td>
+<td align="right">49591036</td>
+<td align="right">4171638</td>
+</tr>
+<tr class="even">
+<td align="left">2009-10</td>
+<td align="right">16334826</td>
+<td align="right">27865588</td>
+<td align="right">2101014</td>
+<td align="right">165</td>
+<td align="right">45198206</td>
+<td align="right">217000</td>
+</tr>
+<tr class="odd">
+<td align="left">2010-11</td>
+<td align="right">40680523</td>
+<td align="right">53917969</td>
+<td align="right">65647667</td>
+<td align="right">14176</td>
+<td align="right">67851659</td>
+<td align="right">15000</td>
+</tr>
+<tr class="even">
+<td align="left">2011-12</td>
+<td align="right">12618718</td>
+<td align="right">42673640</td>
+<td align="right">17135920</td>
+<td align="right">1202192</td>
+<td align="right">51985016</td>
+<td align="right">4800000</td>
+</tr>
+<tr class="odd">
+<td align="left">2012-13</td>
+<td align="right">20605174</td>
+<td align="right">38182296</td>
+<td align="right">19106322</td>
+<td align="right">0</td>
+<td align="right">76277040</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">2013-14</td>
+<td align="right">64893639</td>
+<td align="right">66679857</td>
+<td align="right">57897291</td>
+<td align="right">0</td>
+<td align="right">88794590</td>
+<td align="right">612799</td>
+</tr>
+<tr class="odd">
+<td align="left">2014-15</td>
+<td align="right">29544318</td>
+<td align="right">53814265</td>
+<td align="right">31809694</td>
+<td align="right">1373150</td>
+<td align="right">67195956</td>
+<td align="right">1500</td>
+</tr>
+<tr class="even">
+<td align="left">2015-16</td>
+<td align="right">32519727</td>
+<td align="right">54589702</td>
+<td align="right">11073669</td>
+<td align="right">0</td>
+<td align="right">91176638</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">2016-17</td>
+<td align="right">14572348</td>
+<td align="right">54834739</td>
+<td align="right">79103793</td>
+<td align="right">2740</td>
+<td align="right">59986159</td>
+<td align="right">72250</td>
+</tr>
+<tr class="even">
+<td align="left">2017-18</td>
+<td align="right">17580980</td>
+<td align="right">45974219</td>
+<td align="right">21144067</td>
+<td align="right">4200</td>
+<td align="right">69458317</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">2018-19</td>
+<td align="right">130620834</td>
+<td align="right">99557622</td>
+<td align="right">90143431</td>
+<td align="right">0</td>
+<td align="right">114182106</td>
+<td align="right">138082</td>
+</tr>
+<tr class="even">
+<td align="left">2019-20</td>
+<td align="right">14754127</td>
+<td align="right">57874865</td>
+<td align="right">45935121</td>
+<td align="right">0</td>
+<td align="right">49546919</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="declared-and-undeclared-donations-by-party-group-2018-19." class="section level2">
+<h2>Declared and undeclared donations by party group, 2018-19.</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>returns_party <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PartyGroupName =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(PartyGroupName), <span class="st">&quot;Others&quot;</span>, PartyGroupName)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PartyGroupName =</span> <span class="fu">ifelse</span>(PartyGroupName <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Christian Democratic Party (Fred Nile Group)&quot;</span>, </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                                                       <span class="st">&quot;Democratic Labor Party&quot;</span>), </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">&quot;Others&quot;</span>, </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                                 PartyGroupName)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(FinancialYear, PartyGroupName) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">TotalReceipts =</span> <span class="fu">sum</span>(TotalReceipts),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">Declared =</span> <span class="fu">sum</span>(DetailsOfReceiptsTotal)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Undeclared =</span> TotalReceipts <span class="sc">-</span> Declared) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># select(-TotalReceipts) %&gt;% </span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(FinancialYear <span class="sc">==</span> <span class="st">&quot;2018-19&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;FinancialYear&#39;. You can override using the `.groups` argument.</span></span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">FinancialYear</th>
+<th align="left">PartyGroupName</th>
+<th align="right">TotalReceipts</th>
+<th align="right">Declared</th>
+<th align="right">Undeclared</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2018-19</td>
+<td align="left">Australian Labor Party</td>
+<td align="right">126259524</td>
+<td align="right">98051111</td>
+<td align="right">28208413</td>
+</tr>
+<tr class="even">
+<td align="left">2018-19</td>
+<td align="left">Liberal</td>
+<td align="right">165128954</td>
+<td align="right">105843721</td>
+<td align="right">59285233</td>
+</tr>
+<tr class="odd">
+<td align="left">2018-19</td>
+<td align="left">One Nation</td>
+<td align="right">3023689</td>
+<td align="right">632780</td>
+<td align="right">2390909</td>
+</tr>
+<tr class="even">
+<td align="left">2018-19</td>
+<td align="left">Others</td>
+<td align="right">103706739</td>
+<td align="right">94108277</td>
+<td align="right">9598462</td>
+</tr>
+<tr class="odd">
+<td align="left">2018-19</td>
+<td align="left">The Greens</td>
+<td align="right">20409109</td>
+<td align="right">11485923</td>
+<td align="right">8923186</td>
+</tr>
+<tr class="even">
+<td align="left">2018-19</td>
+<td align="left">The Nationals</td>
+<td align="right">16114060</td>
+<td align="right">10338157</td>
+<td align="right">5775903</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="table-2-donor-returns-donations-below-the-disclosure-threshold-200619" class="section level2">
+<h2>Table 2: Donor returns donations below the disclosure threshold, 2006–19</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>returns_donor_details <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">disclosure_threshold</span>(), <span class="at">by =</span> <span class="st">&quot;FinancialYear&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Amount <span class="sc">&lt;</span> ReportingThreshold) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(FinancialYear) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">BelowThreshold =</span> <span class="fu">sum</span>(Amount, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(returns_donor_details <span class="sc">%&gt;%</span> </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(FinancialYear) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">Total =</span> <span class="fu">sum</span>(Amount, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">&quot;FinancialYear&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Percent =</span> BelowThreshold <span class="sc">/</span> Total <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">disclosure_threshold</span>(), <span class="at">by =</span> <span class="st">&quot;FinancialYear&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">FinancialYear</th>
+<th align="right">BelowThreshold</th>
+<th align="right">Total</th>
+<th align="right">Percent</th>
+<th align="right">ReportingThreshold</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1998-99</td>
+<td align="right">488291</td>
+<td align="right">18025602</td>
+<td align="right">2.708875</td>
+<td align="right">1500</td>
+</tr>
+<tr class="even">
+<td align="left">1999-00</td>
+<td align="right">275978</td>
+<td align="right">12021237</td>
+<td align="right">2.295754</td>
+<td align="right">1500</td>
+</tr>
+<tr class="odd">
+<td align="left">2000-01</td>
+<td align="right">443470</td>
+<td align="right">16829901</td>
+<td align="right">2.635013</td>
+<td align="right">1500</td>
+</tr>
+<tr class="even">
+<td align="left">2001-02</td>
+<td align="right">778913</td>
+<td align="right">24884941</td>
+<td align="right">3.130058</td>
+<td align="right">1500</td>
+</tr>
+<tr class="odd">
+<td align="left">2002-03</td>
+<td align="right">985696</td>
+<td align="right">20504770</td>
+<td align="right">4.807155</td>
+<td align="right">1500</td>
+</tr>
+<tr class="even">
+<td align="left">2003-04</td>
+<td align="right">848905</td>
+<td align="right">18892185</td>
+<td align="right">4.493419</td>
+<td align="right">1500</td>
+</tr>
+<tr class="odd">
+<td align="left">2004-05</td>
+<td align="right">1101647</td>
+<td align="right">30032958</td>
+<td align="right">3.668127</td>
+<td align="right">1500</td>
+</tr>
+<tr class="even">
+<td align="left">2005-06</td>
+<td align="right">477101</td>
+<td align="right">12227902</td>
+<td align="right">3.901740</td>
+<td align="right">1500</td>
+</tr>
+<tr class="odd">
+<td align="left">2006-07</td>
+<td align="right">4950298</td>
+<td align="right">18077096</td>
+<td align="right">27.384365</td>
+<td align="right">10300</td>
+</tr>
+<tr class="even">
+<td align="left">2007-08</td>
+<td align="right">5891279</td>
+<td align="right">26484088</td>
+<td align="right">22.244598</td>
+<td align="right">10500</td>
+</tr>
+<tr class="odd">
+<td align="left">2008-09</td>
+<td align="right">3546389</td>
+<td align="right">12437390</td>
+<td align="right">28.513933</td>
+<td align="right">10900</td>
+</tr>
+<tr class="even">
+<td align="left">2009-10</td>
+<td align="right">3603430</td>
+<td align="right">13367801</td>
+<td align="right">26.956042</td>
+<td align="right">11200</td>
+</tr>
+<tr class="odd">
+<td align="left">2010-11</td>
+<td align="right">5886113</td>
+<td align="right">27797959</td>
+<td align="right">21.174623</td>
+<td align="right">11500</td>
+</tr>
+<tr class="even">
+<td align="left">2011-12</td>
+<td align="right">3660553</td>
+<td align="right">12929886</td>
+<td align="right">28.310791</td>
+<td align="right">11900</td>
+</tr>
+<tr class="odd">
+<td align="left">2012-13</td>
+<td align="right">5214448</td>
+<td align="right">19664286</td>
+<td align="right">26.517352</td>
+<td align="right">12100</td>
+</tr>
+<tr class="even">
+<td align="left">2013-14</td>
+<td align="right">7021860</td>
+<td align="right">58439100</td>
+<td align="right">12.015688</td>
+<td align="right">12400</td>
+</tr>
+<tr class="odd">
+<td align="left">2014-15</td>
+<td align="right">4917540</td>
+<td align="right">24082643</td>
+<td align="right">20.419436</td>
+<td align="right">12800</td>
+</tr>
+<tr class="even">
+<td align="left">2015-16</td>
+<td align="right">8580588</td>
+<td align="right">31041252</td>
+<td align="right">27.642532</td>
+<td align="right">13000</td>
+</tr>
+<tr class="odd">
+<td align="left">2016-17</td>
+<td align="right">4034911</td>
+<td align="right">15425763</td>
+<td align="right">26.156962</td>
+<td align="right">13200</td>
+</tr>
+<tr class="even">
+<td align="left">2017-18</td>
+<td align="right">5642885</td>
+<td align="right">19245152</td>
+<td align="right">29.321073</td>
+<td align="right">13500</td>
+</tr>
+<tr class="odd">
+<td align="left">2018-19</td>
+<td align="right">8526266</td>
+<td align="right">125572687</td>
+<td align="right">6.789905</td>
+<td align="right">13800</td>
+</tr>
+<tr class="even">
+<td align="left">2019-20</td>
+<td align="right">2864891</td>
+<td align="right">18020970</td>
+<td align="right">15.897540</td>
+<td align="right">14000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="number-of-donors" class="section level2">
+<h2>Number of donors</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>returns_donor_details <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(FinancialYear, RegistrationCode, DonationMadeToClientFileId) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total =</span> <span class="fu">sum</span>(Amount, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">disclosure_threshold</span>(), <span class="at">by =</span> <span class="st">&quot;FinancialYear&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Total <span class="sc">&lt;</span> ReportingThreshold) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(FinancialYear, ReportingThreshold) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ReportingThreshold)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;FinancialYear&#39;, &#39;RegistrationCode&#39;. You can override using the `.groups` argument.</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;FinancialYear&#39;. You can override using the `.groups` argument.</span></span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">FinancialYear</th>
+<th align="right">ReportingThreshold</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2019-20</td>
+<td align="right">14000</td>
+<td align="right">152</td>
+</tr>
+<tr class="even">
+<td align="left">2018-19</td>
+<td align="right">13800</td>
+<td align="right">366</td>
+</tr>
+<tr class="odd">
+<td align="left">2017-18</td>
+<td align="right">13500</td>
+<td align="right">306</td>
+</tr>
+<tr class="even">
+<td align="left">2016-17</td>
+<td align="right">13200</td>
+<td align="right">277</td>
+</tr>
+<tr class="odd">
+<td align="left">2015-16</td>
+<td align="right">13000</td>
+<td align="right">429</td>
+</tr>
+<tr class="even">
+<td align="left">2014-15</td>
+<td align="right">12800</td>
+<td align="right">286</td>
+</tr>
+<tr class="odd">
+<td align="left">2013-14</td>
+<td align="right">12400</td>
+<td align="right">288</td>
+</tr>
+<tr class="even">
+<td align="left">2012-13</td>
+<td align="right">12100</td>
+<td align="right">309</td>
+</tr>
+<tr class="odd">
+<td align="left">2011-12</td>
+<td align="right">11900</td>
+<td align="right">247</td>
+</tr>
+<tr class="even">
+<td align="left">2010-11</td>
+<td align="right">11500</td>
+<td align="right">330</td>
+</tr>
+<tr class="odd">
+<td align="left">2009-10</td>
+<td align="right">11200</td>
+<td align="right">263</td>
+</tr>
+<tr class="even">
+<td align="left">2008-09</td>
+<td align="right">10900</td>
+<td align="right">277</td>
+</tr>
+<tr class="odd">
+<td align="left">2007-08</td>
+<td align="right">10500</td>
+<td align="right">390</td>
+</tr>
+<tr class="even">
+<td align="left">2006-07</td>
+<td align="right">10300</td>
+<td align="right">296</td>
+</tr>
+<tr class="odd">
+<td align="left">1998-99</td>
+<td align="right">1500</td>
+<td align="right">84</td>
+</tr>
+<tr class="even">
+<td align="left">1999-00</td>
+<td align="right">1500</td>
+<td align="right">57</td>
+</tr>
+<tr class="odd">
+<td align="left">2000-01</td>
+<td align="right">1500</td>
+<td align="right">105</td>
+</tr>
+<tr class="even">
+<td align="left">2001-02</td>
+<td align="right">1500</td>
+<td align="right">124</td>
+</tr>
+<tr class="odd">
+<td align="left">2002-03</td>
+<td align="right">1500</td>
+<td align="right">161</td>
+</tr>
+<tr class="even">
+<td align="left">2003-04</td>
+<td align="right">1500</td>
+<td align="right">144</td>
+</tr>
+<tr class="odd">
+<td align="left">2004-05</td>
+<td align="right">1500</td>
+<td align="right">228</td>
+</tr>
+<tr class="even">
+<td align="left">2005-06</td>
+<td align="right">1500</td>
+<td align="right">87</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="donations-in-queensland-req-ausvotestr-0.1.0" class="section level2">
+<h2>Donations in Queensland (req ausvotesTR &gt; 0.1.0)</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tmp_qld <span class="ot">&lt;-</span> returns_receipts_details <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(FinancialYear <span class="sc">==</span> <span class="st">&quot;2018-19&quot;</span> <span class="sc">&amp;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>           RecipientClientId <span class="sc">%in%</span> returns_party<span class="sc">$</span>ClientFileId[returns_party<span class="sc">$</span>FinancialYear <span class="sc">==</span> <span class="st">&quot;2018-19&quot;</span> <span class="sc">&amp;</span> returns_party<span class="sc">$</span>State <span class="sc">==</span> <span class="st">&quot;QLD&quot;</span>] <span class="sc">&amp;</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>           ReceiptType <span class="sc">==</span> <span class="st">&quot;Donation Received&quot;</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(tmp_qld)[<span class="dv">1</span>]</span></code></pre></div>
+<p>[1] 393</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(tmp_qld<span class="sc">$</span>Amount)</span></code></pre></div>
+<p>[1] 86951582</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

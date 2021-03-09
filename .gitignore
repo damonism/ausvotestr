@@ -5,3 +5,5 @@
 data-raw/csv/
 data-raw/*.asc
 inst/doc
+doc
+Meta

@@ -4,3 +4,5 @@ TODO
 ^README\.Rmd$
 ^README\.md$
 data-raw
+^doc$
+^Meta$
