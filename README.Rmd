@@ -57,6 +57,16 @@ kable(disclosure_threshold(), format.args = list(big.mark = ','))
 
 ## Changelog
 
+### 9 March 2021
+
+- `returns_search()` is now case-insensitive, which seems to make more
+  sense.
+
+### 7 March 2021
+
+- Fixed some documentation bugs so it now builds cleanly.
+- Vignettes still not showing up -- not sure why.
+
 ### 2 February 2021
 
 - Updated the data with the 2019-2020 returns

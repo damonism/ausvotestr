@@ -69,7 +69,14 @@ donor_id_search <- function(donor_name) {
 #'
 #' The search is via a string search (using either \code{grep} or
 #' \code{agrep}, depending on arguments) of the \code{DonorName} field. As
-#' such, the \code{donor_name} argument supports regular expressions.
+#' such, the \code{donor_name} argument supports whatever search patterns the
+#' function supports (including regular expressions in the case of
+#' \code{grep}).
+#'
+#' If \code{approximate = FALSE} the search is case insensitive. This makes
+#' the search a little more useful when you're not sure exactly what the
+#' name of the entity is (approximate searches are less affected by string
+#' case).
 #'
 #' If the \code{donor_only} argument is \code{FALSE}, the function also
 #' searchers the recipient returns, which is good from the sake of
@@ -80,7 +87,7 @@ donor_id_search <- function(donor_name) {
 #' output of this function aggregated by donor name (and optionally by
 #' year).
 #'
-#' @param donor_name Donor name as a regular expression.
+#' @param donor_name Donor name as a \code{grep} pr \code{agrep} pattern.
 #' @param approximate (\code{BOOL}) If \code{TRUE}, use \code{agrep} for an
 #'   appoximate match, rather than \code{grep}. Defaults to \code{FALSE}
 #'   (\code{grep}).
@@ -102,7 +109,7 @@ returns_search <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
                        'ReceiptType', 'ReturnTypeDescription', 'TransactionDate', 'Amount')
 
   if(approximate == FALSE) {
-    tmp_donor <- returns_donor_details[grep(donor_name, returns_donor_details$ReturnClientName),]
+    tmp_donor <- returns_donor_details[grep(donor_name, returns_donor_details$ReturnClientName, ignore.case = TRUE),]
   } else {
     tmp_donor <- returns_donor_details[agrep(donor_name, returns_donor_details$ReturnClientName),]
   }
@@ -122,7 +129,7 @@ returns_search <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
   if(donor_only == FALSE) {
 
     if(approximate == FALSE) {
-      tmp_recipient <- returns_receipts_details[grep(donor_name, returns_receipts_details$ReceivedFromClientName),]
+      tmp_recipient <- returns_receipts_details[grep(donor_name, returns_receipts_details$ReceivedFromClientName, ignore.case = TRUE),]
     } else {
       tmp_recipient <- returns_receipts_details[agrep(donor_name, returns_receipts_details$ReceivedFromClientName),]
     }

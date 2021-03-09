@@ -7,7 +7,7 @@
 returns_search(donor_name, approximate = FALSE, donor_only = TRUE)
 }
 \arguments{
-\item{donor_name}{Donor name as a regular expression.}
+\item{donor_name}{Donor name as a \code{grep} pr \code{agrep} pattern.}
 
 \item{approximate}{(\code{BOOL}) If \code{TRUE}, use \code{agrep} for an
 appoximate match, rather than \code{grep}. Defaults to \code{FALSE}
@@ -27,7 +27,14 @@ returns or the donor and recipient returns.
 \details{
 The search is via a string search (using either \code{grep} or
 \code{agrep}, depending on arguments) of the \code{DonorName} field. As
-such, the \code{donor_name} argument supports regular expressions.
+such, the \code{donor_name} argument supports whatever search patterns the
+function supports (including regular expressions in the case of
+\code{grep}).
+
+If \code{approximate = FALSE} the search is case insensitive. This makes
+the search a little more useful when you're not sure exactly what the
+name of the entity is (approximate searches are less affected by string
+case).
 
 If the \code{donor_only} argument is \code{FALSE}, the function also
 searchers the recipient returns, which is good from the sake of
