@@ -95,7 +95,11 @@ donor_id_search <- function(donor_name) {
 #'   avoiding 'Other Receipts' in recipient returns). Defaults to
 #'   \code{TRUE}.
 #'
-#' @return A \code{data.frame}.
+#' @return A \code{data.frame} with zero or more rows and the following
+#'   columns: \code{FinancialYear}, \code{ReturnId}, \code{RegistrationCode},
+#'   \code{DonorName}, \code{RecipientName}, \code{PartyGroupName},
+#'   \code{ReceiptType}, '\code{ReturnTypeDescription}, \code{TransactionDate},
+#'   \code{Amount}.
 #' @export
 #'
 #' @examples
@@ -114,16 +118,20 @@ returns_search <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
     tmp_donor <- returns_donor_details[agrep(donor_name, returns_donor_details$ReturnClientName),]
   }
 
-  tmp_donor <- merge(tmp_donor, tmp_groups, by.x = "DonationMadeToClientFileId", by.y = "ClientFileId", all.x = TRUE)
-
-  colnames(tmp_donor) <- gsub('DonationMadeToName', 'RecipientName', colnames(tmp_donor), fixed = TRUE)
-  colnames(tmp_donor) <- gsub('ReturnClientName', 'DonorName', colnames(tmp_donor), fixed = TRUE)
-
-  # You can't add a new column to an empty data.frame
   if(nrow(tmp_donor) > 0) {
+    tmp_donor <- merge(tmp_donor, tmp_groups, by.x = "DonationMadeToClientFileId", by.y = "ClientFileId", all.x = TRUE)
+
+    colnames(tmp_donor) <- gsub('DonationMadeToName', 'RecipientName', colnames(tmp_donor), fixed = TRUE)
+    colnames(tmp_donor) <- gsub('ReturnClientName', 'DonorName', colnames(tmp_donor), fixed = TRUE)
+
     tmp_donor$ReceiptType <- 'Donation'
+    tmp_return <- tmp_donor[tmp_common_cols]
+
   } else {
     message("No donor returns for search: ", donor_name)
+    # No easy way to add a column to a zero row data.frame
+    tmp_return <- data.frame(matrix(ncol = length(tmp_common_cols), nrow = 0), stringsAsFactors = FALSE)
+    colnames(tmp_return) <- tmp_common_cols
   }
 
   if(donor_only == FALSE) {
@@ -135,17 +143,11 @@ returns_search <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
     }
     colnames(tmp_recipient) <- gsub('ReceivedFromClientName', 'DonorName', colnames(tmp_recipient), fixed = TRUE)
 
-    # tmp_ae <- tmp_recipient[tmp_recipient$ReturnTypeCode == 'federalassociatedentity',]
-
     if(nrow(tmp_recipient) == 0) {
       message("No recipient returns for search: ", donor_name)
     }
 
-    tmp_return <- rbind(tmp_donor[tmp_common_cols], tmp_recipient[tmp_common_cols])
-
-  } else {
-
-    tmp_return <- tmp_donor[tmp_common_cols]
+    tmp_return <- rbind(tmp_return, tmp_recipient[tmp_common_cols])
 
   }
 
@@ -174,8 +176,12 @@ returns_search <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
 returns_search_date <- function(donor_name, from_date, ...) {
 
   tmp_data <- returns_search(donor_name = donor_name, ...)
-  tmp_data <- tmp_data[!is.na(tmp_data$TransactionDate),]
-  tmp_data[tmp_data$TransactionDate > from_date,]
+  if(nrow(tmp_data) == 0) {
+    return(tmp_data)
+  } else {
+    tmp_data <- tmp_data[!is.na(tmp_data$TransactionDate),]
+    return(tmp_data[tmp_data$TransactionDate > from_date,])
+  }
 
 }
 
@@ -206,7 +212,8 @@ returns_search_summary <- function(donor_name, by_year = FALSE, from_date = NA, 
   tmp_data <- returns_search(donor_name, approximate = approximate, donor_only = TRUE)
 
   if(nrow(tmp_data) == 0) {
-    stop("No entries returned.")
+    message("No entries returned for search ", donor_name)
+    return(tmp_data)
   }
 
   if(!is.na(from_date)) {

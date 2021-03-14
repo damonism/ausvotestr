@@ -57,6 +57,11 @@ kable(disclosure_threshold(), format.args = list(big.mark = ','))
 
 ## Changelog
 
+### 14 March 2021
+- `returns_search()` and associated functions no longer returns an error when
+  there isn't a hit on the search (now returns a zero-row `data.frame` with
+  all of the appropriate columns)
+
 ### 9 March 2021
 
 - `returns_search()` is now case-insensitive, which seems to make more

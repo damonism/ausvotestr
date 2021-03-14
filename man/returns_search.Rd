@@ -18,7 +18,11 @@ avoiding 'Other Receipts' in recipient returns). Defaults to
 \code{TRUE}.}
 }
 \value{
-A \code{data.frame}.
+A \code{data.frame} with zero or more rows and the following
+columns: \code{FinancialYear}, \code{ReturnId}, \code{RegistrationCode},
+\code{DonorName}, \code{RecipientName}, \code{PartyGroupName},
+\code{ReceiptType}, '\code{ReturnTypeDescription}, \code{TransactionDate},
+\code{Amount}.
 }
 \description{
 This provides a quick way to search for named donors in either the donor
