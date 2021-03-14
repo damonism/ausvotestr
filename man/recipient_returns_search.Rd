@@ -7,11 +7,13 @@
 recipient_returns_search(donor_name, approximate = FALSE)
 }
 \arguments{
-\item{donor_name}{Donor name}
+\item{donor_name}{donor name}
 
-\item{approximate}{logical. If \code{TRUE}, will use \code{agrep} for searching rather than grep.
+\item{approximate}{logical. If \code{TRUE}, will use \link{agrep} for
+searching rather than \link{grep}.
 
-Includes political party, political campaigner and associated entity returns.}
+Includes political party, political campaigner and associated entity
+returns.}
 }
 \value{
 A \code{data.frame}.

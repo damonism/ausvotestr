@@ -9,11 +9,13 @@ donor_returns_search(donor_name, approximate = FALSE)
 \arguments{
 \item{donor_name}{donor name}
 
-\item{approximate}{logical. If \code{TRUE}, will use \code{agrep} for searching rather than grep.}
+\item{approximate}{logical. If \code{TRUE}, will use \link{agrep} for
+searching rather than \link{grep}.}
 }
 \value{
 A \code{data.frame}.
 }
 \description{
-Donor returns search
+Generally \link{returns_search} will be a better option for searching this
+data.
 }

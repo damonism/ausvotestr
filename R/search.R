@@ -1,7 +1,11 @@
 #' Donor returns search
 #'
+#' Generally \link{returns_search} will be a better option for searching this
+#'   data.
+#'
 #' @param donor_name donor name
-#' @param approximate logical. If \code{TRUE}, will use \code{agrep} for searching rather than grep.
+#' @param approximate logical. If \code{TRUE}, will use \link{agrep} for
+#'   searching rather than \link{grep}.
 #'
 #' @return A \code{data.frame}.
 #' @export
@@ -26,10 +30,12 @@ donor_returns_search <- function(donor_name, approximate = FALSE) {
 
 #' Recipient returns search
 #'
-#' @param donor_name Donor name
-#' @param approximate logical. If \code{TRUE}, will use \code{agrep} for searching rather than grep.
+#' @param donor_name donor name
+#' @param approximate logical. If \code{TRUE}, will use \link{agrep} for
+#'   searching rather than \link{grep}.
 #'
-#' Includes political party, political campaigner and associated entity returns.
+#' Includes political party, political campaigner and associated entity
+#'   returns.
 #'
 #' @return A \code{data.frame}.
 #' @export
@@ -67,11 +73,11 @@ donor_id_search <- function(donor_name) {
 #' This provides a quick way to search for named donors in either the donor
 #' returns or the donor and recipient returns.
 #'
-#' The search is via a string search (using either \code{grep} or
-#' \code{agrep}, depending on arguments) of the \code{DonorName} field. As
+#' The search is via a string search (using either \link{grep} or
+#' \link{agrep}, depending on arguments) of the \code{DonorName} field. As
 #' such, the \code{donor_name} argument supports whatever search patterns the
 #' function supports (including regular expressions in the case of
-#' \code{grep}).
+#' \link{grep}).
 #'
 #' If \code{approximate = FALSE} the search is case insensitive. This makes
 #' the search a little more useful when you're not sure exactly what the
@@ -83,15 +89,15 @@ donor_id_search <- function(donor_name) {
 #' completeness, but also includes 'Other Receipts' (ie., receipts which
 #' are not donations), which may lead to interpretation difficulties.
 #'
-#' The companion function \code{returns_search_summary()} provides the
+#' The companion function \link{returns_search_summary} provides the
 #' output of this function aggregated by donor name (and optionally by
 #' year).
 #'
-#' @param donor_name Donor name as a \code{grep} pr \code{agrep} pattern.
-#' @param approximate (\code{BOOL}) If \code{TRUE}, use \code{agrep} for an
-#'   appoximate match, rather than \code{grep}. Defaults to \code{FALSE}
-#'   (\code{grep}).
-#' @param donor_only (\code{BOOL}) Only search donor returns (useful for
+#' @param donor_name donor name as a \link{grep} pr \code{link} pattern.
+#' @param approximate (\code{BOOL}) if \code{TRUE}, use \code{agrep} for an
+#'   approximate match, rather than \link{grep}. Defaults to \code{FALSE}
+#'   (\link{grep}).
+#' @param donor_only (\code{BOOL}) only search donor returns (useful for
 #'   avoiding 'Other Receipts' in recipient returns). Defaults to
 #'   \code{TRUE}.
 #'
@@ -159,10 +165,8 @@ returns_search <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
 
 #' Search donor and recipient returns by date
 #'
-#' This function is simply a wrapper around \code{returns_search()},
-#' allowing filtering of results by date.
-#'
-#' It will eventually be rolled into the former function.
+#' This function is simply a wrapper around \link{returns_search},
+#' allowing easy filtering of results by date.
 #'
 #' @param donor_name Donor name as a regular expression.
 #' @param from_date Date in 'YYYY-MM-DD' format.
@@ -190,14 +194,15 @@ returns_search_date <- function(donor_name, from_date, ...) {
 #' Returns a \code{data.frame} of donations by named donor(s) aggregated by
 #' recipient party group and (optionally) year of return.
 #'
-#' This is mainly a convenience function for the Shiny app.
+#' This is mainly a convenience function for the Shiny app. It calls
+#' \link{returns_search_date} internally
 #'
-#' @param donor_name Donor name as a regular expression.
-#' @param by_year (\code{BOOL}) Aggregate donation amounts by financial year.
+#' @param donor_name donor name as a regular expression.
+#' @param by_year (\code{BOOL}) aggregate donation amounts by financial year.
 #'   Defaults to \code{FALSE}.
-#' @param from_date (Optional) Date in 'YYYY-MM-DD' format.
-#' @param approximate (\code{BOOL}) If \code{TRUE}, use \code{agrep} for an
-#'   appoximate match, rather than \code{grep}. Defaults to \code{FALSE}
+#' @param from_date (Optional) date in 'YYYY-MM-DD' format.
+#' @param approximate (\code{BOOL}) if \code{TRUE}, use \code{agrep} for an
+#'   approximate match, rather than \code{grep}. Defaults to \code{FALSE}
 #'   (\code{grep}).
 #'
 #' @return A \code{data.frame}.
@@ -217,16 +222,13 @@ returns_search_summary <- function(donor_name, by_year = FALSE, from_date = NA, 
   }
 
   if(!is.na(from_date)) {
-
     tmp_data <- tmp_data[tmp_data$TransactionDate > as.Date(from_date),]
-
   }
 
   if(by_year == FALSE) {
     tmp_table <- aggregate(Amount ~ PartyGroupName + DonorName, tmp_data, sum)
   } else {
     tmp_table <- aggregate(Amount ~ FinancialYear + PartyGroupName + DonorName, tmp_data, sum)
-
   }
 
   return(tmp_table[order(tmp_table$PartyGroupName),])

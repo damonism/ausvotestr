@@ -17,11 +17,8 @@ returns_search_date(donor_name, from_date, ...)
 A \code{data.frame}.
 }
 \description{
-This function is simply a wrapper around \code{returns_search()},
-allowing filtering of results by date.
-}
-\details{
-It will eventually be rolled into the former function.
+This function is simply a wrapper around \link{returns_search},
+allowing easy filtering of results by date.
 }
 \examples{
 returns_search_date("Woodside|AGL", from_date = "2010-01-01")

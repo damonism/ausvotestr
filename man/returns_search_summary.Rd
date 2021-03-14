@@ -12,15 +12,15 @@ returns_search_summary(
 )
 }
 \arguments{
-\item{donor_name}{Donor name as a regular expression.}
+\item{donor_name}{donor name as a regular expression.}
 
-\item{by_year}{(\code{BOOL}) Aggregate donation amounts by financial year.
+\item{by_year}{(\code{BOOL}) aggregate donation amounts by financial year.
 Defaults to \code{FALSE}.}
 
-\item{from_date}{(Optional) Date in 'YYYY-MM-DD' format.}
+\item{from_date}{(Optional) date in 'YYYY-MM-DD' format.}
 
-\item{approximate}{(\code{BOOL}) If \code{TRUE}, use \code{agrep} for an
-appoximate match, rather than \code{grep}. Defaults to \code{FALSE}
+\item{approximate}{(\code{BOOL}) if \code{TRUE}, use \code{agrep} for an
+approximate match, rather than \code{grep}. Defaults to \code{FALSE}
 (\code{grep}).}
 }
 \value{
@@ -31,7 +31,8 @@ Returns a \code{data.frame} of donations by named donor(s) aggregated by
 recipient party group and (optionally) year of return.
 }
 \details{
-This is mainly a convenience function for the Shiny app.
+This is mainly a convenience function for the Shiny app. It calls
+\link{returns_search_date} internally
 }
 \examples{
 returns_search_summary("Woodside|AGL", from_date = "2010-01-01", by_year = TRUE)

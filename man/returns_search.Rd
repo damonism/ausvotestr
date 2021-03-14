@@ -7,13 +7,13 @@
 returns_search(donor_name, approximate = FALSE, donor_only = TRUE)
 }
 \arguments{
-\item{donor_name}{Donor name as a \code{grep} pr \code{agrep} pattern.}
+\item{donor_name}{donor name as a \link{grep} pr \code{link} pattern.}
 
-\item{approximate}{(\code{BOOL}) If \code{TRUE}, use \code{agrep} for an
-appoximate match, rather than \code{grep}. Defaults to \code{FALSE}
-(\code{grep}).}
+\item{approximate}{(\code{BOOL}) if \code{TRUE}, use \code{agrep} for an
+approximate match, rather than \link{grep}. Defaults to \code{FALSE}
+(\link{grep}).}
 
-\item{donor_only}{(\code{BOOL}) Only search donor returns (useful for
+\item{donor_only}{(\code{BOOL}) only search donor returns (useful for
 avoiding 'Other Receipts' in recipient returns). Defaults to
 \code{TRUE}.}
 }
@@ -29,11 +29,11 @@ This provides a quick way to search for named donors in either the donor
 returns or the donor and recipient returns.
 }
 \details{
-The search is via a string search (using either \code{grep} or
-\code{agrep}, depending on arguments) of the \code{DonorName} field. As
+The search is via a string search (using either \link{grep} or
+\link{agrep}, depending on arguments) of the \code{DonorName} field. As
 such, the \code{donor_name} argument supports whatever search patterns the
 function supports (including regular expressions in the case of
-\code{grep}).
+\link{grep}).
 
 If \code{approximate = FALSE} the search is case insensitive. This makes
 the search a little more useful when you're not sure exactly what the
@@ -45,7 +45,7 @@ searchers the recipient returns, which is good from the sake of
 completeness, but also includes 'Other Receipts' (ie., receipts which
 are not donations), which may lead to interpretation difficulties.
 
-The companion function \code{returns_search_summary()} provides the
+The companion function \link{returns_search_summary} provides the
 output of this function aggregated by donor name (and optionally by
 year).
 }
