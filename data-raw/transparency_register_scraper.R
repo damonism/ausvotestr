@@ -2,6 +2,7 @@ library(httr)
 library(jsonlite)
 library(dplyr)
 library(tidyr)
+library(usethis)
 
 # This script imports all of the data from the AEC transparency register, located at:
 #
@@ -108,7 +109,7 @@ returns_party <- returns_party_web %>%
 if(nrow(returns_party) == nrow(returns_party_web)) {
 
   rm(tmp_party_returns)
-  devtools::use_data(returns_party, overwrite = TRUE)
+  use_data(returns_party, overwrite = TRUE)
   rm(returns_party_web)  # returns_party is needed (and deleted) later.
 
 } else {
@@ -146,7 +147,7 @@ returns_campaigner <- returns_campaigner %>%
                                                                                                              ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
 rm(tmp_camp_returns)
 
-devtools::use_data(returns_campaigner, overwrite = TRUE)
+use_data(returns_campaigner, overwrite = TRUE)
 rm(returns_campaigner)
 
 # Associated entity returns
@@ -192,9 +193,10 @@ returns_associatedentity %>%
             TotalDebts = sum(TotalDebts, na.rm = TRUE),
             TotalPayments = sum(TotalPayments, na.rm = TRUE),
             TotalReceipts = sum(TotalReceipts)) %>%
-  arrange(desc(FinancialYear))
+  arrange(desc(FinancialYear)) %>%
+  print()
 
-devtools::use_data(returns_associatedentity, overwrite = TRUE)
+use_data(returns_associatedentity, overwrite = TRUE)
 
 # Remove ClientFileIdsOfAssociatedParties into its own data.frame to normalise
 # (At some point they stopped using ClientFileIdsOfAssociatedParties so now we guestimate using
@@ -225,7 +227,7 @@ if(nrow(returns_associatedentity_associatedparty) < 2000) {
 
 } else {
 
-  devtools::use_data(returns_associatedentity_associatedparty, overwrite = TRUE)
+  use_data(returns_associatedentity_associatedparty, overwrite = TRUE)
   rm(returns_associatedentity, returns_associatedentity_associatedparty, returns_party)
 
 
@@ -304,7 +306,8 @@ returns_donor %>%
             PoliticalParties = sum(TotalDonationsMadeToPoliticalParties, na.rm = TRUE),
             PoliticalCampaigners = sum(TotalDonationsMadeToPoliticalCampaigners, na.rm = TRUE),
             Received = sum(TotalDonationsReceived, na.rm = TRUE)) %>%
-  arrange(desc(FinancialYear))
+  arrange(desc(FinancialYear)) %>%
+  print()
 
 returns_donor_details %>%
   group_by(FinancialYear) %>%
@@ -313,16 +316,18 @@ returns_donor_details %>%
             Returns = length(unique(ReturnId)),
             Donors = length(unique(ClientFileId)),
             Recipients = length(unique(DonationMadeToClientFileId))) %>%
-  arrange(desc(FinancialYear))
+  arrange(desc(FinancialYear)) %>%
+  print()
 
 returns_donor_address %>%
   group_by(FinancialYear) %>%
   summarise(Rows = n(),
             TotalDonationsMade = sum(TotalDonationsMade, na.rm = TRUE),
             TotalDonationsReceived = sum(TotalDonationsReceived, na.rm = TRUE)) %>%
-  arrange(desc(FinancialYear))
+  arrange(desc(FinancialYear)) %>%
+  print()
 
-devtools::use_data(returns_donor, returns_donor_details, returns_donor_address, overwrite = TRUE)
+use_data(returns_donor, returns_donor_details, returns_donor_address, overwrite = TRUE)
 rm(returns_donor, returns_donor_details, returns_donor_address, returns_donor_web, returns_donor_details_web)
 
 # Third partry returns
@@ -351,9 +356,10 @@ returns_thirdparty %>%
             ElectoralExpenditure = sum(TotalElectoralExpenditure, na.rm = TRUE),
             TotalExpenditure = sum(TotalExpenditure, na.rm = TRUE),
             TotalGifts = sum(TotalGifts, na.rm = TRUE)) %>%
-  arrange(desc(FinancialYear))
+  arrange(desc(FinancialYear)) %>%
+  print()
 
-devtools::use_data(returns_thirdparty, overwrite = TRUE)
+use_data(returns_thirdparty, overwrite = TRUE)
 rm(returns_thirdparty)
 
 # Detailed receipts
@@ -391,14 +397,15 @@ returns_receipts_details %>%
               group_by(FinancialYear) %>%
               summarise(Other.Rows = n(),
                         Other.Amount = sum(Amount, na.rm = TRUE)),
-            by = "FinancialYear")
+            by = "FinancialYear") %>%
+  print()
 
-devtools::use_data(returns_receipts_details, overwrite = TRUE)
+use_data(returns_receipts_details, overwrite = TRUE)
 rm(returns_receipts_details, returns_receipts_details_web)
 
 # Make a record of when the data was last updated.
 returns_updated <- data.frame(Updated = Sys.time(), stringsAsFactors = FALSE)
-devtools::use_data(returns_updated, overwrite = TRUE)
+use_data(returns_updated, overwrite = TRUE)
 
 #### Make the files portable ####
 
