@@ -5,7 +5,7 @@
 \alias{returns_associatedentity_associatedparty}
 \title{Associated parties of associated entities}
 \format{
-An object of class \code{data.frame} with 2528 rows and 4 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 2529 rows and 4 columns.
 }
 \usage{
 returns_associatedentity_associatedparty
