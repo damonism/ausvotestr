@@ -128,3 +128,26 @@ dim(tmp_qld)[1]
 sum(tmp_qld$Amount)
 
 ```
+
+# Search many donors at once
+
+This can also be done with `lapply()`, but the `purrr` functions are a bit
+less wordy. 
+
+```{r}
+library(purrr)
+
+check_donors <- c('Rinehart', 'Hancock', 'Forrest', 'Fortescue',
+                  'Pratt', 'Shimao', 'Wing Mau', 'Cannon-Brookes',
+                  'Atlassian', 'Farquhar', 'Triguboff', 'Meriton',
+                  'Palmer', 'Mineralogy', 'Lowy', 'Westfield',
+                  'Stokes', 'Seven', 'John Gandel', 'Vicinity', 'Alan Wilson',
+                  'Reece', 'Packer', 'Crown', 'Sehgal', 'Samvardhana',
+                  'Chak Wing', 'Kingold', 'Glasenberg', 'Glencore',
+                  'Cowin', 'Competitive Foods', 'Ainsworth', 
+                  'Aristocrat', 'Lang Walker', 'Walker Group', 
+                  'Richard White', 'WiseTech')
+
+map_dfr(check_donors, returns_search, donor_only = FALSE)
+```
+
