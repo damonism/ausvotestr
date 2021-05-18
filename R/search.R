@@ -135,9 +135,16 @@ returns_search <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
 
   } else {
     message("No donor returns for search: ", donor_name)
-    # No easy way to add a column to a zero row data.frame
-    tmp_return <- data.frame(matrix(ncol = length(tmp_common_cols), nrow = 0), stringsAsFactors = FALSE)
-    colnames(tmp_return) <- tmp_common_cols
+    # No easy way to add a column to a zero row data.frame - this is a hack
+    # to keep the column formats with a nil return (which allows it to be
+    # pasted together with other returns).
+    tmp_donor <- returns_donor_details[1,]
+    colnames(tmp_donor) <- gsub('DonationMadeToName', 'RecipientName', colnames(tmp_donor), fixed = TRUE)
+    colnames(tmp_donor) <- gsub('ReturnClientName', 'DonorName', colnames(tmp_donor), fixed = TRUE)
+
+    tmp_donor$ReceiptType <- 'Donation'
+    tmp_donor$PartyGroupName <- 'DUMMY'
+    tmp_return <- tmp_donor[0,][tmp_common_cols]
   }
 
   if(donor_only == FALSE) {
