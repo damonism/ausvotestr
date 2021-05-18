@@ -1,6 +1,6 @@
 #' Donor returns search
 #'
-#' Generally \link{returns_search} will be a better option for searching this
+#' Generally \link{search_returns} will be a better option for searching this
 #'   data.
 #'
 #' @param donor_name donor name
@@ -9,7 +9,7 @@
 #'
 #' @return A \code{data.frame}.
 #' @export
-donor_returns_search <- function(donor_name, approximate = FALSE) {
+search_donor_returns <- function(donor_name, approximate = FALSE) {
 
   tmp_groups <- unique(returns_party[c("ClientFileId", "PartyGroupId", "PartyGroupName")])
 
@@ -39,7 +39,7 @@ donor_returns_search <- function(donor_name, approximate = FALSE) {
 #'
 #' @return A \code{data.frame}.
 #' @export
-recipient_returns_search <- function(donor_name, approximate = FALSE) {
+search_recipient_returns <- function(donor_name, approximate = FALSE) {
 
   if(approximate == FALSE) {
     return_data <- returns_receipts_details[grep(donor_name, returns_receipts_details$ReceivedFromClientName),]
@@ -53,7 +53,7 @@ recipient_returns_search <- function(donor_name, approximate = FALSE) {
 
 }
 
-donor_id_search <- function(donor_name) {
+search_donor_id <- function(donor_name) {
 
   tmp_donor <- returns_donor[c("FinancialYear", "CurrentClientName", "ReturnClientName", "ClientFileId")][grepl(donor_name, returns_donor$CurrentClientName) | grepl(donor_name, returns_donor$ReturnClientName),]
   tmp_donor$ReturnType <- "Donor Return"
@@ -89,7 +89,7 @@ donor_id_search <- function(donor_name) {
 #' completeness, but also includes 'Other Receipts' (ie., receipts which
 #' are not donations), which may lead to interpretation difficulties.
 #'
-#' The companion function \link{returns_search_summary} provides the
+#' The companion function \link{search_returns_summary} provides the
 #' output of this function aggregated by donor name (and optionally by
 #' year).
 #'
@@ -109,8 +109,8 @@ donor_id_search <- function(donor_name) {
 #' @export
 #'
 #' @examples
-#' returns_search("Woodside|AGL")
-returns_search <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
+#' search_returns("Woodside|AGL")
+search_returns <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
 
   tmp_groups <- unique(returns_party[c('ClientFileId', 'PartyGroupId', 'PartyGroupName')])
 
@@ -172,21 +172,21 @@ returns_search <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
 
 #' Search donor and recipient returns by date
 #'
-#' This function is simply a wrapper around \link{returns_search},
+#' This function is simply a wrapper around \link{search_returns},
 #' allowing easy filtering of results by date.
 #'
 #' @param donor_name Donor name as a regular expression.
 #' @param from_date Date in 'YYYY-MM-DD' format.
-#' @param ... Passed to \code{returns_search()}.
+#' @param ... Passed to \code{search_returns()}.
 #'
 #' @return A \code{data.frame}.
 #' @export
 #'
 #' @examples
-#' returns_search_date("Woodside|AGL", from_date = "2010-01-01")
-returns_search_date <- function(donor_name, from_date, ...) {
+#' search_returns_date("Woodside|AGL", from_date = "2010-01-01")
+search_returns_date <- function(donor_name, from_date, ...) {
 
-  tmp_data <- returns_search(donor_name = donor_name, ...)
+  tmp_data <- search_returns(donor_name = donor_name, ...)
   if(nrow(tmp_data) == 0) {
     return(tmp_data)
   } else {
@@ -202,7 +202,7 @@ returns_search_date <- function(donor_name, from_date, ...) {
 #' recipient party group and (optionally) year of return.
 #'
 #' This is mainly a convenience function for the Shiny app. It calls
-#' \link{returns_search_date} internally
+#' \link{search_returns_date} internally
 #'
 #' @param donor_name donor name as a regular expression.
 #' @param by_year (\code{BOOL}) aggregate donation amounts by financial year.
@@ -216,12 +216,12 @@ returns_search_date <- function(donor_name, from_date, ...) {
 #' @export
 #'
 #' @examples
-#' returns_search_summary("Woodside|AGL", from_date = "2010-01-01", by_year = TRUE)
+#' search_returns_summary("Woodside|AGL", from_date = "2010-01-01", by_year = TRUE)
 #'
 #' @importFrom stats aggregate
-returns_search_summary <- function(donor_name, by_year = FALSE, from_date = NA, approximate = FALSE) {
+search_returns_summary <- function(donor_name, by_year = FALSE, from_date = NA, approximate = FALSE) {
 
-  tmp_data <- returns_search(donor_name, approximate = approximate, donor_only = TRUE)
+  tmp_data <- search_returns(donor_name, approximate = approximate, donor_only = TRUE)
 
   if(nrow(tmp_data) == 0) {
     message("No entries returned for search ", donor_name)

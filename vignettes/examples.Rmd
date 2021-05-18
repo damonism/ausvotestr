@@ -148,6 +148,6 @@ check_donors <- c('Rinehart', 'Hancock', 'Forrest', 'Fortescue',
                   'Aristocrat', 'Lang Walker', 'Walker Group', 
                   'Richard White', 'WiseTech')
 
-map_dfr(check_donors, returns_search, donor_only = FALSE)
+map_dfr(check_donors, search_returns, donor_only = FALSE)
 ```
 

@@ -45,7 +45,7 @@ server <- function(input, output) {
 
   detailed_data_df <- reactive({
     req(input$donor_name)
-    detailed_data <- returns_search_date(input$donor_name,
+    detailed_data <- search_returns_date(input$donor_name,
                                          approximate = FALSE,
                                          donor_only = input$donor_only,
                                          from_date = input$from_date)
@@ -67,7 +67,7 @@ server <- function(input, output) {
   # }, options = list(lengthMenu = list(c(25, 50, 100, -1), c('25', '50', '100', 'All'))))
 
   output$summary <- renderDataTable({
-    summary_table <- returns_search_summary(input$donor_name,
+    summary_table <- search_returns_summary(input$donor_name,
                                             approximate = FALSE,
                                             by_year = input$summary_by_year,
                                             from_date = input$from_date)
