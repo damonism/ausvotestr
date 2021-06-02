@@ -407,17 +407,23 @@ rm(returns_receipts_details, returns_receipts_details_web)
 returns_updated <- data.frame(Updated = Sys.time(), stringsAsFactors = FALSE)
 use_data(returns_updated, overwrite = TRUE)
 
+rm(list = ls())
+
+
 #### Make the files portable ####
 
-# rm(list = ls())
-
-data_files <- list.files("data")
-
-for(each_file in data_files) {
-
-  load(paste0("data/", each_file))
-  df_name <- gsub(".rda", "", fixed = TRUE, each_file)
-  save(list = df_name, ascii = TRUE, file = paste0("data-raw/", df_name, ".asc"))
-  rm(list = df_name)
-
-}
+# # This was a hack I did to work around certain limitations with one of the
+# # machines I was developing this on, and is no longer necessary.
+# #
+# # Use this instead: remotes::install_gitlab("damonism/ausvotesTR")
+#
+# data_files <- list.files("data")
+#
+# for(each_file in data_files) {
+#
+#   load(paste0("data/", each_file))
+#   df_name <- gsub(".rda", "", fixed = TRUE, each_file)
+#   save(list = df_name, ascii = TRUE, file = paste0("data-raw/", df_name, ".asc"))
+#   rm(list = df_name)
+#
+# }
