@@ -100,6 +100,11 @@ search_donor_id <- function(donor_name) {
 #' @param donor_only (\code{BOOL}) only search donor returns (useful for
 #'   avoiding 'Other Receipts' in recipient returns). Defaults to
 #'   \code{TRUE}.
+#' @param from_date Date in 'YYYY-MM-DD' format. Return a filtered result with
+#'   only those returns with a later \code{TransactionDate}. Note that not all
+#'   transactions have a date (this is particularly true of political party
+#'   returns) and this function will trigger a warning if it does not return a
+#'   transaction because the date is missing.
 #'
 #' @return A \code{data.frame} with zero or more rows and the following
 #'   columns: \code{FinancialYear}, \code{ReturnId}, \code{RegistrationCode},
@@ -109,8 +114,8 @@ search_donor_id <- function(donor_name) {
 #' @export
 #'
 #' @examples
-#' search_returns("Woodside|AGL")
-search_returns <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
+#' search_returns_date("Woodside|AGL", from_date = "2010-01-01")
+search_returns <- function(donor_name, approximate = FALSE, donor_only = TRUE, from_date = NA) {
 
   tmp_groups <- unique(returns_party[c('ClientFileId', 'PartyGroupId', 'PartyGroupName')])
 
@@ -165,15 +170,24 @@ search_returns <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
   }
 
   tmp_return <- tmp_return[order(tmp_return$FinancialYear),]
-  rownames(tmp_return) <- NULL
 
+  if(!is.na(from_date)){
+    tmp_return_length <- nrow(tmp_return)
+    tmp_return <- tmp_return[!is.na(tmp_return$TransactionDate),]
+    tmp_return_nodate <- tmp_return_length - nrow(tmp_return)
+    if(tmp_return_nodate > 0) {
+      message('Warning: ', tmp_return_nodate, ' rows missing dates.')
+    }
+    tmp_return <- tmp_return[tmp_return$TransactionDate > from_date,]
+  }
+
+  rownames(tmp_return) <- NULL
   return(tmp_return)
 }
 
 #' Search donor and recipient returns by date
 #'
-#' This function is simply a wrapper around \link{search_returns},
-#' allowing easy filtering of results by date.
+#' Deprecated -- use \link{search_returns} with `from_date` instead.
 #'
 #' @param donor_name Donor name as a regular expression.
 #' @param from_date Date in 'YYYY-MM-DD' format.
@@ -186,13 +200,15 @@ search_returns <- function(donor_name, approximate = FALSE, donor_only = TRUE) {
 #' search_returns_date("Woodside|AGL", from_date = "2010-01-01")
 search_returns_date <- function(donor_name, from_date, ...) {
 
-  tmp_data <- search_returns(donor_name = donor_name, ...)
-  if(nrow(tmp_data) == 0) {
-    return(tmp_data)
-  } else {
-    tmp_data <- tmp_data[!is.na(tmp_data$TransactionDate),]
-    return(tmp_data[tmp_data$TransactionDate > from_date,])
-  }
+  search_returns(donor_name = donor_name, from_date = from_date, ...)
+
+  # tmp_data <- search_returns(donor_name = donor_name, ...)
+  # if(nrow(tmp_data) == 0) {
+  #   return(tmp_data)
+  # } else {
+  #   tmp_data <- tmp_data[!is.na(tmp_data$TransactionDate),]
+  #   return(tmp_data[tmp_data$TransactionDate > from_date,])
+  # }
 
 }
 
@@ -202,7 +218,7 @@ search_returns_date <- function(donor_name, from_date, ...) {
 #' recipient party group and (optionally) year of return.
 #'
 #' This is mainly a convenience function for the Shiny app. It calls
-#' \link{search_returns_date} internally
+#' \link{search_returns} internally.
 #'
 #' @param donor_name donor name as a regular expression.
 #' @param by_year (\code{BOOL}) aggregate donation amounts by financial year.
@@ -221,16 +237,16 @@ search_returns_date <- function(donor_name, from_date, ...) {
 #' @importFrom stats aggregate
 search_returns_summary <- function(donor_name, by_year = FALSE, from_date = NA, approximate = FALSE) {
 
-  tmp_data <- search_returns(donor_name, approximate = approximate, donor_only = TRUE)
+  tmp_data <- search_returns(donor_name, approximate = approximate, donor_only = TRUE, from_date = from_date)
 
   if(nrow(tmp_data) == 0) {
     message("No entries returned for search ", donor_name)
     return(tmp_data)
   }
 
-  if(!is.na(from_date)) {
-    tmp_data <- tmp_data[tmp_data$TransactionDate > as.Date(from_date),]
-  }
+  # if(!is.na(from_date)) {
+  #   tmp_data <- tmp_data[tmp_data$TransactionDate > as.Date(from_date),]
+  # }
 
   if(by_year == FALSE) {
     tmp_table <- aggregate(Amount ~ PartyGroupName + DonorName, tmp_data, sum)

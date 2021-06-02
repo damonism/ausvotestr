@@ -8,7 +8,8 @@ knitr::opts_chunk$set(echo = TRUE)
 library(ausvotesTR)
 ```
 
-`ausvotesTR` is an R package of the data provided by the Australian Electoral Commission's (AEC) [Transparency Register](https://transparency.aec.gov.au/).
+`ausvotesTR` is an R package of the data provided by the Australian Electoral 
+Commission's (AEC) [Transparency Register](https://transparency.aec.gov.au/).
 
 The package aims to be both easier to access than the data on the AEC's 
 website, and also to provide linkages and metadata that is available on the 
@@ -25,7 +26,7 @@ and a Shiny app for quickly searching for donations by donors.
 To install from GitLab:
 
 ```R
-devtools::install_gitlab("damonism/ausvotesTR")
+remotes::install_gitlab("damonism/ausvotesTR")
 ```
 
 ## Data extraction date
@@ -45,7 +46,7 @@ The current data in the package was extracted on `r format(returns_updated[1,1],
 
 ## Disclosure threshold
 
-The disclosure threshold is CPI indexed anually. Donations below
+The disclosure threshold is CPI indexed annually. Donations below
 the threshold may not be included in returns.
 
 The disclosure threshold for each year was:
@@ -56,6 +57,26 @@ kable(disclosure_threshold(), format.args = list(big.mark = ','))
 ```
 
 ## Changelog
+
+### 2 June 2021
+- New data extract
+- Added [package documentation](https://r-pkgs.org/man.html#man-packages) for
+  the package (including adding a `globalVariables()` definition for the data
+  frames so the package will pass a `devtools::check()` cleanly -- there must
+  be a better way to do this with data packages!)
+- bumped the version to 0.1.7
+
+### 18 May 2021
+- New data extract
+- Renamed all of the search functions to makes them easier to find.
+- Rolled `search_returns_date()` functionality into `search_returns()`.
+- Fixed `search_returns()` so that even if it produces a nil return the
+  columns are the correct format so you can join them with something like
+  `map_dfr()` or `lapply()`.
+- The scraper now uses `use_data()` from `usethis`, where it has moved from
+  `devtools`. This is not reflected in dependencies as the scraper is not
+  actually included in the package.
+- A few documentation tweaks. 
 
 ### 14 March 2021
 - `returns_search()` and associated functions no longer returns an error when
@@ -92,4 +113,6 @@ kable(disclosure_threshold(), format.args = list(big.mark = ','))
 - Updated version number to 0.1.4
 
 ## Todo
-- Combine `returns_search` and `returns_search_date`
+- [x] Combine `returns_search` and `returns_search_date`
+- [ ] Add links to AEC returns from Shiny app
+- [ ] Complete the documentation of the data

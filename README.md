@@ -20,7 +20,7 @@ data and a Shiny app for quickly searching for donations by donors.
 To install from GitLab:
 
 ``` r
-devtools::install_gitlab("damonism/ausvotesTR")
+remotes::install_gitlab("damonism/ausvotesTR")
 ```
 
 ## Data extraction date
@@ -38,11 +38,11 @@ Regulated entities may submit an amendment to their returns to the AEC,
 and the data in the package will reflect all of the returns and any
 amendments at the time of extraction.
 
-The current data in the package was extracted on 02 February 2021.
+The current data in the package was extracted on 10 May 2021.
 
 ## Disclosure threshold
 
-The disclosure threshold is CPI indexed anually. Donations below the
+The disclosure threshold is CPI indexed annually. Donations below the
 threshold may not be included in returns.
 
 The disclosure threshold for each year was:
@@ -73,6 +73,30 @@ The disclosure threshold for each year was:
 | 1998-99       |              1,500 |
 
 ## Changelog
+
+### 2 June 2021
+
+-   New data extract
+-   Added [package
+    documentation](https://r-pkgs.org/man.html#man-packages) for the
+    package (including adding a `globalVariables()` definition for the
+    data frames so the package will pass a `devtools::check()` cleanly –
+    there must be a better way to do this with data packages!)
+-   bumped the version to 0.1.7
+
+### 18 May 2021
+
+-   New data extract
+-   Renamed all of the search functions to makes them easier to find.
+-   Rolled `search_returns_date()` functionality into
+    `search_returns()`.
+-   Fixed `search_returns()` so that even if it produces a nil return
+    the columns are the correct format so you can join them with
+    something like `map_dfr()` or `lapply()`.
+-   The scraper now uses `use_data()` from `usethis`, where it has moved
+    from `devtools`. This is not reflected in dependencies as the
+    scraper is not actually included in the package.
+-   A few documentation tweaks.
 
 ### 14 March 2021
 
@@ -111,4 +135,6 @@ The disclosure threshold for each year was:
 
 ## Todo
 
--   Combine `returns_search` and `returns_search_date`
+-   [x] Combine `returns_search` and `returns_search_date`
+-   [ ] Add links to AEC returns from Shiny app
+-   [ ] Complete the documentation of the data
