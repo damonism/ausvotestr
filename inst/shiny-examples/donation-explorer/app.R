@@ -94,8 +94,9 @@ server <- function(input, output) {
   )
 
   output$date_updated <- renderText({
-    paste(p(paste0('Data extracted on ',
-          format(as.Date(returns_updated[1,1], tz = "AEST"), "%d %B %Y"),
+    paste(p(paste0("Data extracted on ",
+          format(as.Date(returns_updated[1,1], tz = "Australia/Melbourne"),
+                 "%d %B %Y"),
           " from the Australian Electoral Commission's (AEC) Transparency Register. ",
           "Results will not reflect any amendments made to returns after that date.")),
           p(paste0("The most recent returns period as of the date the data was extracted was ",
