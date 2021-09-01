@@ -7,16 +7,20 @@
 \format{
 A \code{data.frame} with 11166 rows and 10 variables:
 \describe{
-\item{FinancialYear}{Financial year of the return in the format of \code{YYYY-YY}.}
-\item{CurrentClientName}{Name that the party filed the current return under (Chr).}
+\item{FinancialYear}{Financial year of the return in the format of
+\code{YYYY-YY}.}
+\item{CurrentClientName}{Name that the party filed the current return
+under (Chr).}
 \item{AddressLine1}{Address line 1(Chr).}
 \item{AddressLine2}{Address line 2 -- often blank(Chr).}
 \item{Suburb}{Suburb (Chr).}
 \item{State}{State abbreviation (Chr).}
 \item{Postcode}{Postcode (Int).}
 \item{LodgedOnBehalfOf}{Usually blank (Chr).}
-\item{TotalDonationsMade}{Total reported donations, in whole Australian dollars (Int).}
-\item{TotalDonationsReceived}{Total reported receipts, in whole Australian dollars (Int).}
+\item{TotalDonationsMade}{Total reported donations, in whole Australian
+dollars (Int).}
+\item{TotalDonationsReceived}{Total reported receipts, in whole Australian
+dollars (Int).}
 }
 }
 \source{
@@ -29,10 +33,17 @@ returns_donor_address
 AEC-provided addresses for the donors listed in the \code{returns_donor} file.
 }
 \details{
-The AEC provides CSV files with the addresses of donors who have made returns, however because those records in the CSV files do not have unique identifiers it is not possible to definitively match the addresses to the records in the \code{returns_donor} data.
+The AEC provides CSV files with the addresses of donors who have made
+returns, however because those records in the CSV files do not have unique
+identifiers it is not possible to definitively match the addresses to the
+records in the \code{returns_donor} data.
 
-As of the 2018-19 data, matching on \code{c("FinancialYear", "CurrentClientName", "TotalDonationsReceived"))} duplicates about 40-odd records (or about 11,000), which may be sufficient precision, depending on what you want to do.
+As of the 2018-19 data, matching on \code{c("FinancialYear",
+"CurrentClientName", "TotalDonationsReceived"))} duplicates about 40-odd
+records (or about 11,000), which may be sufficient precision, depending on
+what you want to do.
 
-The formatting of donors from outside Australia is inconsistent, but they can generally be picked up by filter on \code{is.na(Postcode)}.
+The formatting of donors from outside Australia is inconsistent, but they
+can generally be picked up by filter on \code{is.na(Postcode)}.
 }
 \keyword{datasets}

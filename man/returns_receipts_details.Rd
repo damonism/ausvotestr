@@ -5,27 +5,45 @@
 \alias{returns_receipts_details}
 \title{Detailed receipts}
 \format{
-A \code{data.frame} with 86283 rows and 19 variables:
+A \code{data.frame} with 19 variables:
 \describe{
 \item{ViewName}{String of "Annual Detailed Receipt" (Chr).}
 \item{RegistrationCode}{Unique code for each individual return (Chr).}
-\item{ReturnId}{Unique code for each individual return (Int) -- Not clear why both this and \code{RegistrationCode} both exist but may be an internal AEC thing.}
-\item{ReturnTypeCode}{String of either "federalpoliticalparty", "federalpoliticalcampaigner" or "federalassociatedentity" (Chr).}
-\item{ReturnTypeDescription}{String of either "Political Party Return", "Political Campaigner Return" or "Associated Entity Return" (Chr).}
-\item{AmendmentNumber}{The number of times the return has been amended (Int).}
-\item{FinancialYear}{Financial year of the return in the format of \code{YYYY-YY}.}
-\item{UniqueReferenceNumber}{Unique code (as per \code{RegistrationCode}) for each amendment of each return (Chr).}
-\item{RecipientClientId}{Unique identifier (\code{ClientFileId} of the recipient of the donation (Int).}
+\item{ReturnId}{Unique code for each individual return (Int) -- It is not
+clear why both this and \code{RegistrationCode} both exist but may
+be for internal AEC use.}
+\item{ReturnTypeCode}{String of either "federalpoliticalparty",
+"federalpoliticalcampaigner" or "federalassociatedentity" (Chr).}
+\item{ReturnTypeDescription}{String of either "Political Party Return",
+"Political Campaigner Return" or "Associated Entity Return" (Chr).}
+\item{AmendmentNumber}{The number of times the return has been amended
+(Int).}
+\item{FinancialYear}{Financial year of the return in the format of
+\code{YYYY-YY}.}
+\item{UniqueReferenceNumber}{Unique code (as per \code{RegistrationCode})
+for each amendment of each return (Chr).}
+\item{RecipientClientId}{Unique identifier (\code{ClientFileId} of the
+recipient of the donation (Int).}
 \item{RecipientName}{Name of the receipient of the money (Chr).}
-\item{RecipientClientType}{One of "Political Party", "Political Campaigner", "Third Party", "Organisation Donor" or "Associated Entity" (Chr).}
-\item{PartyGroupId}{ID if party is a member of a party group (see \code{\link{party_by_group}}) (Int).}
+\item{RecipientClientType}{One of "Political Party", "Political
+Campaigner", "Third Party", "Organisation Donor" or
+"Associated Entity" (Chr).}
+\item{PartyGroupId}{ID if party is a member of a party group (see
+\code{\link{party_by_group}}) (Int).}
 \item{PoliticalPartyId}{List of IDs of political parties (List).}
 \item{ReceivedFromClientName}{Name that the donor (Chr).}
 \item{RecivedFromClientId}{\code{ClientFileId} of the donor (Int).}
-\item{RecieptType}{One of "Donation Received", "Other Receipt, Subscription", "Unspecified" or "Public Funding" (note that anything other than "Donation Received" or "Other Receipt" is no longer used) (Chr).}
-\item{TransactionDate}{Date object of transaction date (Date).}
+\item{RecieptType}{One of "Donation Received", "Other Receipt",
+"Subscription", "Unspecified" or "Public Funding"
+(note that anything other than "Donation Received" or "Other Receipt"
+is no longer used) (Chr).}
+\item{TransactionDate}{Date object of transaction date (Date). Note that
+a large proportion of entries \strong{do not include a date} (ie., the
+data will be \code{NA}), and filtering by date will therefore exclude
+a large amount of data.}
 \item{Amount}{Donation amount in whole Australian dollars (Int).}
-\item{PartyGroupName}{If party is a member of a party group, the name of the group (see \code{\link{party_by_group}}) (Chr).}
+\item{PartyGroupName}{If party is a member of a party group, the name of
+the group (see \code{\link{party_by_group}}) (Chr).}
 }
 }
 \source{

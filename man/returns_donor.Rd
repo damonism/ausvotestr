@@ -5,7 +5,7 @@
 \alias{returns_donor}
 \title{Donor annual returns}
 \format{
-A \code{data.frame} with 11204 rows and 16 variables:
+A \code{data.frame} with 16 variables:
 \describe{
 \item{ViewName}{String of "Donor Return" (Chr).}
 \item{ReturnTypeCode}{String of either "federaldonororganisation" or "federaldonorindividual" (Chr).}
