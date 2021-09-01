@@ -25,8 +25,8 @@ avoiding 'Other Receipts' in recipient returns). Defaults to
 \item{from_date}{Date in 'YYYY-MM-DD' format. Return a filtered result with
 only those returns with a later \code{TransactionDate}. Note that not all
 transactions have a date (this is particularly true of political party
-returns) and this function will trigger a warning if it does not return a
-transaction because the date is missing.}
+returns) and if the \code{TransactionDate} is missing this will be replaced
+by relevant \code{DisclosurePeriodEndDate} and a warning will be printed.}
 }
 \value{
 A \code{data.frame} with zero or more rows and the following
@@ -53,13 +53,15 @@ case).
 
 If the \code{donor_only} argument is \code{FALSE}, the function also
 searchers the recipient returns, which is good from the sake of
-completeness, but also includes 'Other Receipts' (ie., receipts which
-are not donations), which may lead to interpretation difficulties.
+completeness, but also includes 'Other Receipts' (ie., receipts that
+are not donations), which may lead to interpretation difficulties as some
+data will be repeated between the donor and recipient returns, but it will
+not always be obvious what data is repeated.
 
 The companion function \link{search_returns_summary} provides the
 output of this function aggregated by donor name (and optionally by
 year).
 }
 \examples{
-search_returns_date("Woodside|AGL", from_date = "2010-01-01")
+search_returns("Woodside|AGL", from_date = "2010-01-01")
 }

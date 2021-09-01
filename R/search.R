@@ -86,8 +86,10 @@ search_donor_id <- function(donor_name) {
 #'
 #' If the \code{donor_only} argument is \code{FALSE}, the function also
 #' searchers the recipient returns, which is good from the sake of
-#' completeness, but also includes 'Other Receipts' (ie., receipts which
-#' are not donations), which may lead to interpretation difficulties.
+#' completeness, but also includes 'Other Receipts' (ie., receipts that
+#' are not donations), which may lead to interpretation difficulties as some
+#' data will be repeated between the donor and recipient returns, but it will
+#' not always be obvious what data is repeated.
 #'
 #' The companion function \link{search_returns_summary} provides the
 #' output of this function aggregated by donor name (and optionally by
@@ -103,8 +105,8 @@ search_donor_id <- function(donor_name) {
 #' @param from_date Date in 'YYYY-MM-DD' format. Return a filtered result with
 #'   only those returns with a later \code{TransactionDate}. Note that not all
 #'   transactions have a date (this is particularly true of political party
-#'   returns) and this function will trigger a warning if it does not return a
-#'   transaction because the date is missing.
+#'   returns) and if the \code{TransactionDate} is missing this will be replaced
+#'   by relevant \code{DisclosurePeriodEndDate} and a warning will be printed.
 #'
 #' @return A \code{data.frame} with zero or more rows and the following
 #'   columns: \code{FinancialYear}, \code{ReturnId}, \code{RegistrationCode},
@@ -114,14 +116,15 @@ search_donor_id <- function(donor_name) {
 #' @export
 #'
 #' @examples
-#' search_returns_date("Woodside|AGL", from_date = "2010-01-01")
+#' search_returns("Woodside|AGL", from_date = "2010-01-01")
 search_returns <- function(donor_name, approximate = FALSE, donor_only = TRUE, from_date = NA) {
 
   tmp_groups <- unique(returns_party[c('ClientFileId', 'PartyGroupId', 'PartyGroupName')])
 
   tmp_common_cols <- c('FinancialYear', 'ReturnId', 'RegistrationCode',
                        'DonorName', 'RecipientName', 'PartyGroupName',
-                       'ReceiptType', 'ReturnTypeDescription', 'TransactionDate', 'Amount')
+                       'ReceiptType', 'ReturnTypeDescription', 'TransactionDate',
+                       'Amount', 'DisclosurePeriodEndDate')
 
   if(approximate == FALSE) {
     tmp_donor <- returns_donor_details[grep(donor_name, returns_donor_details$ReturnClientName, ignore.case = TRUE),]
@@ -172,13 +175,13 @@ search_returns <- function(donor_name, approximate = FALSE, donor_only = TRUE, f
   tmp_return <- tmp_return[order(tmp_return$FinancialYear),]
 
   if(!is.na(from_date)){
-    tmp_return_length <- nrow(tmp_return)
-    tmp_return <- tmp_return[!is.na(tmp_return$TransactionDate),]
-    tmp_return_nodate <- tmp_return_length - nrow(tmp_return)
-    if(tmp_return_nodate > 0) {
-      message('Warning: ', tmp_return_nodate, ' rows missing dates.')
+    if(nrow(tmp_return) != nrow(tmp_return[!is.na(tmp_return$TransactionDate),])) {
+      message('Warning: ',
+              nrow(tmp_return) - nrow(tmp_return[!is.na(tmp_return$TransactionDate),]),
+              ' rows missing dates - replaced with DisclosurePeriodEndDate.')
+      tmp_return$TransactionDate[is.na(tmp_return$TransactionDate)] <- tmp_return$DisclosurePeriodEndDate[is.na(tmp_return$TransactionDate)]
     }
-    tmp_return <- tmp_return[tmp_return$TransactionDate > from_date,]
+    tmp_return <- tmp_return[tmp_return$TransactionDate >= from_date,]
   }
 
   rownames(tmp_return) <- NULL
