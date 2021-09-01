@@ -38,7 +38,7 @@ Regulated entities may submit an amendment to their returns to the AEC,
 and the data in the package will reflect all of the returns and any
 amendments at the time of extraction.
 
-The current data in the package was extracted on 10 May 2021.
+The current data in the package was extracted on 01 September 2021.
 
 ## Disclosure threshold
 
@@ -74,6 +74,23 @@ The disclosure threshold for each year was:
 
 ## Changelog
 
+### 1 September 2021
+
+-   Fixed some documentation, including clarifying when
+    `TransactionDate` might be missing for `returns_receipts_details`
+    and `returns_donor_details`
+-   Fixed `search_returns()` to replace `TransactionDate` with
+    `DisclosurePeriodEndDate` when `TransactionDate` is missing when
+    called with the `from_date` option so that those records were not
+    just silently discarded. This is particularly important for the
+    Shiny app as it always uses dates in its searches.
+-   Fixed the timezone in the Shiny App (who know ‘AEST’ was not a valid
+    timezone).
+-   Removed a lot of cruft from the data scraping process. This isn’t
+    exposed in the package but it makes my life a lot easier.
+-   Updated the data.
+-   Increased the version number to 0.1.8.
+
 ### 2 June 2021
 
 -   New data extract
@@ -82,7 +99,7 @@ The disclosure threshold for each year was:
     package (including adding a `globalVariables()` definition for the
     data frames so the package will pass a `devtools::check()` cleanly –
     there must be a better way to do this with data packages!)
--   bumped the version to 0.1.7
+-   bumped the version to 0.1.7.
 
 ### 18 May 2021
 
@@ -138,3 +155,6 @@ The disclosure threshold for each year was:
 -   [x] Combine `returns_search` and `returns_search_date`
 -   [ ] Add links to AEC returns from Shiny app
 -   [ ] Complete the documentation of the data
+-   [x] The Shiny app should have an option not to use dates (or should
+    use the DisclosurePeriodEndDate) as some entries are missing dates
+    and will be ignored when using `search_returns()` with a date.
