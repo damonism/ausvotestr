@@ -26,7 +26,10 @@ under (Chr).}
 dataset (Chr).}
 \item{DonationMadeToName}{Name of recipient of donation as written on
 return (Chr).}
-\item{DonationMadeToClientFileId}{ID of recipient (Int).}
+\item{DonationMadeToClientFileId}{ID of recipient (Int). This can be
+joined with \code{ClientFileId} from \link{returns_party} to get
+\code{PartyGroupName}, which is usually more useful than
+\code{DonationMadeToName} in this table.}
 \item{DonationMadeToClientType}{String of one of "politicalparty",
 "politicalcampaigner", "thirdparty", "general", "associatedentity"
 or "organisationdonor". Used to determine the appropriate dataset
