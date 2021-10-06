@@ -7,11 +7,21 @@
 party_by_group()
 }
 \value{
-A \code{data.frame} of party IDs and party group IDs and names.
+A \code{data.frame} with three columns: \code{ClientFileId},
+\code{PartyGroupId} and \code{PartyGroupName}.
 }
 \description{
-Party and group table
+This function returns a table which can be used for a \code{merge} or
+\code{left_join} to get party group ID from party ID.
+}
+\details{
+One of the more useful tables in the package, \link{returns_donor_details},
+contains \code{DonationMadeToClientFileId} but not a group ID. Use this
+function and merge on \code{DonationMadeToClientFileId} and
+\code{ClientFileId} to get the \code{PartyGroupName} for the donation.
 }
 \examples{
 party_by_group()
+
+merge(returns_donor_details[returns_donor_details$FinancialYear == "2019-20",], party_by_group(), by.x = "DonationMadeToClientFileId", by.y = "ClientFileId", all.x = TRUE)
 }
