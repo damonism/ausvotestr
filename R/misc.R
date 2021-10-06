@@ -43,7 +43,9 @@ disclosure_threshold <- function() {
 #' @examples
 #' party_by_group()
 #'
-#' merge(returns_donor_details[returns_donor_details$FinancialYear == "2019-20",], party_by_group(), by.x = "DonationMadeToClientFileId", by.y = "ClientFileId", all.x = TRUE)
+#' merge(returns_donor_details[returns_donor_details$FinancialYear == "2019-20",],
+#'       party_by_group(),
+#'       by.x = "DonationMadeToClientFileId", by.y = "ClientFileId", all.x = TRUE)
 party_by_group <- function() {
 
   tmp_df <- unique(returns_party[!is.na(returns_party$PartyGroupId),][c("ClientFileId", "PartyGroupId", "PartyGroupName")])

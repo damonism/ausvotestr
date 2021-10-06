@@ -23,5 +23,7 @@ function and merge on \code{DonationMadeToClientFileId} and
 \examples{
 party_by_group()
 
-merge(returns_donor_details[returns_donor_details$FinancialYear == "2019-20",], party_by_group(), by.x = "DonationMadeToClientFileId", by.y = "ClientFileId", all.x = TRUE)
+merge(returns_donor_details[returns_donor_details$FinancialYear == "2019-20",],
+      party_by_group(),
+      by.x = "DonationMadeToClientFileId", by.y = "ClientFileId", all.x = TRUE)
 }
