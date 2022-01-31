@@ -120,11 +120,12 @@ if(nrow(returns_party) == nrow(returns_party_web)) {
 
 # Political campaigner returns
 message('#### returns_campaigner ####')
-returns_campaigner <- get_returns_data("https://transparency.aec.gov.au/AnnualPoliticalCampaigner",
+returns_campaigner_csv <- get_returns_data("https://transparency.aec.gov.au/AnnualPoliticalCampaigner",
                                        "https://transparency.aec.gov.au/AnnualPoliticalCampaigner/PoliticalCampaignerReturnsRead")
 
 tmp_camp_returns <- read.csv("data-raw/csv/Political Campaigner Returns.csv", stringsAsFactors = FALSE)
-returns_campaigner <- returns_campaigner %>%
+
+returns_campaigner <- returns_campaigner_csv %>%
   left_join(tmp_camp_returns %>%
               select(FinancialYear = Financial.Year,
                      CurrentClientName = Name,
@@ -132,31 +133,23 @@ returns_campaigner <- returns_campaigner %>%
                      AddressLine2 = Address.Line.2,
                      Suburb, State, Postcode),
             by = c("FinancialYear", "CurrentClientName")) %>%
-  mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
-                                ifelse(FinancialYear == "1999-2000", "1999-00",
-                                       ifelse(FinancialYear == "2000-2001", "2000-01",
-                                              ifelse(FinancialYear == "2001-2002", "2001-02",
-                                                     ifelse(FinancialYear == "2002-2003", "2002-03",
-                                                            ifelse(FinancialYear == "2003-2004", "2003-04",
-                                                                   ifelse(FinancialYear == "2004-2005", "2004-05",
-                                                                          ifelse(FinancialYear == "2005-2006", "2005-06",
-                                                                                 ifelse(FinancialYear == "2006-2007", "2006-07",
-                                                                                        ifelse(FinancialYear == "2007-2008", "2007-08",
-                                                                                               ifelse(FinancialYear == "2008-2009", "2008-09",
-                                                                                                      ifelse(FinancialYear == "2009-2010", "2009-10",
-                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
-rm(tmp_camp_returns)
+  left_join(tmp_FinancialYear %>% select(-DisclosurePeriodEndDate),  # Data already has DisclosurePeriodEndDate
+            by = "FinancialYear") %>%
+  select(-FinancialYear) %>%
+  rename(FinancialYear = FinancialYearNew)
+
+rm(tmp_camp_returns, returns_campaigner_csv)
 
 use_data(returns_campaigner, overwrite = TRUE)
-rm(returns_campaigner)
+# rm(returns_campaigner)
 
 # Associated entity returns
 message('#### returns_associatedentity ####')
-returns_associatedentity <- get_returns_data("https://transparency.aec.gov.au/AnnualAssociatedEntity",
+returns_associatedentity_csv <- get_returns_data("https://transparency.aec.gov.au/AnnualAssociatedEntity",
                                "https://transparency.aec.gov.au/AnnualAssociatedEntity/AssociatedEntityReturnsRead")
-
 tmp_ae_returns <- read.csv("data-raw/csv/Associated Entity Returns.csv", stringsAsFactors = FALSE)
-returns_associatedentity <- returns_associatedentity %>%
+
+returns_associatedentity <- returns_associatedentity_csv %>%
   left_join(tmp_ae_returns %>%
               select(FinancialYear = Financial.Year,
                      CurrentClientName = Name,
@@ -167,20 +160,12 @@ returns_associatedentity <- returns_associatedentity %>%
                      AddressLine2 = Address.Line.2,
                      Suburb, State, Postcode),
             by = c("FinancialYear", "CurrentClientName", "TotalReceipts", "TotalPayments", "TotalDebts")) %>%
-  mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
-                                ifelse(FinancialYear == "1999-2000", "1999-00",
-                                       ifelse(FinancialYear == "2000-2001", "2000-01",
-                                              ifelse(FinancialYear == "2001-2002", "2001-02",
-                                                     ifelse(FinancialYear == "2002-2003", "2002-03",
-                                                            ifelse(FinancialYear == "2003-2004", "2003-04",
-                                                                   ifelse(FinancialYear == "2004-2005", "2004-05",
-                                                                          ifelse(FinancialYear == "2005-2006", "2005-06",
-                                                                                 ifelse(FinancialYear == "2006-2007", "2006-07",
-                                                                                        ifelse(FinancialYear == "2007-2008", "2007-08",
-                                                                                               ifelse(FinancialYear == "2008-2009", "2008-09",
-                                                                                                      ifelse(FinancialYear == "2009-2010", "2009-10",
-                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
-rm(tmp_ae_returns)
+  left_join(tmp_FinancialYear %>% select(-DisclosurePeriodEndDate),  # Data already has DisclosurePeriodEndDate
+            by = "FinancialYear") %>%
+  select(-FinancialYear) %>%
+  rename(FinancialYear = FinancialYearNew)
+
+rm(tmp_ae_returns, returns_associatedentity_csv)
 
 returns_associatedentity %>%
   group_by(FinancialYear) %>%
