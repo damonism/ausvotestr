@@ -79,6 +79,7 @@ returns_party_web <- get_returns_data("https://transparency.aec.gov.au/AnnualPol
                                          "https://transparency.aec.gov.au/AnnualPoliticalParty/PoliticalPartyReturnsRead")
 
 tmp_party_returns <- read.csv("data-raw/csv/Party Returns.csv", stringsAsFactors = FALSE)
+
 returns_party <- returns_party_web %>%
   left_join(tmp_party_returns %>%
               select(FinancialYear = Financial.Year,
@@ -90,19 +91,10 @@ returns_party <- returns_party_web %>%
                      AddressLine2 = Address.Line.2,
                      Suburb, State, Postcode),
             by = c("FinancialYear", "CurrentClientName", "TotalReceipts", "TotalPayments", "TotalDebts")) %>%
-  mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
-                                ifelse(FinancialYear == "1999-2000", "1999-00",
-                                       ifelse(FinancialYear == "2000-2001", "2000-01",
-                                              ifelse(FinancialYear == "2001-2002", "2001-02",
-                                                     ifelse(FinancialYear == "2002-2003", "2002-03",
-                                                            ifelse(FinancialYear == "2003-2004", "2003-04",
-                                                                   ifelse(FinancialYear == "2004-2005", "2004-05",
-                                                                          ifelse(FinancialYear == "2005-2006", "2005-06",
-                                                                                 ifelse(FinancialYear == "2006-2007", "2006-07",
-                                                                                        ifelse(FinancialYear == "2007-2008", "2007-08",
-                                                                                               ifelse(FinancialYear == "2008-2009", "2008-09",
-                                                                                                      ifelse(FinancialYear == "2009-2010", "2009-10",
-                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear)))))))))))))) %>%
+  left_join(tmp_FinancialYear %>% select(-DisclosurePeriodEndDate),  # Data already has DisclosurePeriodEndDate
+            by = "FinancialYear") %>%
+  select(-FinancialYear) %>%
+  rename(FinancialYear = FinancialYearNew) %>%
   filter(!(RegistrationCode == "P0083" & State == "TAS")) %>%  # These confuse the merge because they are 0 Totals.
   filter(!(RegistrationCode == "P0091" & State == "NT"))
 
@@ -120,12 +112,12 @@ if(nrow(returns_party) == nrow(returns_party_web)) {
 
 # Political campaigner returns
 message('#### returns_campaigner ####')
-returns_campaigner_csv <- get_returns_data("https://transparency.aec.gov.au/AnnualPoliticalCampaigner",
+returns_campaigner_web <- get_returns_data("https://transparency.aec.gov.au/AnnualPoliticalCampaigner",
                                        "https://transparency.aec.gov.au/AnnualPoliticalCampaigner/PoliticalCampaignerReturnsRead")
 
 tmp_camp_returns <- read.csv("data-raw/csv/Political Campaigner Returns.csv", stringsAsFactors = FALSE)
 
-returns_campaigner <- returns_campaigner_csv %>%
+returns_campaigner <- returns_campaigner_web %>%
   left_join(tmp_camp_returns %>%
               select(FinancialYear = Financial.Year,
                      CurrentClientName = Name,
@@ -138,18 +130,18 @@ returns_campaigner <- returns_campaigner_csv %>%
   select(-FinancialYear) %>%
   rename(FinancialYear = FinancialYearNew)
 
-rm(tmp_camp_returns, returns_campaigner_csv)
+rm(tmp_camp_returns, returns_campaigner_web)
 
 use_data(returns_campaigner, overwrite = TRUE)
 # rm(returns_campaigner)
 
 # Associated entity returns
 message('#### returns_associatedentity ####')
-returns_associatedentity_csv <- get_returns_data("https://transparency.aec.gov.au/AnnualAssociatedEntity",
+returns_associatedentity_web <- get_returns_data("https://transparency.aec.gov.au/AnnualAssociatedEntity",
                                "https://transparency.aec.gov.au/AnnualAssociatedEntity/AssociatedEntityReturnsRead")
 tmp_ae_returns <- read.csv("data-raw/csv/Associated Entity Returns.csv", stringsAsFactors = FALSE)
 
-returns_associatedentity <- returns_associatedentity_csv %>%
+returns_associatedentity <- returns_associatedentity_web %>%
   left_join(tmp_ae_returns %>%
               select(FinancialYear = Financial.Year,
                      CurrentClientName = Name,
@@ -165,7 +157,7 @@ returns_associatedentity <- returns_associatedentity_csv %>%
   select(-FinancialYear) %>%
   rename(FinancialYear = FinancialYearNew)
 
-rm(tmp_ae_returns, returns_associatedentity_csv)
+rm(tmp_ae_returns, returns_associatedentity_web)
 
 returns_associatedentity %>%
   group_by(FinancialYear) %>%
@@ -229,27 +221,10 @@ returns_donor_details_web <- get_returns_data("https://transparency.aec.gov.au/A
                                           "https://transparency.aec.gov.au/AnnualDonor/DonationsMadeRead")
 
 returns_donor <- returns_donor_web %>%
-  # left_join(tmp_donor_returns %>%
-  #             select(FinancialYear = Financial.Year,
-  #                    CurrentClientName = Name,
-  #                    TotalDonationsReceived = Total.Donations.Received,
-  #                    AddressLine1 = Address.Line.1,
-  #                    AddressLine2 = Address.Line.2,
-  #                    Suburb, State, Postcode),
-  #           by = c("FinancialYear", "CurrentClientName", "TotalDonationsReceived")) %>%
-  mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
-                                ifelse(FinancialYear == "1999-2000", "1999-00",
-                                       ifelse(FinancialYear == "2000-2001", "2000-01",
-                                              ifelse(FinancialYear == "2001-2002", "2001-02",
-                                                     ifelse(FinancialYear == "2002-2003", "2002-03",
-                                                            ifelse(FinancialYear == "2003-2004", "2003-04",
-                                                                   ifelse(FinancialYear == "2004-2005", "2004-05",
-                                                                          ifelse(FinancialYear == "2005-2006", "2005-06",
-                                                                                 ifelse(FinancialYear == "2006-2007", "2006-07",
-                                                                                        ifelse(FinancialYear == "2007-2008", "2007-08",
-                                                                                               ifelse(FinancialYear == "2008-2009", "2008-09",
-                                                                                                      ifelse(FinancialYear == "2009-2010", "2009-10",
-                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
+  left_join(tmp_FinancialYear %>% select(-DisclosurePeriodEndDate),  # Data already has DisclosurePeriodEndDate
+            by = "FinancialYear") %>%
+  select(-FinancialYear) %>%
+  rename(FinancialYear = FinancialYearNew)
 
 returns_donor_details <- returns_donor_details_web %>%
   left_join(tmp_FinancialYear, by = "FinancialYear") %>%
@@ -267,19 +242,10 @@ returns_donor_address <- tmp_donor_returns %>%
          LodgedOnBehalfOf = Lodged.on.behalf.of,
          TotalDonationsMade = Total.Donations.Made,
          TotalDonationsReceived = Total.Donations.Received) %>%
-  mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
-                                ifelse(FinancialYear == "1999-2000", "1999-00",
-                                       ifelse(FinancialYear == "2000-2001", "2000-01",
-                                              ifelse(FinancialYear == "2001-2002", "2001-02",
-                                                     ifelse(FinancialYear == "2002-2003", "2002-03",
-                                                            ifelse(FinancialYear == "2003-2004", "2003-04",
-                                                                   ifelse(FinancialYear == "2004-2005", "2004-05",
-                                                                          ifelse(FinancialYear == "2005-2006", "2005-06",
-                                                                                 ifelse(FinancialYear == "2006-2007", "2006-07",
-                                                                                        ifelse(FinancialYear == "2007-2008", "2007-08",
-                                                                                               ifelse(FinancialYear == "2008-2009", "2008-09",
-                                                                                                      ifelse(FinancialYear == "2009-2010", "2009-10",
-                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
+  left_join(tmp_FinancialYear %>% select(-DisclosurePeriodEndDate),  # No need for DisclosurePeriodEndDate
+            by = "FinancialYear") %>%
+  select(-FinancialYear) %>%
+  rename(FinancialYear = FinancialYearNew)
 
 rm(tmp_donor_returns)
 # returns_donor <- unique(returns_donor)
@@ -315,26 +281,21 @@ returns_donor_address %>%
 use_data(returns_donor, returns_donor_details, returns_donor_address, overwrite = TRUE)
 rm(returns_donor, returns_donor_details, returns_donor_address, returns_donor_web, returns_donor_details_web)
 
-# Third partry returns
+# Third party returns
 # NOTE: there does not seem to be any way to get the donations to third parties via the web
 # interface (although they are in the CSV files).
 message("#### returns_thirdparty #####")
-returns_thirdparty <- get_returns_data("https://transparency.aec.gov.au/AnnualThirdParty",
-                               "https://transparency.aec.gov.au/AnnualThirdParty/ThirdPartyReturnsRead") %>%
-  mutate(FinancialYear = ifelse(FinancialYear == "1998-1999", "1998-99",
-                                ifelse(FinancialYear == "1999-2000", "1999-00",
-                                       ifelse(FinancialYear == "2000-2001", "2000-01",
-                                              ifelse(FinancialYear == "2001-2002", "2001-02",
-                                                     ifelse(FinancialYear == "2002-2003", "2002-03",
-                                                            ifelse(FinancialYear == "2003-2004", "2003-04",
-                                                                   ifelse(FinancialYear == "2004-2005", "2004-05",
-                                                                          ifelse(FinancialYear == "2005-2006", "2005-06",
-                                                                                 ifelse(FinancialYear == "2006-2007", "2006-07",
-                                                                                        ifelse(FinancialYear == "2007-2008", "2007-08",
-                                                                                               ifelse(FinancialYear == "2008-2009", "2008-09",
-                                                                                                      ifelse(FinancialYear == "2009-2010", "2009-10",
-                                                                                                             ifelse(FinancialYear == "2010-2011", "2010-11", FinancialYear))))))))))))))
 
+returns_thirdparty_web <- get_returns_data("https://transparency.aec.gov.au/AnnualThirdParty",
+                                       "https://transparency.aec.gov.au/AnnualThirdParty/ThirdPartyReturnsRead")
+
+returns_thirdparty <- returns_thirdparty_web %>%
+  left_join(tmp_FinancialYear %>% select(-DisclosurePeriodEndDate),  # Data already has DisclosurePeriodEndDate
+            by = "FinancialYear") %>%
+  select(-FinancialYear) %>%
+  rename(FinancialYear = FinancialYearNew)
+
+## TEST ##
 returns_thirdparty %>%
   group_by(FinancialYear) %>%
   summarise(Rows = n(),

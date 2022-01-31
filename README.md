@@ -38,7 +38,7 @@ Regulated entities may submit an amendment to their returns to the AEC,
 and the data in the package will reflect all of the returns and any
 amendments at the time of extraction.
 
-The current data in the package was extracted on 01 September 2021.
+The current data in the package was extracted on 31 January 2022.
 
 ## Disclosure threshold
 
@@ -73,6 +73,11 @@ The disclosure threshold for each year was:
 | 1998-99       |              1,500 |
 
 ## Changelog
+
+### 31 January 2022
+
+-   Updated the data with the final 2019-20 data (I guess).
+-   Updated the Examples vignette.
 
 ### 1 September 2021
 
