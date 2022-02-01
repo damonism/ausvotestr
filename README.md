@@ -74,6 +74,12 @@ The disclosure threshold for each year was:
 
 ## Changelog
 
+### 1 February 2022
+
+-   Updated the data with the 2020-21 returns.
+-   Re-worked the import script to make it a bit more robust.
+-   Increased the version number to 0.2.
+
 ### 31 January 2022
 
 -   Updated the data with the final 2019-20 data (I guess).

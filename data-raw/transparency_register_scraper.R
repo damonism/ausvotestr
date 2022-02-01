@@ -10,6 +10,7 @@ library(usethis)
 
 tmp_FinancialYear <- read.table(header = TRUE, text = "
 FinancialYear FinancialYearNew DisclosurePeriodEndDate
+2020-21          2020-21              2021-06-30
 2019-20          2019-20              2020-06-30
 2018-19          2018-19              2019-06-30
 2017-18          2017-18              2018-06-30
@@ -71,9 +72,20 @@ if(!dir.exists("data-raw/csv")) {
 unzip(tmp_zip, junkpaths = TRUE, exdir = "data-raw/csv")
 unlink(tmp_zip)
 
-#### Import the data into R ####
+csv_files <- list.files("data-raw/csv")
 
-# Political party returns
+csv_files_expected <- c("Associated Entity Returns.csv", "Capital Contributions.csv", "Detailed Debts.csv",
+                        "Detailed Discretionary Benefits.csv", "Detailed Receipts.csv", "Donations Made.csv",
+                        "Donor Donations Received.csv", "Donor Returns.csv", "Party Returns.csv",
+                        "Political Campaigner Returns.csv", "Third Party Donations Received.csv", "Third Party Returns.csv")
+
+if(!setequal(csv_files, csv_files_expected)) {
+  warning("CSV files in zipfile not as expected.")
+}
+
+#### Build the data frames ####
+
+##### Political party returns #####
 message('#### returns_party ####')
 returns_party_web <- get_returns_data("https://transparency.aec.gov.au/AnnualPoliticalParty",
                                          "https://transparency.aec.gov.au/AnnualPoliticalParty/PoliticalPartyReturnsRead")
@@ -98,19 +110,39 @@ returns_party <- returns_party_web %>%
   filter(!(RegistrationCode == "P0083" & State == "TAS")) %>%  # These confuse the merge because they are 0 Totals.
   filter(!(RegistrationCode == "P0091" & State == "NT"))
 
-if(nrow(returns_party) == nrow(returns_party_web)) {
+# if(nrow(returns_party) == nrow(returns_party_web)) {
+#
+#   rm(tmp_party_returns)
+#   use_data(returns_party, overwrite = TRUE)
+#   rm(returns_party_web)  # returns_party is needed (and deleted) later.
+#
+# } else {
+#
+#   stop("Merge of address CSV and returns_party have different numbers of rows.")
+#
+# }
 
-  rm(tmp_party_returns)
-  use_data(returns_party, overwrite = TRUE)
-  rm(returns_party_web)  # returns_party is needed (and deleted) later.
-
-} else {
+if(nrow(returns_party) != nrow(returns_party_web)) {
 
   stop("Merge of address CSV and returns_party have different numbers of rows.")
 
 }
 
-# Political campaigner returns
+returns_party %>%
+  group_by(FinancialYear) %>%
+  summarise(Returns = n(),
+            Receipts = sum(TotalReceipts, na.rm = TRUE),
+            Payments = sum(TotalPayments, na.rm = TRUE),
+            Debts = sum(TotalDebts, na.rm = TRUE),
+            DiscBenefits = sum(DetailsOfDiscretionaryBenefitsTotal, na.rm = TRUE),
+            DetailsReceipts = sum(DetailsOfReceiptsTotal, na.rm = TRUE),
+            DetailsDebts = sum(DetailsOfDebtsTotal, na.rm = TRUE)) %>%
+  arrange(desc(FinancialYear)) %>%
+  print()
+
+rm(tmp_party_returns, returns_party_web)
+
+##### Political campaigner returns #####
 message('#### returns_campaigner ####')
 returns_campaigner_web <- get_returns_data("https://transparency.aec.gov.au/AnnualPoliticalCampaigner",
                                        "https://transparency.aec.gov.au/AnnualPoliticalCampaigner/PoliticalCampaignerReturnsRead")
@@ -132,10 +164,21 @@ returns_campaigner <- returns_campaigner_web %>%
 
 rm(tmp_camp_returns, returns_campaigner_web)
 
-use_data(returns_campaigner, overwrite = TRUE)
-# rm(returns_campaigner)
+# Summary table
+message("Only goes back to 2018-19.")
+returns_campaigner %>%
+  group_by(FinancialYear) %>%
+  summarise(Returns = n(),
+            Receipts = sum(TotalReceipts, na.rm = TRUE),
+            Payments = sum(TotalPayments, na.rm = TRUE),
+            Debts = sum(TotalDebts, na.rm = TRUE),
+            Expenditure = sum(TotalElectoralExpenditure, na.rm = TRUE),
+            DiscBenefits = sum(DetailsOfDiscretionaryBenefitsTotal, na.rm = TRUE),
+            DetailsReceipts = sum(DetailsOfReceiptsTotal, na.rm = TRUE),
+            DetailsDebts = sum(DetailsOfDebtsTotal, na.rm = TRUE)) %>%
+  print()
 
-# Associated entity returns
+##### Associated entity returns #####
 message('#### returns_associatedentity ####')
 returns_associatedentity_web <- get_returns_data("https://transparency.aec.gov.au/AnnualAssociatedEntity",
                                "https://transparency.aec.gov.au/AnnualAssociatedEntity/AssociatedEntityReturnsRead")
@@ -173,8 +216,6 @@ returns_associatedentity %>%
   arrange(desc(FinancialYear)) %>%
   print()
 
-use_data(returns_associatedentity, overwrite = TRUE)
-
 # Remove ClientFileIdsOfAssociatedParties into its own data.frame to normalise
 # (At some point they stopped using ClientFileIdsOfAssociatedParties so now we guestimate using
 # AssociatedParties, which is a text field and doesn't match perfectly in all cases.)
@@ -202,16 +243,10 @@ if(nrow(returns_associatedentity_associatedparty) < 2000) {
 
   stop("Something has gone wrong with generating returns_associatedentity_associatedparty")
 
-} else {
-
-  use_data(returns_associatedentity_associatedparty, overwrite = TRUE)
-  rm(returns_associatedentity, returns_associatedentity_associatedparty, returns_party)
-
-
 }
 
+##### Donor returns #####
 
-# Donor returns
 # NOTE: There is some duplication with the returns_donor file due to
 # insufficient detail for matching the CSV files to the JSON data.
 message('#### returns_donor, returns_donor_details, returns_donor_address ####')
@@ -250,6 +285,7 @@ returns_donor_address <- tmp_donor_returns %>%
 rm(tmp_donor_returns)
 # returns_donor <- unique(returns_donor)
 
+message("returns_donor summary:")
 returns_donor %>%
   group_by(FinancialYear) %>%
   summarise(Rows = n(),
@@ -260,6 +296,7 @@ returns_donor %>%
   arrange(desc(FinancialYear)) %>%
   print()
 
+message("returns_donor_details summary:")
 returns_donor_details %>%
   group_by(FinancialYear) %>%
   summarise(Rows = n(),
@@ -270,6 +307,7 @@ returns_donor_details %>%
   arrange(desc(FinancialYear)) %>%
   print()
 
+message("returns_donor_address summary:")
 returns_donor_address %>%
   group_by(FinancialYear) %>%
   summarise(Rows = n(),
@@ -278,10 +316,10 @@ returns_donor_address %>%
   arrange(desc(FinancialYear)) %>%
   print()
 
-use_data(returns_donor, returns_donor_details, returns_donor_address, overwrite = TRUE)
-rm(returns_donor, returns_donor_details, returns_donor_address, returns_donor_web, returns_donor_details_web)
+rm(returns_donor_web, returns_donor_details_web)
 
-# Third party returns
+##### Third party returns #####
+
 # NOTE: there does not seem to be any way to get the donations to third parties via the web
 # interface (although they are in the CSV files).
 message("#### returns_thirdparty #####")
@@ -305,10 +343,10 @@ returns_thirdparty %>%
   arrange(desc(FinancialYear)) %>%
   print()
 
-use_data(returns_thirdparty, overwrite = TRUE)
-rm(returns_thirdparty)
+rm(returns_thirdparty_web)
 
-# Detailed receipts
+##### Detailed receipts #####
+
 message("#### returns_receipts_details #####")
 returns_receipts_details_web <- get_returns_data("https://transparency.aec.gov.au/AnnualDetailedReceipts",
                                         "https://transparency.aec.gov.au/AnnualDetailedReceipts/DetailedReceiptsRead")
@@ -346,30 +384,32 @@ returns_receipts_details %>%
             by = "FinancialYear") %>%
   print()
 
-use_data(returns_receipts_details, overwrite = TRUE)
-rm(returns_receipts_details, returns_receipts_details_web)
+returns_receipts_details %>%
+  group_by(FinancialYear) %>%
+  summarise(Max = max(Amount), Min = min(Amount), Mean = mean(Amount)) %>%
+  arrange(desc(FinancialYear)) %>%
+  kable()
+
+rm(returns_receipts_details_web)
 
 # Make a record of when the data was last updated.
 returns_updated <- data.frame(Updated = Sys.time(), stringsAsFactors = FALSE)
-use_data(returns_updated, overwrite = TRUE)
 
-rm(list = ls())
+#### Import the data into the package ####
 
+if(askYesNo("Write data tables to package?")) {
+  use_data(returns_campaigner,
+           returns_associatedentity,
+           returns_receipts_details,
+           returns_thirdparty,
+           returns_party,
+           returns_donor, returns_donor_details, returns_donor_address,
+           returns_associatedentity_associatedparty,
+           returns_updated,
+           overwrite = TRUE)
 
-#### Make the files portable ####
+}
 
-# # This was a hack I did to work around certain limitations with one of the
-# # machines I was developing this on, and is no longer necessary.
-# #
-# # Use this instead: remotes::install_gitlab("damonism/ausvotesTR")
-#
-# data_files <- list.files("data")
-#
-# for(each_file in data_files) {
-#
-#   load(paste0("data/", each_file))
-#   df_name <- gsub(".rda", "", fixed = TRUE, each_file)
-#   save(list = df_name, ascii = TRUE, file = paste0("data-raw/", df_name, ".asc"))
-#   rm(list = df_name)
-#
-# }
+if(askYesNo("Delete data files?")) {
+  rm(list = ls())
+}
