@@ -5,7 +5,7 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(ausvotesTR)
+devtools::load_all(".")
 ```
 
 `ausvotesTR` is an R package of the data provided by the Australian Electoral 
@@ -57,6 +57,16 @@ kable(disclosure_threshold(), format.args = list(big.mark = ','))
 ```
 
 ## Changelog
+
+### 1 February 2022
+- Updated the data with the 2020-21 returns.
+- Re-worked the import script to make it a bit more robust.
+- Increased the version number to 0.2.
+
+### 31 January 2022
+- Updated the data with the final 2019-20 data (I guess).
+- Updated the Examples vignette.
+
 ### 1 September 2021
 - Fixed some documentation, including clarifying when `TransactionDate` might 
   be missing for `returns_receipts_details` and `returns_donor_details`
