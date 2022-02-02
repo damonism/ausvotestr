@@ -9,10 +9,15 @@
 #' \itemize{
 #' \item{the entity is controlled by one or more registered political parties;}
 #' \item{the entity is a financial member of a registered political party;}
-#' \item{another person is a financial member of a registered political party on behalf of the entity;}
+#' \item{another person is a financial member of a registered political party
+#'       on behalf of the entity;}
 #' \item{the entity has voting rights in a registered political party;}
-#' \item{another person has voting rights in a registered political party on behalf of the entity;}
-#' \item{the entity operates wholly, or to a significant extent, for the benefit of one or more disclosure entities, and the benefit relates to one or more electoral activities (whether or not the electoral activities are undertaken during an election period).}
+#' \item{another person has voting rights in a registered political party on
+#'       behalf of the entity;}
+#' \item{the entity operates wholly, or to a significant extent, for the
+#'       benefit of one or more disclosure entities, and the benefit relates to
+#'      one or more electoral activities (whether or not the electoral
+#'      activities are undertaken during an election period).}
 #' }
 #'
 #' Examples of associated entities include '500 clubs', 'think tanks',
@@ -27,13 +32,18 @@
 #'
 #' @format A \code{data.frame} with 27 variables:
 #' \describe{
-#'   \item{ViewName}{String containing the year and "Associated Entity Annual Return".}
+#'   \item{ViewName}{String containing the year and "Associated Entity Annual
+#'         Return".}
 #'   \item{ReturnTypeCode}{String of "federalassociatedentity".}
 #'   \item{DisclosurePeriodEndDate}{End date of the financial year as a date
 #'         object (easier to use for plotting).}
 #'   \item{ClientFileId}{Unique identifier of the associated entity filing the return
 #'         (Int).}
-#'   \item{DetailsOfCapitalContributionsTotal}{}
+#'   \item{DetailsOfCapitalContributionsTotal}{Where an associated entity paid
+#'         an amount during a financial year to or for the benefit of one or more
+#'         political party and the amount was paid out of funds generated from the
+#'         capital of the associated entity the associated entity must disclose
+#'         deposits of capital received since 16 June 1995.}
 #'   \item{DetailsOfDebtsTotal}{Total of debts listed for the return in
 #'         \code{\link{returns_receipts_details}} data file (Int),}
 #'   \item{DetailsOfReceiptsTotal}{Total of receipts listed for the return in
@@ -53,14 +63,26 @@
 #'         (Int).}
 #'   \item{TotalReceipts}{Total reported receipts, in whole Australian dollars
 #'         (Int).}
-#'   \item{AssociatedParties}{The parties with which the entity is associated. If more than one, they will be separated with a semicolon (\code{;}).}
-#'   \item{AssociatedPartiesFormatted}{As per \code{AssociatedParties} but the parties are separated with a \code{<br/>} string.}
-#'   \item{ClientFileIdsOfAssociatedParties}{The \code{ClientFileId} of any associated parties. If more than one, they are separated with a semicolon (\code{;}.}
+#'   \item{AssociatedParties}{The parties with which the entity is associated.
+#'         If more than one, they will be separated with a semicolon
+#'         (\code{;}). These are also available in long format in
+#'         \link{returns_associatedentity_associatedparty}.}
+#'   \item{AssociatedPartiesFormatted}{As per \code{AssociatedParties} but the
+#'         parties are separated with a \code{<br/>} string.}
+#'   \item{ClientFileIdsOfAssociatedParties}{The \code{ClientFileId} of any
+#'         associated parties. If more than one, they are separated with a
+#'         semicolon (\code{;}). These are also available in long format in
+#'         \link{returns_associatedentity_associatedparty}.}
 #'   \item{RegistrationCode}{Unique code for each individual return (Chr).}
-#'   \item{LodgedOnBehalfOf}{Any unions or body corporate the return has been lodged on behalf of. This field is often blank (but not \code{NA}). Where there is more than one entity the return has been lodged on behalf of, these will be separated with a \code{<br/>} string.}
+#'   \item{LodgedOnBehalfOf}{Any unions or body corporate the return has been
+#'         lodged on behalf of. This field is often blank (but not \code{NA}).
+#'        Where there is more than one entity the return has been lodged on
+#'        behalf of, these will be separated with a \code{<br/>} string.}
 #'   \item{RegistrationCode}{Unique code for each individual return (Chr).}
-#'   \item{CurrentClientName}{Name that the associated entity filed the current return under (Chr).}
-#'   \item{ReturnClientName}{Associated entity name that should be consistent across the dataset (Chr).}
+#'   \item{CurrentClientName}{Name that the associated entity filed the current
+#'         return under (Chr).}
+#'   \item{ReturnClientName}{Associated entity name that should be consistent
+#'         across the dataset (Chr).}
 #'   \item{ReturnTypeDescription}{String of "Associated Entity Return".}
 #'   \item{AddressLine1}{Address line 1 (merged from CSV file) (Chr).}
 #'   \item{AddressLine2}{Address line 2 -- often blank (merged from CSV file)
@@ -173,7 +195,7 @@
 #'  \item{the total value of debts as at 30 June}
 #'  \item{the details of debts outstanding as at 30 June that total more than the disclosure threshold}
 #'  \item{the total amount of electoral expenditure incurred}
-#'  \item{the details of any discretionary benefits received from the Commonwealth, State or Territory}
+#'  \item{the details of any discretionary benefits received from the Commonwealth, State or Territory.}
 #' }
 #'
 #' Political Campaigners were first required to lodge returns for the 2018-19
@@ -223,7 +245,8 @@
 #'         \code{YYYY-YY}.}
 #' }
 #'
-#' @source \url{https://transparency.aec.gov.au/AnnualThirdParty}#' @docType data
+#' @source \url{https://transparency.aec.gov.au/AnnualPoliticalCampaigner}
+#' @docType data
 "returns_campaigner"
 
 #' Parties annual returns
@@ -298,7 +321,6 @@
 #'   \item{ReturnTypeCode}{String of either "federaldonororganisation" or "federaldonorindividual" (Chr).}
 #'   \item{RegistrationCode}{Unique code for each individual return (Chr).}
 #'   \item{ReturnId}{Unique code for each individual return (Int) -- Not clear why both this and \code{RegistrationCode} both exist but may be an internal AEC thing.}
-#'   \item{FinancialYear}{Financial year of the return in the format of \code{YYYY-YY} (Chr).}
 #'   \item{DisclosurePeriodEndDate}{End date of the financial year as a date object (easier to use for plotting) (Date).}
 #'   \item{ReportingPeriodThreshold}{The threshold, in whole Australian follars, above which donations must be reported in that reporting period (Int).}
 #'   \item{ReturnTypeDescription}{String of either "Organisation Donor Return" or "Individual Donor Return" (Chr).}
@@ -310,6 +332,7 @@
 #'   \item{TotalDonationsMadeToPoliticalCampaigners}{Sum of donations to political campaigners (the legislative requirement to report this was only introduced in 2018-19) (Int).}
 #'   \item{TotalDonationsReceived}{Sum of donations received, in whole Australian dollars (Int).}
 #'   \item{LodgedOnBehalfOf}{Usually blank (Chr).}
+#'   \item{FinancialYear}{Financial year of the return in the format of \code{YYYY-YY} (Chr).}
 #' }
 #' @source \url{https://transparency.aec.gov.au/AnnualDonor}
 #' @docType data
@@ -332,10 +355,8 @@
 #' The formatting of donors from outside Australia is inconsistent, but they
 #' can generally be picked up by filter on \code{is.na(Postcode)}.
 #'
-#'@format A \code{data.frame} with 11166 rows and 10 variables:
+#'@format A \code{data.frame} with 10 variables:
 #' \describe{
-#'   \item{FinancialYear}{Financial year of the return in the format of
-#'         \code{YYYY-YY}.}
 #'   \item{CurrentClientName}{Name that the party filed the current return
 #'         under (Chr).}
 #'   \item{AddressLine1}{Address line 1(Chr).}
@@ -348,6 +369,8 @@
 #'         dollars (Int).}
 #'   \item{TotalDonationsReceived}{Total reported receipts, in whole Australian
 #'         dollars (Int).}
+#'   \item{FinancialYear}{Financial year of the return in the format of
+#'         \code{YYYY-YY}.}
 #' }
 #' @source \url{https://transparency.aec.gov.au/Download}
 #' @docType data
