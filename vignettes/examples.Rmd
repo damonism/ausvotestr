@@ -1,7 +1,7 @@
 ---
 title: "ausvotesTR Examples"
 author: "Damon Muller"
-date: "`r Sys.Date()`"
+date: "`r format(Sys.Date(), '%d %B %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{ausvotesTR Examples}
@@ -14,7 +14,67 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+devtools::load_all(".")
 ```
+
+# Search many donors at once
+
+This can also be done with `lapply()`, but the `purrr` functions are a bit
+less wordy and produce nicer output. 
+
+```{r search_mutliple_donors, message=TRUE, warning=FALSE, paged.print=TRUE}
+library(purrr)
+
+check_donors <- c('Rinehart', 'Hancock', 'Forrest', 'Fortescue',
+                  'Pratt', 'Shimao', 'Wing Mau', 'Cannon-Brookes',
+                  'Atlassian', 'Farquhar', 'Triguboff', 'Meriton',
+                  'Palmer', 'Mineralogy', 'Lowy', 'Westfield',
+                  'Stokes', 'Seven', 'John Gandel', 'Vicinity', 'Alan Wilson',
+                  'Reece', 'Packer', 'Crown', 'Sehgal', 'Samvardhana',
+                  'Chak Wing', 'Kingold', 'Glasenberg', 'Glencore',
+                  'Cowin', 'Competitive Foods', 'Ainsworth', 
+                  'Aristocrat', 'Lang Walker', 'Walker Group', 
+                  'Richard White', 'WiseTech')
+
+map_dfr(check_donors, search_returns, donor_only = FALSE)
+```
+
+# Aggregated donors to one party
+
+Adds a link which allows that donor's details to be checked on the AEC website.
+
+```{r donors_to_party, warning=FALSE, results='asis'}
+library(dplyr)
+
+returns_receipts_details %>%
+  filter(PartyGroupName == "The Greens") %>% 
+  filter(ReceiptType == "Donation Received") %>% 
+  filter(FinancialYear %in% c('2020-21', '2019-20', '2018-19', '2017-18')) %>% 
+  group_by(FinancialYear, ReceivedFromClientId, ReceivedFromClientName) %>% 
+  summarise(Amount = sum(Amount, na.rm = TRUE)) %>% 
+  mutate(link = paste0('https://transparency.aec.gov.au/AnnualClientEntity/EntityDetail?clientFileId=', ReceivedFromClientId)) %>% 
+  head() %>% 
+  knitr::kable()
+```
+
+# Donor returns with party group
+
+The `donor_returns_detail` is one of the more useful tables, but as it comes 
+the AEC it does not include the party group, only the party name. We can use 
+the included `party_by_group()` function to get the party group and then merge
+that with the `DonationMadeToClientFileId` field.
+
+```{r donors_party_group, message=TRUE, warning=FALSE, paged.print=TRUE}
+library(dplyr)
+
+returns_donor_details %>% 
+  filter(FinancialYear %in% c('2018-19', '2019-20', '2020-21')) %>% 
+  filter(DonationMadeToClientType == 'politicalparty') %>% 
+  left_join(party_by_group(), 
+            by = c("DonationMadeToClientFileId" = "ClientFileId"))
+```
+
 
 # Undisclosed ('dark') funding in Australia
 
@@ -23,7 +83,7 @@ The following code replicated the analysis used in [_Undisclosed funding sources
 ## Figure 1: Total reported receipts by type (federal)
 
 ```{r receipts_by_type}
-library(ausvotesTR)
+#library(ausvotesTR)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
@@ -60,16 +120,16 @@ ggplot(Receipts_by_type, aes(x = FinancialYear, y = Amount, fill = ReceiptType))
 
 ## Table 1: Reported and unreported income by party in 2018–19
 
-```{r results='asis'}
+```{r receipts_by_type_table, results='asis'}
 Receipts_by_type %>% 
   spread(ReceiptType, Amount) %>% 
   knitr::kable()
 ```
 
 
-## Declared and undeclared donations by party group, 2018-19.
+## Declared and undeclared donations by party group, 2020-21.
 
-```{r results='asis'}
+```{r declared_and_undeclared, results='asis'}
 returns_party %>% 
   mutate(PartyGroupName = ifelse(is.na(PartyGroupName), "Others", PartyGroupName)) %>% 
   mutate(PartyGroupName = ifelse(PartyGroupName %in% c("Christian Democratic Party (Fred Nile Group)", 
@@ -81,13 +141,13 @@ returns_party %>%
             Declared = sum(DetailsOfReceiptsTotal)) %>% 
   mutate(Undeclared = TotalReceipts - Declared) %>% 
   # select(-TotalReceipts) %>% 
-  filter(FinancialYear == "2018-19") %>% 
+  filter(FinancialYear == "2020-21") %>% 
   knitr::kable()
 ```
 
-## Table 2: Donor returns donations below the disclosure threshold, 2006–19
+## Table 2: Donor returns donations below the disclosure threshold, 2006–21
 
-```{r results='asis'}
+```{r below_disclosure_threshold, results='asis'}
 returns_donor_details %>% 
   left_join(disclosure_threshold(), by = "FinancialYear") %>% 
   filter(Amount < ReportingThreshold) %>% 
@@ -104,7 +164,7 @@ returns_donor_details %>%
 
 ## Number of donors 
 
-```{r results='asis'}
+```{r number_of_donors, results='asis'}
 returns_donor_details %>% 
   group_by(FinancialYear, RegistrationCode, DonationMadeToClientFileId) %>% 
   summarise(Total = sum(Amount, na.rm = TRUE)) %>% 
@@ -118,10 +178,10 @@ returns_donor_details %>%
 
 ## Donations in Queensland (req ausvotesTR > 0.1.0)
 
-```{r results='asis'}
+```{r donations_in_qld, results='asis'}
 tmp_qld <- returns_receipts_details %>% 
   filter(FinancialYear == "2018-19" & 
-           RecipientClientId %in% returns_party$ClientFileId[returns_party$FinancialYear == "2018-19" & returns_party$State == "QLD"] & 
+           RecipientClientId %in% returns_party$ClientFileId[returns_party$FinancialYear == "2020-21" & returns_party$State == "QLD"] & 
            ReceiptType == "Donation Received")
 
 dim(tmp_qld)[1]
@@ -129,44 +189,5 @@ sum(tmp_qld$Amount)
 
 ```
 
-# Search many donors at once
 
-This can also be done with `lapply()`, but the `purrr` functions are a bit
-less wordy. 
-
-```{r search_mutliple_donors, message=TRUE, warning=FALSE, paged.print=TRUE}
-library(purrr)
-
-check_donors <- c('Rinehart', 'Hancock', 'Forrest', 'Fortescue',
-                  'Pratt', 'Shimao', 'Wing Mau', 'Cannon-Brookes',
-                  'Atlassian', 'Farquhar', 'Triguboff', 'Meriton',
-                  'Palmer', 'Mineralogy', 'Lowy', 'Westfield',
-                  'Stokes', 'Seven', 'John Gandel', 'Vicinity', 'Alan Wilson',
-                  'Reece', 'Packer', 'Crown', 'Sehgal', 'Samvardhana',
-                  'Chak Wing', 'Kingold', 'Glasenberg', 'Glencore',
-                  'Cowin', 'Competitive Foods', 'Ainsworth', 
-                  'Aristocrat', 'Lang Walker', 'Walker Group', 
-                  'Richard White', 'WiseTech')
-
-map_dfr(check_donors, search_returns, donor_only = FALSE) %>% 
-  head()
-```
-
-# Aggregated donors to one party
-
-Adds a link which allows that donor's details to be checked on the AEC website.
-
-```{r donors_to_party, warning=FALSE, results='asis'}
-library(dplyr)
-
-returns_receipts_details %>%
-  filter(PartyGroupName == "The Greens") %>% 
-  filter(ReceiptType == "Donation Received") %>% 
-  filter(FinancialYear %in% c('2019-20', '2018-19', '2017-18')) %>% 
-  group_by(FinancialYear, ReceivedFromClientId, ReceivedFromClientName) %>% 
-  summarise(Amount = sum(Amount, na.rm = TRUE)) %>% 
-  mutate(link = paste0('https://transparency.aec.gov.au/AnnualClientEntity/EntityDetail?clientFileId=', ReceivedFromClientId)) %>% 
-  head() %>% 
-  knitr::kable()
-```
 
