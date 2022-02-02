@@ -5,7 +5,7 @@
 \alias{returns_thirdparty}
 \title{Third party expenditure returns}
 \format{
-An object of class \code{data.frame} with 626 rows and 20 columns.
+An object of class \code{data.frame} with 647 rows and 20 columns.
 }
 \usage{
 returns_thirdparty

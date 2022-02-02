@@ -5,7 +5,7 @@
 \alias{returns_campaigner}
 \title{Political campaigner returns}
 \format{
-An object of class \code{data.frame} with 47 rows and 24 columns.
+An object of class \code{data.frame} with 64 rows and 24 columns.
 }
 \usage{
 returns_campaigner
