@@ -6,3 +6,4 @@ TODO
 data-raw
 ^doc$
 ^Meta$
+.gitlab-ci.yml
