@@ -384,18 +384,25 @@ returns_receipts_details %>%
             by = "FinancialYear") %>%
   print()
 
-returns_receipts_details %>%
-  group_by(FinancialYear) %>%
-  summarise(Max = max(Amount), Min = min(Amount), Mean = mean(Amount)) %>%
-  arrange(desc(FinancialYear)) %>%
-  kable()
-
 rm(returns_receipts_details_web)
 
 # Make a record of when the data was last updated.
 returns_updated <- data.frame(Updated = Sys.time(), stringsAsFactors = FALSE)
 
 #### Import the data into the package ####
+
+if(askYesNo("Compared to new files to old files?")) {
+
+  # This is a very quick and dirty comparison of the new and old data
+  # and is mostly just a framework for something more thorough in the
+  # future.
+  old_data <- new.env()
+
+  lapply(list.files("data/", full.names = TRUE), load, envir = old_data)
+
+  lapply(ls(pattern = "^returns_"), function(x) message(x, " : ", all_equal(get(x), get(x, envir = old_data))))
+
+}
 
 if(askYesNo("Write data tables to package?")) {
   use_data(returns_campaigner,
