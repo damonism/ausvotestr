@@ -5,13 +5,27 @@
 \alias{returns_associatedentity_associatedparty}
 \title{Associated parties of associated entities}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 2736 rows and 4 columns.
+A \code{data.frame} with 4 variables:
+\describe{
+\item{FinancialYear}{Financial year of the return in the format of
+\code{YYYY-YY}.}
+\item{RegistrationCode}{Unique code for each individual return (Chr).}
+\item{AssociatedParties}{A party with which the entity is associated.}
+\item{ClientFileId}{Unique identifier of the associated party.}
+}
+}
+\source{
+\url{https://transparency.aec.gov.au/AnnualAssociatedEntity}
 }
 \usage{
 returns_associatedentity_associatedparty
 }
 \description{
-An associated entity may have multiple associated parties, which are
-listed in this \code{data.frame}.
+An associated entity may have multiple associated parties, which are listed
+in this \code{data.frame} and can be merged back into the
+\link{returns_associatedentity} table by joining on \code{RegistrationCode}.
+}
+\details{
+The primary source of this data is the \link{returns_associatedentity} table.
 }
 \keyword{datasets}

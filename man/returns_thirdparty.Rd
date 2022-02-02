@@ -5,12 +5,63 @@
 \alias{returns_thirdparty}
 \title{Third party expenditure returns}
 \format{
-An object of class \code{data.frame} with 647 rows and 20 columns.
+A \code{data.frame} with 20 variables:
+\describe{
+\item{ViewName}{String of "Third Party Return".}
+\item{ReturnTypeCode}{String of "federalthirdparty".}
+\item{RegistrationCode}{Unique code for each individual return (Chr).}
+\item{ReturnId}{Unique code for each individual return (Int) -- It is not
+clear why both this and \code{RegistrationCode} both exist but may
+be for internal AEC use.}
+\item{ReportingThreshold}{The threshold, in whole Australian follars, above
+which donations must be reported in that reporting period (Int).}
+\item{ReturnTypeDescription}{String of "Third Party Return".}
+\item{ReturnClientName}{Third party name that should be consistent across the
+dataset (Chr).}
+\item{CurrentClientName}{Name that the third party filed the current return under
+(Chr).}
+\item{TotalPublicExpressionPartyCandidate}{Expenditure on public expression of views on a political party or candidate (not used since 2019).}
+\item{TotalPrintingAndProduction}{Expenditure on printing or publication (not used since 2019).}
+\item{TotalBroadcast}{Expenditure on broadcasting (not used since 2019).}
+\item{TotalOpinionPolling}{Expenditure on polling (not used since 2019).}
+\item{TotalPublicExpressionOtherIssue}{Expenditue on public expression of views on an issue (not used since 2019).}
+\item{TotalElectoralExpenditure}{Total electoral expenditure, in whole Australian dollars
+(Int).}
+\item{TotalExpenditure}{Total expenditure, in whole Australian dollars (Int). From 2019 \code{TotalExpenditure} should equal \code{TotalElectoralExpenditure} as that is the only reportable expenditure.}
+\item{TotalGifts}{Total amount of gifts (donations) received for electoral expenditure, in whole Australian dollars
+(Int).}
+\item{LodgedOnBehalfOf}{Any unions or body corporate the return has been lodged on behalf of. This field is often blank (but not \code{NA}). Where there is more than one entity the return has been lodged on behalf of, these will be separated with a \code{<br/>} string.}
+\item{FinancialYear}{Financial year of the return in the format of
+\code{YYYY-YY}.}
+}
+}
+\source{
+\url{https://transparency.aec.gov.au/AnnualThirdParty}
 }
 \usage{
 returns_thirdparty
 }
 \description{
-Third party expenditure returns
+Annual returns from third parties, from the 2006-07 to the 2020-21 financial
+years.
+}
+\details{
+Part XX of the
+\href{https://www.legislation.gov.au/Latest/C2019C00103}{Commonwealth
+Electoral Act 1918} requires all third parties that incurred electoral
+expenditure above the disclosure threshold, to lodge financial disclosure
+returns on an annual basis.
+
+These returns set out for that financial year:
+
+\itemize{
+\item{the total amount of electoral expenditure incurred}
+\item{the details of any donations above the disclosure threshold that the
+third party received, and used to incur that electoral expenditure.}
+}
+
+Returns for financial years that ended before 1 January 2019 required third
+parties to break down the total electoral expenditure into five distinct
+categories, which are detailed on those returns.
 }
 \keyword{datasets}

@@ -5,12 +5,79 @@
 \alias{returns_campaigner}
 \title{Political campaigner returns}
 \format{
-An object of class \code{data.frame} with 64 rows and 24 columns.
+A \code{data.frame} with 20 variables:
+\describe{
+\item{ViewName}{String of "Political Campaigner Return".}
+\item{RegistrationCode}{Unique code for each individual return (Chr).}
+\item{ReturnId}{Unique code for each individual return (Int) -- It is not
+clear why both this and \code{RegistrationCode} both exist but may
+be for internal AEC use.}
+\item{DisclosurePeriodEndDate}{End date of the financial year as a date
+object (easier to use for plotting).}
+\item{ReportingThreshold}{The threshold, in whole Australian dollars, above
+which donations must be reported in that reporting period (Int).}
+\item{ReturnTypeDescription}{String of "Political Campaigner Return".}
+\item{ReturnTypeCode}{String of "federalpoliticalcampaigner".}
+\item{ClientFileId}{Unique identifier of the campaigner filing the return
+(Int).}
+\item{CurrentClientName}{Name that the campaigner filed the current return under
+(Chr).}
+\item{ReturnClientName}{Campaigner name that should be consistent across the
+dataset (Chr).}
+\item{TotalReceipts}{Total reported receipts, in whole Australian dollars
+(Int).}
+\item{TotalPayments}{Total reported payments, in whole Australian dollars
+(Int).}
+\item{TotalDebts}{Total reported debts, in whole Australian dollars (Int).}
+\item{TotalElectoralExpenditure}{Total electoral expenditure, in whole Australian dollars
+(Int).}
+\item{LodgedOnBehalfOf}{Any unions or body corporate the return has been lodged on behalf of. This field is often blank (but not \code{NA}). Where there is more than one entity the return has been lodged on behalf of, these will be separated with a \code{<br/>} string.}
+\item{DetailsOfReceiptsTotal}{Total of receipts listed for the return in
+\code{\link{returns_receipts_details}} data file (Int),}
+\item{DetailsOfDebtsTotal}{Total of debts listed for the return in
+\code{\link{returns_receipts_details}} data file (Int),}
+\item{DetailsOfDiscretionaryBenefitsTotal}{Total of discretionary benefits
+listed for the return in \code{\link{returns_receipts_details}} data
+file (Int),}
+\item{AddressLine1}{Address line 1 (merged from CSV file) (Chr).}
+\item{AddressLine2}{Address line 2 -- often blank (merged from CSV file)
+(Chr).}
+\item{Suburb}{Suburb (merged from CSV file) (Chr).}
+\item{State}{State abbreviation (merged from CSV file) (Chr).}
+\item{Postcode}{Postcode (merged from CSV file) (Int).}
+\item{FinancialYear}{Financial year of the return in the format of
+\code{YYYY-YY}.}
+}
+}
+\source{
+\url{https://transparency.aec.gov.au/AnnualThirdParty}#' @docType data
 }
 \usage{
 returns_campaigner
 }
 \description{
-Political campaigner returns
+Annual returns from political campaigners (from the 2018-19 to the 2020-21
+financial years.)
+}
+\details{
+Part XX of the
+\href{https://www.legislation.gov.au/Latest/C2019C00103}{Commonwealth
+Electoral Act 1918} requires all registered political campaigners to lodge
+financial disclosure returns on an annual basis.
+
+These returns set out for that financial year:
+
+\itemize{
+\item{the total value of receipts}
+\item{the details of amounts received that are more than the disclosure threshold}
+\item{the total value of payments}
+\item{the total value of debts as at 30 June}
+\item{the details of debts outstanding as at 30 June that total more than the disclosure threshold}
+\item{the total amount of electoral expenditure incurred}
+\item{the details of any discretionary benefits received from the Commonwealth, State or Territory}
+}
+
+Political Campaigners were first required to lodge returns for the 2018-19
+financial year and all lodged returns are listed.
 }
 \keyword{datasets}

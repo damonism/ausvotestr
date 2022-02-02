@@ -32,11 +32,11 @@ A \code{data.frame} with 16 variables:
 returns_donor
 }
 \description{
-List of annual returns from political donors (1998-99 to 2018-19),
+List of annual returns from political donors (1998-99 to 2020-21),
 }
 \details{
 During the period covered by this data the reporting requirements in the
-Commonwealth Electoral Act 1918 changed, which led to the discrepency
+Commonwealth Electoral Act 1918 changed, which led to the discrepancy
 between the \code{TotalDonationsMadeToPoliticalPartiesAndCampaigners} and
 \code{TotalDonationsMadeToPoliticalParties} variables.
 }

@@ -5,7 +5,7 @@
 \alias{returns_donor_details}
 \title{Donations made details}
 \format{
-A \code{data.frame} 15 variables:
+A \code{data.frame} 16 variables:
 \describe{
 \item{ViewName}{String of "Annual Donor Donation Made" (Chr).}
 \item{RegistrationCode}{Unique code for each individual return (Chr).}
@@ -16,8 +16,6 @@ be for internal AEC use}
 "federaldonorindividual" (Chr).}
 \item{ReturnTypeDescription}{String of either "Organisation Donor Return"
 or "Individual Donor Return" (Chr).}
-\item{FinancialYear}{Financial year of the return in the format of
-\code{YYYY-YY}.}
 \item{ClientFileId}{Unique identifier of the party filing the return
 (Int).}
 \item{CurrentClientName}{Name that the donor filed the current return
@@ -41,6 +39,9 @@ therefore exclude these entries.}
 \item{Amount}{Donation amount in whole Australian dollars (Int).}
 \item{FinancialRecordType}{A string of either "donationmade" or
 "campaignerdonation" (Chr).}
+\item{FinancialYear}{Financial year of the return in the format of
+\code{YYYY-YY}.}
+\item{DisclosurePeriodEndDate}{End date of the financial year as a date object (easier to use for plotting) (Date).}
 }
 }
 \source{
@@ -50,7 +51,7 @@ therefore exclude these entries.}
 returns_donor_details
 }
 \description{
-Itemised details of receipts from political donors (1998-99 to 2019-20).
+Itemised details of receipts from political donors (1998-99 to 2020-21).
 }
 \details{
 Part XX of the Commonwealth Electoral Act 1918 requires all donors to set
@@ -58,12 +59,13 @@ out the details of all receipts above the disclosure threshold each
 financial year.
 
 These details set out:
+
 \itemize{
-\item the name of the person/entity that provided the funds
-\item the address of the person/entity
-\item the amount donated
-\item the date on which the donation was made (however the date is missing for
-unknown reasons in a very small proportion of the entries)
+\item{the name of the person/entity that provided the funds}
+\item{the address of the person/entity}
+\item{the amount donated}
+\item{the date on which the donation was made (however the date is missing for
+unknown reasons in a very small proportion of the entries)}
 }
 
 All detailed receipts disclosed on political party, political campaigner

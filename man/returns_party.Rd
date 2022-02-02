@@ -13,10 +13,6 @@ A \code{data.frame} with 24 variables:
 \item{ReturnId}{Unique code for each individual return (Int) -- It is not
 clear why both this and \code{RegistrationCode} both exist but may
 be for internal AEC use.}
-\item{FinancialYear}{Financial year of the return in the format of
-\code{YYYY-YY}.}
-\item{DisclosurePeriodEndDate}{End date of the financial year as a date
-object (easier to use for plotting).}
 \item{ReturnTypeDescription}{String of "Political Party Return".}
 \item{ClientFileId}{Unique identifier of the party filing the return
 (Int).}
@@ -28,7 +24,7 @@ dataset (Chr).}
 of that group (Int).}
 \item{PartyGroupName}{If the party is a member of a party group, the name
 of that group (Chr).}
-\item{TotalReceipts}{Total reported recipts, in whole Australian dollars
+\item{TotalReceipts}{Total reported receipts, in whole Australian dollars
 (Int).}
 \item{TotalPayments}{Total reported payments, in whole Australian dollars
 (Int).}
@@ -46,6 +42,8 @@ file (Int),}
 \item{Suburb}{Suburb (merged from CSV file) (Chr).}
 \item{State}{State abbreviation (merged from CSV file) (Chr).}
 \item{Postcode}{Postcode (merged from CSV file) (Int).}
+\item{FinancialYear}{Financial year of the return in the format of
+\code{YYYY-YY}.}
 }
 }
 \source{
@@ -55,7 +53,7 @@ file (Int),}
 returns_party
 }
 \description{
-Annual returns filed by political parties (1998-99 to 2019-20).
+Annual returns filed by political parties (1998-99 to 2020-21).
 }
 \details{
 Data is by financial year and is published by the AEC at the beginning of

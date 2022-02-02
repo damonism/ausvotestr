@@ -5,7 +5,7 @@
 \alias{returns_receipts_details}
 \title{Detailed receipts}
 \format{
-A \code{data.frame} with 19 variables:
+A \code{data.frame} with 20 variables:
 \describe{
 \item{ViewName}{String of "Annual Detailed Receipt" (Chr).}
 \item{RegistrationCode}{Unique code for each individual return (Chr).}
@@ -18,8 +18,6 @@ be for internal AEC use.}
 "Political Campaigner Return" or "Associated Entity Return" (Chr).}
 \item{AmendmentNumber}{The number of times the return has been amended
 (Int).}
-\item{FinancialYear}{Financial year of the return in the format of
-\code{YYYY-YY}.}
 \item{UniqueReferenceNumber}{Unique code (as per \code{RegistrationCode})
 for each amendment of each return (Chr).}
 \item{RecipientClientId}{Unique identifier (\code{ClientFileId} of the
@@ -44,6 +42,9 @@ a large amount of data.}
 \item{Amount}{Donation amount in whole Australian dollars (Int).}
 \item{PartyGroupName}{If party is a member of a party group, the name of
 the group (see \code{\link{party_by_group}}) (Chr).}
+\item{FinancialYear}{Financial year of the return in the format of
+\code{YYYY-YY}.}
+\item{DisclosurePeriodEndDate}{End date of the financial year as a date object (easier to use for plotting) (Date).}
 }
 }
 \source{
@@ -63,11 +64,12 @@ details of all receipts above the disclosure threshold each financial
 year.
 
 These details set out:
+
 \itemize{
-\item the name of the person/entity that provided the funds
-\item the address of the person/entity
-\item the amount received from that person/entity
-\item the type of funds that were received
+\item{the name of the person/entity that provided the funds}
+\item{the address of the person/entity}
+\item{the amount received from that person/entity}
+\item{the type of funds that were received}
 }
 
 All detailed receipts disclosed on political party, political campaigner
