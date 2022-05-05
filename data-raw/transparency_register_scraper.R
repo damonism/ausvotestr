@@ -391,7 +391,7 @@ returns_updated <- data.frame(Updated = Sys.time(), stringsAsFactors = FALSE)
 
 #### Import the data into the package ####
 
-if(askYesNo("Compared to new files to old files?")) {
+if(askYesNo("Compare new files to old files?")) {
 
   # This is a very quick and dirty comparison of the new and old data
   # and is mostly just a framework for something more thorough in the
