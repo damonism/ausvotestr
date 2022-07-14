@@ -58,6 +58,10 @@ get_returns_data <- function(page_url, json_url) {
     tmp_returns$TransactionDate <- as.Date(as.character(tmp_returns$TransactionDate), format = "%Y-%m-%dT%H:%M:%S")
   }
 
+  if("GiftDate" %in% colnames(tmp_returns)) {
+    tmp_returns$GiftDate <- as.Date(as.character(tmp_returns$GiftDate), format = "%Y-%m-%dT%H:%M:%S")
+  }
+
   return(tmp_returns)
 
 }
@@ -386,6 +390,21 @@ returns_receipts_details %>%
 
 rm(returns_receipts_details_web)
 
+##### Election Returns from Candidates and Senate Groups #####
+
+election_candidates_returns <- get_returns_data('https://transparency.aec.gov.au/CandidateSenateGroup',
+                                       'https://transparency.aec.gov.au/CandidateSenateGroup/CandidateSenateGroupData') |>
+  mutate(IsNilReturn = ifelse(IsNilReturn == "Y", TRUE,
+                              ifelse(IsNilReturn == "N", FALSE, NA)))
+
+election_donor_returns <- get_returns_data('https://transparency.aec.gov.au/Donor',
+                                           'https://transparency.aec.gov.au/Donor/DonorReturnsRead')
+
+
+election_donor_details <- get_returns_data('https://transparency.aec.gov.au/Donor',
+                                           'https://transparency.aec.gov.au/Donor/DonationsMadeRead')
+
+
 # Make a record of when the data was last updated.
 returns_updated <- data.frame(Updated = Sys.time(), stringsAsFactors = FALSE)
 
@@ -413,6 +432,7 @@ if(askYesNo("Write data tables to package?")) {
            returns_donor, returns_donor_details, returns_donor_address,
            returns_associatedentity_associatedparty,
            returns_updated,
+           election_candidates_returns, election_donor_returns, election_donor_details,
            overwrite = TRUE)
 
 }

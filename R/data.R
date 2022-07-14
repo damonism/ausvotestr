@@ -540,3 +540,25 @@
 #'
 #' @docType data
 "returns_updated"
+
+#' Candidate and group election returns
+#'
+#' @format A \code{data.frame} with 34 variables.
+#'
+#' @docType data
+"election_candidates_returns"
+
+#' Detailed receipts from candidate and group election returns
+#'
+#' @format A \code{data.frame} with 19 variables.
+#'
+#' @docType data
+"election_donor_details"
+
+#' Election donor returns
+#'
+#' @format A \code{data.frame} with 24 variables.
+#'
+#' @docType data
+"election_donor_returns"
+
