@@ -7,13 +7,18 @@
 \format{
 A \code{data.frame} with 27 variables:
 \describe{
-\item{ViewName}{String containing the year and "Associated Entity Annual Return".}
+\item{ViewName}{String containing the year and "Associated Entity Annual
+Return".}
 \item{ReturnTypeCode}{String of "federalassociatedentity".}
 \item{DisclosurePeriodEndDate}{End date of the financial year as a date
 object (easier to use for plotting).}
 \item{ClientFileId}{Unique identifier of the associated entity filing the return
 (Int).}
-\item{DetailsOfCapitalContributionsTotal}{}
+\item{DetailsOfCapitalContributionsTotal}{Where an associated entity paid
+an amount during a financial year to or for the benefit of one or more
+political party and the amount was paid out of funds generated from the
+capital of the associated entity the associated entity must disclose
+deposits of capital received since 16 June 1995.}
 \item{DetailsOfDebtsTotal}{Total of debts listed for the return in
 \code{\link{returns_receipts_details}} data file (Int),}
 \item{DetailsOfReceiptsTotal}{Total of receipts listed for the return in
@@ -33,14 +38,26 @@ be for internal AEC use.}
 (Int).}
 \item{TotalReceipts}{Total reported receipts, in whole Australian dollars
 (Int).}
-\item{AssociatedParties}{The parties with which the entity is associated. If more than one, they will be separated with a semicolon (\code{;}).}
-\item{AssociatedPartiesFormatted}{As per \code{AssociatedParties} but the parties are separated with a \code{<br/>} string.}
-\item{ClientFileIdsOfAssociatedParties}{The \code{ClientFileId} of any associated parties. If more than one, they are separated with a semicolon (\code{;}.}
+\item{AssociatedParties}{The parties with which the entity is associated.
+If more than one, they will be separated with a semicolon
+(\code{;}). These are also available in long format in
+\link{returns_associatedentity_associatedparty}.}
+\item{AssociatedPartiesFormatted}{As per \code{AssociatedParties} but the
+parties are separated with a \code{<br/>} string.}
+\item{ClientFileIdsOfAssociatedParties}{The \code{ClientFileId} of any
+associated parties. If more than one, they are separated with a
+semicolon (\code{;}). These are also available in long format in
+\link{returns_associatedentity_associatedparty}.}
 \item{RegistrationCode}{Unique code for each individual return (Chr).}
-\item{LodgedOnBehalfOf}{Any unions or body corporate the return has been lodged on behalf of. This field is often blank (but not \code{NA}). Where there is more than one entity the return has been lodged on behalf of, these will be separated with a \code{<br/>} string.}
+\item{LodgedOnBehalfOf}{Any unions or body corporate the return has been
+lodged on behalf of. This field is often blank (but not \code{NA}).
+Where there is more than one entity the return has been lodged on
+behalf of, these will be separated with a \code{<br/>} string.}
 \item{RegistrationCode}{Unique code for each individual return (Chr).}
-\item{CurrentClientName}{Name that the associated entity filed the current return under (Chr).}
-\item{ReturnClientName}{Associated entity name that should be consistent across the dataset (Chr).}
+\item{CurrentClientName}{Name that the associated entity filed the current
+return under (Chr).}
+\item{ReturnClientName}{Associated entity name that should be consistent
+across the dataset (Chr).}
 \item{ReturnTypeDescription}{String of "Associated Entity Return".}
 \item{AddressLine1}{Address line 1 (merged from CSV file) (Chr).}
 \item{AddressLine2}{Address line 2 -- often blank (merged from CSV file)
@@ -69,10 +86,15 @@ entity if any of the following apply in a financial year:
 \itemize{
 \item{the entity is controlled by one or more registered political parties;}
 \item{the entity is a financial member of a registered political party;}
-\item{another person is a financial member of a registered political party on behalf of the entity;}
+\item{another person is a financial member of a registered political party
+on behalf of the entity;}
 \item{the entity has voting rights in a registered political party;}
-\item{another person has voting rights in a registered political party on behalf of the entity;}
-\item{the entity operates wholly, or to a significant extent, for the benefit of one or more disclosure entities, and the benefit relates to one or more electoral activities (whether or not the electoral activities are undertaken during an election period).}
+\item{another person has voting rights in a registered political party on
+behalf of the entity;}
+\item{the entity operates wholly, or to a significant extent, for the
+benefit of one or more disclosure entities, and the benefit relates to
+one or more electoral activities (whether or not the electoral
+activities are undertaken during an election period).}
 }
 
 Examples of associated entities include '500 clubs', 'think tanks',

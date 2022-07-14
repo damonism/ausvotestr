@@ -50,7 +50,7 @@ file (Int),}
 }
 }
 \source{
-\url{https://transparency.aec.gov.au/AnnualThirdParty}#' @docType data
+\url{https://transparency.aec.gov.au/AnnualPoliticalCampaigner}
 }
 \usage{
 returns_campaigner
@@ -74,7 +74,7 @@ These returns set out for that financial year:
 \item{the total value of debts as at 30 June}
 \item{the details of debts outstanding as at 30 June that total more than the disclosure threshold}
 \item{the total amount of electoral expenditure incurred}
-\item{the details of any discretionary benefits received from the Commonwealth, State or Territory}
+\item{the details of any discretionary benefits received from the Commonwealth, State or Territory.}
 }
 
 Political Campaigners were first required to lodge returns for the 2018-19

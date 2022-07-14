@@ -11,7 +11,6 @@ A \code{data.frame} with 16 variables:
 \item{ReturnTypeCode}{String of either "federaldonororganisation" or "federaldonorindividual" (Chr).}
 \item{RegistrationCode}{Unique code for each individual return (Chr).}
 \item{ReturnId}{Unique code for each individual return (Int) -- Not clear why both this and \code{RegistrationCode} both exist but may be an internal AEC thing.}
-\item{FinancialYear}{Financial year of the return in the format of \code{YYYY-YY} (Chr).}
 \item{DisclosurePeriodEndDate}{End date of the financial year as a date object (easier to use for plotting) (Date).}
 \item{ReportingPeriodThreshold}{The threshold, in whole Australian follars, above which donations must be reported in that reporting period (Int).}
 \item{ReturnTypeDescription}{String of either "Organisation Donor Return" or "Individual Donor Return" (Chr).}
@@ -23,6 +22,7 @@ A \code{data.frame} with 16 variables:
 \item{TotalDonationsMadeToPoliticalCampaigners}{Sum of donations to political campaigners (the legislative requirement to report this was only introduced in 2018-19) (Int).}
 \item{TotalDonationsReceived}{Sum of donations received, in whole Australian dollars (Int).}
 \item{LodgedOnBehalfOf}{Usually blank (Chr).}
+\item{FinancialYear}{Financial year of the return in the format of \code{YYYY-YY} (Chr).}
 }
 }
 \source{
