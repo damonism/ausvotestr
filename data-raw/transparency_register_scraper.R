@@ -80,8 +80,10 @@ csv_files <- list.files("data-raw/csv")
 
 csv_files_expected <- c("Associated Entity Returns.csv", "Capital Contributions.csv", "Detailed Debts.csv",
                         "Detailed Discretionary Benefits.csv", "Detailed Receipts.csv", "Donations Made.csv",
-                        "Donor Donations Received.csv", "Donor Returns.csv", "Party Returns.csv",
-                        "Political Campaigner Returns.csv", "Third Party Donations Received.csv", "Third Party Returns.csv")
+                        "Donor Donations Received.csv", "Donor Returns.csv", "MemberOfParliamentReturns.csv",
+                        "Party Returns.csv", "Political Campaigner Returns.csv",
+                        "Significant Third Party Returns.csv", "Third Party Donations Received.csv",
+                        "Third Party Returns.csv")
 
 if(!setequal(csv_files, csv_files_expected)) {
   warning("CSV files in zipfile not as expected.")
@@ -146,12 +148,15 @@ returns_party %>%
 
 rm(tmp_party_returns, returns_party_web)
 
-##### Political campaigner returns #####
-message('#### returns_campaigner ####')
-returns_campaigner_web <- get_returns_data("https://transparency.aec.gov.au/AnnualPoliticalCampaigner",
-                                       "https://transparency.aec.gov.au/AnnualPoliticalCampaigner/PoliticalCampaignerReturnsRead")
+##### Significant third party returns #####
 
-tmp_camp_returns <- read.csv("data-raw/csv/Political Campaigner Returns.csv", stringsAsFactors = FALSE)
+# This used to be called political campaigner returns
+
+message('#### returns_campaigner ####')
+returns_campaigner_web <- get_returns_data("https://transparency.aec.gov.au/AnnualSignificantThirdParty",
+                                       "https://transparency.aec.gov.au/AnnualSignificantThirdParty/SignificantThirdPartyReturnsRead")
+
+tmp_camp_returns <- read.csv("data-raw/csv/Significant Third Party Returns.csv", stringsAsFactors = FALSE)
 
 returns_campaigner <- returns_campaigner_web %>%
   left_join(tmp_camp_returns %>%
