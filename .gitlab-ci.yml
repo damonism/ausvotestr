@@ -43,7 +43,7 @@ default:
     #    - R -e 'install.packages(c("rappdirs"))'
 
 test:
-  image: rocker/tidyverse:4.1.2
+  image: rocker/tidyverse:4.2.1
   stage: test
   script:
     - R CMD build . --no-build-vignettes --no-manual
@@ -56,7 +56,7 @@ test:
     #    - "$(ls -1t *.tar.gz | head -n 1)"
 
 buildbinarynew:
-  image: rocker/tidyverse:4.1.2
+  image: rocker/tidyverse:4.2.1
   stage: build
   script:
     - "Rscript -e \"roxygen2::roxygenize('.', roclets=c('rd', 'collate', 'namespace'))\""
@@ -65,4 +65,5 @@ buildbinarynew:
     - scp "${PKG_FILE_NAME}" damon@ausvotes.org:packages/
   artifacts:
     paths:
-    - "$(ls -rt *_*.tar.gz |tail -1)"
+    - '*.tar.gz'
+
