@@ -1,4 +1,15 @@
-# ausvotes 0.3
+# ausvotesTR 0.3.1
+
+## 25 November 2022
+
+- The AEC has now renamed the political campaigners dataset to significant 
+  third parties, reflecting changes in legislation. The extract script and 
+  the package documentation now reflects this.
+- Updated the data 
+- The CSVs in the AEC's zip file have changed. Updated check for these.
+
+
+# ausvotesTR 0.3
 
 ## 14 July 2022
 - Updated the data
