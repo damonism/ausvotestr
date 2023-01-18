@@ -23,13 +23,13 @@ devtools::load_all(".")
 This can also be done with `lapply()`, but the `purrr` functions are a bit
 less wordy and produce nicer output. 
 
-```{r search_mutliple_donors, message=TRUE, warning=FALSE, paged.print=TRUE}
+```{r search_mutliple_donors, message=TRUE, warning=FALSE}
 library(purrr)
 
 check_donors <- c('Rinehart', 'Forrest', 'Lowy', 'Stokes')
 
 map_dfr(check_donors, search_returns, donor_only = FALSE) |> 
-  knitr::kable()
+  dplyr::glimpse()
 ```
 
 # Aggregated donors to one party
@@ -45,8 +45,9 @@ returns_receipts_details |>
   filter(FinancialYear %in% c('2020-21', '2019-20', '2018-19', '2017-18')) |> 
   group_by(FinancialYear, ReceivedFromClientId, ReceivedFromClientName) |> 
   summarise(Amount = sum(Amount, na.rm = TRUE)) |> 
-  mutate(link = paste0('https://transparency.aec.gov.au/AnnualClientEntity/EntityDetail?clientFileId=', ReceivedFromClientId)) |> 
-  head() |> 
+  mutate(link = paste0('https://transparency.aec.gov.au/AnnualClientEntity/EntityDetail?clientFileId=',
+                       ReceivedFromClientId)) |> 
+  head(n = 10) |> 
   knitr::kable()
 ```
 
@@ -57,7 +58,7 @@ the AEC it does not include the party group, only the party name. We can use
 the included `party_by_group()` function to get the party group and then merge
 that with the `DonationMadeToClientFileId` field.
 
-```{r donors_party_group, message=TRUE, warning=FALSE, paged.print=TRUE}
+```{r donors_party_group, message=TRUE, warning=FALSE}
 library(dplyr)
 
 returns_donor_details |> 
@@ -65,8 +66,7 @@ returns_donor_details |>
   filter(DonationMadeToClientType == 'politicalparty') |> 
   left_join(party_by_group(), 
             by = c("DonationMadeToClientFileId" = "ClientFileId")) |> 
-  head(n = 10) |> 
-  knitr::kable()
+  glimpse()
 ```
 
 
@@ -90,7 +90,8 @@ Receipts_by_type <- returns_party %>%
   left_join(returns_receipts_details %>% 
               filter(ReturnTypeDescription == "Political Party Return") %>% 
               mutate(ReceiptType = ifelse(ReceiptType == "", "Unspecified", ReceiptType),
-                     ReceiptType = ifelse(grepl("Electoral Commission", ReceivedFromClientName, fixed = TRUE), "Public Funding", ReceiptType)) %>% 
+                     ReceiptType = ifelse(grepl("Electoral Commission", ReceivedFromClientName, 
+                                                fixed = TRUE), "Public Funding", ReceiptType)) %>% 
               group_by(FinancialYear, ReceiptType) %>% 
               summarise(Amount = sum(Amount, na.rm = TRUE)) %>% 
               bind_rows(group_by(., FinancialYear) %>% 
@@ -109,22 +110,24 @@ ggplot(Receipts_by_type, aes(x = FinancialYear, y = Amount, fill = ReceiptType))
   scale_fill_discrete(name = "Receipt type") +
   ggtitle(label = "Total receipts by type") +
   theme(axis.text = element_text(angle = 45, hjust = 1, size = 12),
-        axis.text.x = element_text(colour = ifelse(Receipts_by_type$FinancialYear %in% c("2018-19", "2015-16", "2013-14", "2010-11", "2007-08", "2004-05", "2001-02", "1998-99"), "red", "black")))
+        axis.text.x = element_text(colour = ifelse(Receipts_by_type$FinancialYear %in% 
+                                                     c("2018-19", "2015-16", "2013-14", "2010-11", 
+                                                       "2007-08", "2004-05", "2001-02", "1998-99"), 
+                                                   "red", "black")))
 
 ```
 
 ## Table 1: Reported and unreported income by party in 2018–19
 
-```{r receipts_by_type_table, results='asis'}
+```{r receipts_by_type_table}
 Receipts_by_type |>  
-  spread(ReceiptType, Amount)|> 
-  knitr::kable()
+  spread(ReceiptType, Amount) 
 ```
 
 
 ## Declared and undeclared donations by party group, 2020-21.
 
-```{r declared_and_undeclared, results='asis'}
+```{r declared_and_undeclared}
 returns_party |> 
   mutate(PartyGroupName = ifelse(is.na(PartyGroupName), "Others", PartyGroupName)) |> 
   mutate(PartyGroupName = ifelse(PartyGroupName %in% c("Christian Democratic Party (Fred Nile Group)", 
@@ -135,13 +138,12 @@ returns_party |>
   summarise(TotalReceipts = sum(TotalReceipts),
             Declared = sum(DetailsOfReceiptsTotal)) |> 
   mutate(Undeclared = TotalReceipts - Declared) |> 
-  filter(FinancialYear == "2020-21") |> 
-  knitr::kable()
+  filter(FinancialYear == "2020-21")
 ```
 
 ## Table 2: Donor returns donations below the disclosure threshold, 2006–21
 
-```{r below_disclosure_threshold, results='asis'}
+```{r below_disclosure_threshold}
 returns_donor_details |> 
   left_join(disclosure_threshold(), by = "FinancialYear") |> 
   filter(Amount < ReportingThreshold) |> 
@@ -153,12 +155,12 @@ returns_donor_details |>
             by = "FinancialYear") |> 
   mutate(Percent = BelowThreshold / Total * 100) |> 
   left_join(disclosure_threshold(), by = "FinancialYear") |> 
-  knitr::kable()
+  head(n = 10)
 ```
 
 ## Number of donors 
 
-```{r number_of_donors, results='asis'}
+```{r number_of_donors}
 returns_donor_details |> 
   group_by(FinancialYear, RegistrationCode, DonationMadeToClientFileId) |> 
   summarise(Total = sum(Amount, na.rm = TRUE)) |> 
@@ -167,15 +169,17 @@ returns_donor_details |>
   group_by(FinancialYear, ReportingThreshold) |> 
   summarise(n = n()) |> 
   arrange(desc(ReportingThreshold)) |> 
-  knitr::kable()
+  head(n = 10)
 ```
 
 ## Donations in Queensland (req ausvotesTR > 0.1.0)
 
-```{r donations_in_qld, results='asis'}
+```{r donations_in_qld}
 tmp_qld <- returns_receipts_details |> 
   filter(FinancialYear == "2018-19" & 
-           RecipientClientId %in% returns_party$ClientFileId[returns_party$FinancialYear == "2020-21" & returns_party$State == "QLD"] & 
+           RecipientClientId %in% 
+           returns_party$ClientFileId[returns_party$FinancialYear == "2020-21" &
+                                                               returns_party$State == "QLD"] & 
            ReceiptType == "Donation Received")
 
 dim(tmp_qld)[1]
