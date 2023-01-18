@@ -1,3 +1,9 @@
+# ausvotesTR Development version
+
+## 18 January 2023
+
+- Vignette building now much less likely to crash due to memory issues.
+
 # ausvotesTR 0.3.2
 
 ## 18 January 2023
