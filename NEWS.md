@@ -1,3 +1,9 @@
+# ausvotesTR 0.3.2
+
+## 18 January 2023
+
+- Another data update -- last one before the 2021-22 data is released.
+
 # ausvotesTR 0.3.1
 
 ## 25 November 2022
