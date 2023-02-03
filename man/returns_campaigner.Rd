@@ -85,7 +85,7 @@ listed for the return in \code{\link{returns_receipts_details}} data file
 returns_campaigner
 }
 \description{
-Annual returns from significant third parties (from the 2018-19 to the 2020-21
+Annual returns from significant third parties (from the 2018-19 to the 2020-22
 financial years.)
 }
 \details{

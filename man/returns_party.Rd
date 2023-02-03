@@ -53,7 +53,7 @@ file (Int),}
 returns_party
 }
 \description{
-Annual returns filed by political parties (1998-99 to 2020-21).
+Annual returns filed by political parties (1998-99 to 2020-22).
 }
 \details{
 Data is by financial year and is published by the AEC at the beginning of

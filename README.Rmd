@@ -60,7 +60,7 @@ kable(disclosure_threshold(), format.args = list(big.mark = ','))
 - [ ] Add links to AEC returns from Shiny app
 - [ ] Properly document the election returns data frames
 - [x] Combine `returns_search` and `returns_search_date`
-- [x] Complete the documentation of the data
+- [x] Complete the documentation of the data (except the election returns -- see above)
 - [x] The Shiny app should have an option not to use dates (or should use the
       DisclosurePeriodEndDate) as some entries are missing dates and will be
       ignored when using `search_returns()` with a date.

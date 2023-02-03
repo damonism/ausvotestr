@@ -32,7 +32,7 @@ A \code{data.frame} with 16 variables:
 returns_donor
 }
 \description{
-List of annual returns from political donors (1998-99 to 2020-21),
+List of annual returns from political donors (1998-99 to 2020-22),
 }
 \details{
 During the period covered by this data the reporting requirements in the
