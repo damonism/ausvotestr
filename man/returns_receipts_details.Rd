@@ -6,46 +6,73 @@
 \title{Detailed receipts}
 \format{
 A \code{data.frame} with 20 variables:
+
 \describe{
+
 \item{ViewName}{String of "Annual Detailed Receipt" (Chr).}
+
 \item{RegistrationCode}{Unique code for each individual return (Chr).}
+
 \item{ReturnId}{Unique code for each individual return (Int) -- It is not
-clear why both this and \code{RegistrationCode} both exist but may
-be for internal AEC use.}
-\item{ReturnTypeCode}{String of either "federalpoliticalparty",
-"federalpoliticalcampaigner" or "federalassociatedentity" (Chr).}
-\item{ReturnTypeDescription}{String of either "Political Party Return",
-"Political Campaigner Return" or "Associated Entity Return" (Chr).}
+clear why both this and \code{RegistrationCode} both exist but may be for
+internal AEC use.}
+
+\item{ReturnTypeCode}{String of one of "federalthirdparty",
+"federalsignificantthirdparty", "federalpoliticalparty",
+"federaldonororganisation", "federalmemberofhor",
+"federalassociatedentity", "federalpoliticalcampaigner" or
+"federaldonorindividual" (Chr).}
+
+\item{ReturnTypeDescription}{String of one of "Third Party Return",
+"Significant Third Party Return", "Political Party Return", "Organisation
+Donor Return", "Member of HOR Return", "Associated Entity Return",
+"Political Campaigner Return" or "Individual Donor Return" (Chr).}
+
 \item{AmendmentNumber}{The number of times the return has been amended
 (Int).}
+
 \item{UniqueReferenceNumber}{Unique code (as per \code{RegistrationCode})
 for each amendment of each return (Chr).}
+
 \item{RecipientClientId}{Unique identifier (\code{ClientFileId} of the
 recipient of the donation (Int).}
+
 \item{RecipientName}{Name of the receipient of the money (Chr).}
+
 \item{RecipientClientType}{One of "Political Party", "Political
-Campaigner", "Third Party", "Organisation Donor" or
-"Associated Entity" (Chr).}
+Campaigner", "Third Party", "Organisation Donor" or "Associated Entity"
+(Chr).}
+
 \item{PartyGroupId}{ID if party is a member of a party group (see
 \code{\link{party_by_group}}) (Int).}
+
 \item{PoliticalPartyId}{List of IDs of political parties (List).}
+
 \item{ReceivedFromClientName}{Name that the donor (Chr).}
+
 \item{RecivedFromClientId}{\code{ClientFileId} of the donor (Int).}
+
 \item{RecieptType}{One of "Donation Received", "Other Receipt",
-"Subscription", "Unspecified" or "Public Funding"
-(note that anything other than "Donation Received" or "Other Receipt"
-is no longer used) (Chr).}
-\item{TransactionDate}{Date object of transaction date (Date). Note that
-a large proportion of entries \strong{do not include a date} (ie., the
-data will be \code{NA}), and filtering by date will therefore exclude
-a large amount of data.}
+"Subscription", "Unspecified", "Third Party Gift" (only for third party
+returns) or "Public Funding" (note that "Public Funding" is always an
+"Other Receipt", and is generally not included in the more recent data)
+(Chr).}
+
+\item{TransactionDate}{Date object of transaction date (Date). Note that a
+large proportion of entries \strong{do not include a date} (ie., the data
+will be \code{NA}), and filtering by date will therefore exclude a large
+amount of data.}
+
 \item{Amount}{Donation amount in whole Australian dollars (Int).}
+
 \item{PartyGroupName}{If party is a member of a party group, the name of
 the group (see \code{\link{party_by_group}}) (Chr).}
+
 \item{FinancialYear}{Financial year of the return in the format of
 \code{YYYY-YY}.}
-\item{DisclosurePeriodEndDate}{End date of the financial year as a date object (easier to use for plotting) (Date).}
-}
+
+\item{DisclosurePeriodEndDate}{End date of the financial year as a date
+object (easier to use for plotting) (Date).} }
 }
 \source{
 \url{https://transparency.aec.gov.au/AnnualDetailedReceipts}
@@ -59,24 +86,60 @@ campaigners and associated entities.
 }
 \details{
 Part XX of the Commonwealth Electoral Act 1918 requires all political
-parties, political campaigners and associated entities to set out the
-details of all receipts above the disclosure threshold each financial
-year.
+parties, political campaigners and associated entities to set out the details
+of all receipts above the disclosure threshold each financial year.
 
 These details set out:
 
 \itemize{
+
 \item{the name of the person/entity that provided the funds}
+
 \item{the address of the person/entity}
+
 \item{the amount received from that person/entity}
+
 \item{the type of funds that were received}
+
 }
 
-All detailed receipts disclosed on political party, political campaigner
-and associated entity returns from 1998-99 onwards are listed.
+The details of the following returns are found in this dataset (as per
+\code{ReturnTypeDescription}):
 
-Returns may be listed as donations ("Donation Received") or as an "Other
-Receipt". While there are other types listed in \code{ReceiptType} these
-are either a historical anomaly or an error.
+\itemize{
+
+\item{"Third Party Return"}
+
+\item{"Significant Third Party Return"}
+
+\item{"Political Party Return"}
+
+\item{"Organisation Donor Return"}
+
+\item{"Member of HOR Return"}
+
+\item{"Associated Entity Return"}
+
+\item{"Political Campaigner Return"}
+
+\item{"Individual Donor Return"}
+
+}
+
+All detailed receipts disclosed on political party, political campaigner and
+associated entity returns from 1998-99 onwards are listed.
+
+Receipts may be listed in \code{ReceiptType} as donations ("Donation
+Received") or as an "Other Receipt". Occasionally \code{ReceiptType} is
+listed as a "Subscription", which are treated by the AEC (and the \emph{CEA})
+as Other Receipts. Additionally, there is a \code{ReceiptType} of "Third
+Party Gift", but these are only present in third party returns
+(\link{returns_thirdparty}).
+
+There are around 125 rows where \code{ReceiptType} is blank in the original
+AEC data, but most of them are older and most are not political party returns
+and it is probably reasonably safe (and consistent with AEC practice) to
+consider these to be donations. These blank rows have been converted to
+"Unspecified" in the data import script.
 }
 \keyword{datasets}

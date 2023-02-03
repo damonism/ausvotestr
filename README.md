@@ -38,7 +38,7 @@ Regulated entities may submit an amendment to their returns to the AEC,
 and the data in the package will reflect all of the returns and any
 amendments at the time of extraction.
 
-The current data in the package was extracted on 14 July 2022.
+The current data in the package was extracted on 02 February 2023.
 
 ## Disclosure threshold
 
@@ -49,6 +49,7 @@ The disclosure threshold for each year was:
 
 | FinancialYear | ReportingThreshold |
 |:--------------|-------------------:|
+| 2021-22       |             14,500 |
 | 2020-21       |             14,300 |
 | 2019-20       |             14,000 |
 | 2018-19       |             13,800 |
@@ -78,7 +79,8 @@ The disclosure threshold for each year was:
 -   [ ] Add links to AEC returns from Shiny app
 -   [ ] Properly document the election returns data frames
 -   [x] Combine `returns_search` and `returns_search_date`
--   [x] Complete the documentation of the data
+-   [x] Complete the documentation of the data (except the election
+    returns – see above)
 -   [x] The Shiny app should have an option not to use dates (or should
     use the DisclosurePeriodEndDate) as some entries are missing dates
     and will be ignored when using `search_returns()` with a date.

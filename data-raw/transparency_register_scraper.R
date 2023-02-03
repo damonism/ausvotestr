@@ -3,6 +3,7 @@ library(jsonlite)
 library(dplyr)
 library(tidyr)
 library(usethis)
+library(textclean)
 
 # This script imports all of the data from the AEC transparency register, located at:
 #
@@ -10,6 +11,7 @@ library(usethis)
 
 tmp_FinancialYear <- read.table(header = TRUE, text = "
 FinancialYear FinancialYearNew DisclosurePeriodEndDate
+2021-22          2021-22              2022-06-30
 2020-21          2020-21              2021-06-30
 2019-20          2019-20              2020-06-30
 2018-19          2018-19              2019-06-30
@@ -187,6 +189,29 @@ returns_campaigner %>%
             DetailsDebts = sum(DetailsOfDebtsTotal, na.rm = TRUE)) %>%
   print()
 
+##### Members of Parliament returns #####
+
+# This is new as of 2020-21
+# It also doesn't have anything in the CSV that isn't in the JSON.
+
+message('#### returns_mp ####')
+returns_mp_web <- get_returns_data("https://transparency.aec.gov.au/MemberOfParliament",
+                                           "https://transparency.aec.gov.au/MemberOfParliament/MemberOfParliamentReturnsRead")
+
+returns_mp <- returns_mp_web |>
+  select(-NumberOfDonations, -LodgedOnBehalfOf, -DonationsMadeToMember)  # These don't appear to have anything sensible in them
+
+rm(returns_mp_web)
+
+# Summary table
+
+returns_mp |>
+  group_by(FinancialYear) |>
+  summarise(Returns = n(),
+            Donors = sum(NumberOfDonors, na.rm = TRUE),
+            TotalDonations = sum(TotalGiftValue, na.rm = TRUE)) |>
+  print()
+
 ##### Associated entity returns #####
 message('#### returns_associatedentity ####')
 returns_associatedentity_web <- get_returns_data("https://transparency.aec.gov.au/AnnualAssociatedEntity",
@@ -289,7 +314,8 @@ returns_donor_address <- tmp_donor_returns %>%
   left_join(tmp_FinancialYear %>% select(-DisclosurePeriodEndDate),  # No need for DisclosurePeriodEndDate
             by = "FinancialYear") %>%
   select(-FinancialYear) %>%
-  rename(FinancialYear = FinancialYearNew)
+  rename(FinancialYear = FinancialYearNew) |>
+  mutate(LodgedOnBehalfOf = textclean::replace_non_ascii(LodgedOnBehalfOf))  # One of the CSVs contains en-dashes
 
 rm(tmp_donor_returns)
 # returns_donor <- unique(returns_donor)
@@ -360,14 +386,17 @@ message("#### returns_receipts_details #####")
 returns_receipts_details_web <- get_returns_data("https://transparency.aec.gov.au/AnnualDetailedReceipts",
                                         "https://transparency.aec.gov.au/AnnualDetailedReceipts/DetailedReceiptsRead")
 
-returns_receipts_details <- returns_receipts_details_web %>%
-  left_join(get_returns_data("https://transparency.aec.gov.au/AnnualDetailedReceipts",
-                             "https://transparency.aec.gov.au/AnnualDetailedReceipts/DetailedReceiptsPartyGroupsRead") %>%
-              select(PartyGroupName = Name, PartyGroupId) %>%
+returns_receipts_details_partygroup_web <- get_returns_data("https://transparency.aec.gov.au/AnnualDetailedReceipts",
+                                                            "https://transparency.aec.gov.au/AnnualDetailedReceipts/DetailedReceiptsPartyGroupsRead")
+
+returns_receipts_details <- returns_receipts_details_web |>
+  left_join(returns_receipts_details_partygroup_web |>
+              select(PartyGroupName = Name, PartyGroupId) |>
               mutate(PartyGroupId = as.integer(PartyGroupId)),
-            by = "PartyGroupId") %>%
-  rename(Amount = Value) %>%
+            by = "PartyGroupId") |>
+  rename(Amount = Value) |>
   left_join(tmp_FinancialYear, by = "FinancialYear") %>%
+  mutate(ReceiptType = ifelse(ReceiptType == "", "Unspecified", ReceiptType)) |>  # Don't leave ReceiptType blank
   select(-FinancialYear) %>%
   rename(FinancialYear = FinancialYearNew)
 
@@ -393,7 +422,7 @@ returns_receipts_details %>%
             by = "FinancialYear") %>%
   print()
 
-rm(returns_receipts_details_web)
+rm(returns_receipts_details_web, returns_receipts_details_partygroup_web)
 
 ##### Election Returns from Candidates and Senate Groups #####
 
@@ -433,6 +462,7 @@ if(askYesNo("Write data tables to package?")) {
            returns_associatedentity,
            returns_receipts_details,
            returns_thirdparty,
+           returns_mp,
            returns_party,
            returns_donor, returns_donor_details, returns_donor_address,
            returns_associatedentity_associatedparty,

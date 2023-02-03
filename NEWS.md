@@ -1,4 +1,23 @@
-# ausvotesTR Development version
+# ausvotesTR 0.4.0.1
+
+# 3 February 2023
+- The import script now reclassifies rows in `return_receipts_details` with 
+  blank `ReceiptType` as "Unspecified". Adjust documentation to note this.
+- Note in the documentation for `return_receipts_details` that there is also
+  a `ReceiptType` category of "Third Party Gift" for third party returns.
+
+# ausvotesTR 0.4
+
+## 2 February 2023
+
+- Imported the 2021-22 data (and modified the import script to record it).
+- Fixed some of the CSV data that was causing conniptions for R CMD check 
+  because it had an en-dash in it. 
+- added `returns_mp`, a new returns type I'd failed to include, and documented
+  it.
+- Updated a bunch of documentation to reflect that the data was now up to 
+  2021-22 and to fix some stuff that had got out of date.
+- Updated the version number.
 
 ## 18 January 2023
 
