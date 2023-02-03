@@ -1,6 +1,15 @@
+# ausvotesTR Development Version
+
+# 3 February 2023
+
+- Added a variable to `return_receipts_details` to indicate if an amount is 
+  public funding. I've done a bit of checking and I'm reasonably confident that
+  it is correct, but it's also difficult to be 100% sure.
+
 # ausvotesTR 0.4.0.1
 
 # 3 February 2023
+
 - The import script now reclassifies rows in `return_receipts_details` with 
   blank `ReceiptType` as "Unspecified". Adjust documentation to note this.
 - Note in the documentation for `return_receipts_details` that there is also
