@@ -45,10 +45,10 @@ server <- function(input, output) {
 
   detailed_data_df <- reactive({
     req(input$donor_name)
-    detailed_data <- search_returns_date(input$donor_name,
-                                         approximate = FALSE,
-                                         donor_only = input$donor_only,
-                                         from_date = input$from_date)
+    detailed_data <- search_returns(input$donor_name,
+                                    approximate = FALSE,
+                                    donor_only = input$donor_only,
+                                    from_date = input$from_date)
   })
 
   output$detailed <- renderDataTable({
@@ -56,15 +56,6 @@ server <- function(input, output) {
     detailed_data[c('ReturnId', 'RegistrationCode')] <- NULL
     detailed_data
   }, options = list(lengthMenu = list(c(25, 50, 100, -1), c('25', '50', '100', 'All'))))
-
-  #  output$detailed <- renderDataTable({
-  #   detailed_data <- returns_search_date(input$donor_name,
-  #                                        approximate = FALSE,
-  #                                        donor_only = input$donor_only,
-  #                                        from_date = input$from_date)
-  #   detailed_data[c('ReturnId', 'RegistrationCode')] <- NULL
-  #   detailed_data
-  # }, options = list(lengthMenu = list(c(25, 50, 100, -1), c('25', '50', '100', 'All'))))
 
   output$summary <- renderDataTable({
     summary_table <- search_returns_summary(input$donor_name,
@@ -85,10 +76,6 @@ server <- function(input, output) {
     },
     content = function(file) {
       detailed_data <- detailed_data_df()
-      # detailed_data <- returns_search_date(input$donor_name,
-      #                                      approximate = FALSE,
-      #                                      donor_only = input$donor_only,
-      #                                      from_date = input$from_date)
       write.csv(detailed_data, file, row.names = FALSE)
     }
   )
@@ -106,6 +93,5 @@ server <- function(input, output) {
   })
 }
 
-# Run the application
 shinyApp(ui = ui, server = server)
 
