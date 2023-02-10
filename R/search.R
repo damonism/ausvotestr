@@ -188,6 +188,35 @@ search_returns <- function(donor_name, approximate = FALSE, donor_only = TRUE, f
   return(tmp_return)
 }
 
+#' Search Returns and provide URL
+#'
+#' Run \code{\link{search_returns}} and include a column (\code{URL}) that has a
+#' URL to the return on the AEC website.
+#'
+#' @param ... Passed to \code{\link{search_returns}}
+#'
+#' @return A \code{data.frame}.
+#' @export
+#'
+#' @examples
+#' returns_url("taxation", donor_only = FALSE, from_date = '2010-01-01')
+returns_url <- function(...) {
+  tmp_returns <- search_returns(...)
+
+  if(nrow(tmp_returns > 0)) {
+
+    tmp_returns$URL = paste0("https://transparency.aec.gov.au/",
+                             ifelse(tmp_returns$ReturnTypeDescription == "Political Party Return", "AnnualPoliticalParty",
+                                    ifelse(tmp_returns$ReturnTypeDescription == "Organisation Donor Return" | tmp_returns$ReturnTypeDescription == "Individual Donor Return", "AnnualDonor",
+                                           ifelse(tmp_returns$ReturnTypeDescription == "Associated Entity Return", "AnnualAssociatedEntity",
+                                                  ifelse(tmp_returns$ReturnTypeDescription == "Significant Third Party Return", "AnnualSignificantThirdParty", NA)))),
+                             "/ReturnDetail?returnId=", tmp_returns$ReturnId)
+
+    return(tmp_returns)
+
+  }
+}
+
 #' Search donor and recipient returns by date
 #'
 #' Deprecated -- use \link{search_returns} with `from_date` instead.
