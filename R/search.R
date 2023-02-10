@@ -201,7 +201,7 @@ search_returns <- function(donor_name, approximate = FALSE, donor_only = TRUE, f
 #' @export
 #'
 #' @examples
-#' returns_url("taxation", donor_only = FALSE, from_date = '2010-01-01')
+#' search_returns_url("taxation", donor_only = FALSE, from_date = '2010-01-01')
 search_returns_url <- function(..., as_html = FALSE) {
   tmp_returns <- search_returns(...)
 

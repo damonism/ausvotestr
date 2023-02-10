@@ -20,5 +20,5 @@ Run \code{\link{search_returns}} and include a column (\code{URL}) that has a
 URL to the return on the AEC website.
 }
 \examples{
-returns_url("taxation", donor_only = FALSE, from_date = '2010-01-01')
+search_returns_url("taxation", donor_only = FALSE, from_date = '2010-01-01')
 }
