@@ -2,8 +2,11 @@
 
 # 10 February 2023
 
-- Added `search_returns_url()` function, to add a URL to the specific return on the
-  AEC website.
+- Added `search_returns_url()` function, to add a URL to the specific return on 
+  the AEC website.
+- Added a quick-and-dirty URL to the return on the AEC website to the table on 
+  the Shiny app using the aforementioned function. Also added a receommendation
+  for the `DT` package.
 
 # 3 February 2023
 

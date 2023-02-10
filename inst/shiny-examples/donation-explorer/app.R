@@ -5,6 +5,7 @@
 
 library(shiny)
 library(ausvotesTR)
+library(DT)
 
 ui <- fluidPage(
 
@@ -30,7 +31,7 @@ ui <- fluidPage(
         tabsetPanel(type = "tabs",
                     tabPanel("Detailed results",
                              h2(textOutput("detailed_heading")),
-                             dataTableOutput("detailed")),
+                             DT::dataTableOutput("detailed")),
                     tabPanel("Summary",
                              checkboxInput("summary_by_year",
                                            "Group by year",
@@ -45,16 +46,17 @@ server <- function(input, output) {
 
   detailed_data_df <- reactive({
     req(input$donor_name)
-    detailed_data <- search_returns(input$donor_name,
+    detailed_data <- search_returns_url(input$donor_name,
                                     approximate = FALSE,
                                     donor_only = input$donor_only,
-                                    from_date = input$from_date)
+                                    from_date = input$from_date,
+                                    as_html = TRUE)
   })
 
-  output$detailed <- renderDataTable({
+  output$detailed <- DT::renderDataTable({
     detailed_data <- detailed_data_df()
-    detailed_data[c('ReturnId', 'RegistrationCode')] <- NULL
-    detailed_data
+    detailed_data[c('ReturnId', 'RegistrationCode', 'URL')] <- NULL
+    datatable(detailed_data, escape = c(-11))
   }, options = list(lengthMenu = list(c(25, 50, 100, -1), c('25', '50', '100', 'All'))))
 
   output$summary <- renderDataTable({
