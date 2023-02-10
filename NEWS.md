@@ -2,7 +2,7 @@
 
 # 10 February 2023
 
-- Added `returns_url()` function, to add a URL to the specific return on the
+- Added `search_returns_url()` function, to add a URL to the specific return on the
   AEC website.
 
 # 3 February 2023
