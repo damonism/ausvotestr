@@ -1,6 +1,10 @@
 # ausvotesTR Development Version
 
-# 10 February 2023
+## 7 March 2023
+
+- New data extract.
+
+## 10 February 2023
 
 - Added `search_returns_url()` function, to add a URL to the specific return on 
   the AEC website.
@@ -8,7 +12,7 @@
   the Shiny app using the aforementioned function. Also added a receommendation
   for the `DT` package.
 
-# 3 February 2023
+## 3 February 2023
 
 - Added a variable to `return_receipts_details` to indicate if an amount is 
   public funding. I've done a bit of checking and I'm reasonably confident that
@@ -16,7 +20,7 @@
 
 # ausvotesTR 0.4.0.1
 
-# 3 February 2023
+## 3 February 2023
 
 - The import script now reclassifies rows in `return_receipts_details` with 
   blank `ReceiptType` as "Unspecified". Adjust documentation to note this.
