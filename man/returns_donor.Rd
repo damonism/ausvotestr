@@ -5,24 +5,56 @@
 \alias{returns_donor}
 \title{Donor annual returns}
 \format{
-A \code{data.frame} with 16 variables:
-\describe{
+A \code{data.frame} with 16 variables: \describe{
+
 \item{ViewName}{String of "Donor Return" (Chr).}
-\item{ReturnTypeCode}{String of either "federaldonororganisation" or "federaldonorindividual" (Chr).}
+
+\item{ReturnTypeCode}{String of either "federaldonororganisation" or
+"federaldonorindividual" (Chr).}
+
 \item{RegistrationCode}{Unique code for each individual return (Chr).}
-\item{ReturnId}{Unique code for each individual return (Int) -- Not clear why both this and \code{RegistrationCode} both exist but may be an internal AEC thing.}
-\item{DisclosurePeriodEndDate}{End date of the financial year as a date object (easier to use for plotting) (Date).}
-\item{ReportingPeriodThreshold}{The threshold, in whole Australian follars, above which donations must be reported in that reporting period (Int).}
-\item{ReturnTypeDescription}{String of either "Organisation Donor Return" or "Individual Donor Return" (Chr).}
-\item{ClientFileId}{Unique identifier of the party filing the return (Int).}
-\item{CurrentClientName}{Name that the party filed the current return under (Chr).}
-\item{ReturnClientName}{Party name that should be consistent across the dataset (Chr).}
-\item{TotalDonationsMadeToPoliticalPartiesAndCampaigners}{Sum of donations to political parties and political campaigners, in whole Australian dollars (Int).}
-\item{TotalDonationsMadeToPoliticalParties}{Sum of donations to political parties, in whole Australian dollars (Int).}
-\item{TotalDonationsMadeToPoliticalCampaigners}{Sum of donations to political campaigners (the legislative requirement to report this was only introduced in 2018-19) (Int).}
-\item{TotalDonationsReceived}{Sum of donations received, in whole Australian dollars (Int).}
+
+\item{ReturnId}{Unique code for each individual return (Int) -- Not clear
+why both this and \code{RegistrationCode} both exist but may be an internal
+AEC thing.}
+
+\item{DisclosurePeriodEndDate}{End date of the financial year as a date
+object (easier to use for plotting) (Date).}
+
+\item{ReportingPeriodThreshold}{The threshold, in whole Australian follars,
+above which donations must be reported in that reporting period (Int).}
+
+\item{ReturnTypeDescription}{String of either "Organisation Donor Return"
+or "Individual Donor Return" (Chr).}
+
+\item{ClientFileId}{Unique identifier of the party filing the return
+(Int).}
+
+\item{CurrentClientName}{Name that the party filed the current return under
+(Chr).}
+
+\item{ReturnClientName}{Party name that should be consistent across the
+dataset (Chr).}
+
+\item{TotalDonationsMadeToPoliticalPartiesAndCampaigners}{Sum of donations
+to political parties and political campaigners, in whole Australian dollars
+(Int).}
+
+\item{TotalDonationsMadeToPoliticalParties}{Sum of donations to political
+parties, in whole Australian dollars (Int).}
+
+\item{TotalDonationsMadeToPoliticalCampaigners}{Sum of donations to
+political campaigners (the legislative requirement to report this was only
+introduced in 2018-19) (Int).}
+
+\item{TotalDonationsReceived}{Sum of donations received, in whole
+Australian dollars (Int).}
+
 \item{LodgedOnBehalfOf}{Usually blank (Chr).}
-\item{FinancialYear}{Financial year of the return in the format of \code{YYYY-YY} (Chr).}
+
+\item{FinancialYear}{Financial year of the return in the format of
+\code{YYYY-YY} (Chr).}
+
 }
 }
 \source{
@@ -32,12 +64,12 @@ A \code{data.frame} with 16 variables:
 returns_donor
 }
 \description{
-List of annual returns from political donors (1998-99 to 2020-22),
+List of annual returns from political donors (1998-99 to 2021-22),
 }
 \details{
 During the period covered by this data the reporting requirements in the
-Commonwealth Electoral Act 1918 changed, which led to the discrepancy
-between the \code{TotalDonationsMadeToPoliticalPartiesAndCampaigners} and
+Commonwealth Electoral Act 1918 changed, which led to the discrepancy between
+the \code{TotalDonationsMadeToPoliticalPartiesAndCampaigners} and
 \code{TotalDonationsMadeToPoliticalParties} variables.
 }
 \keyword{datasets}

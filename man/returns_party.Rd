@@ -5,45 +5,77 @@
 \alias{returns_party}
 \title{Parties annual returns}
 \format{
-A \code{data.frame} with 24 variables:
+A \code{data.frame} with 25 variables:
+
 \describe{
+
 \item{ViewName}{String of "Political Party Annual Return".}
+
 \item{ReturnTypeCode}{String of "federalpoliticalparty".}
+
 \item{RegistrationCode}{Unique code for each individual return (Chr).}
+
 \item{ReturnId}{Unique code for each individual return (Int) -- It is not
-clear why both this and \code{RegistrationCode} both exist but may
-be for internal AEC use.}
+clear why both this and \code{RegistrationCode} both exist but may be for
+internal AEC use.}
+
+\item{DisclosurePeriodEndDate}{End date of the financial year as a date
+object (easier to use for plotting).}
+
+\item{ReportingPeriodThreshold}{The threshold, in whole Australian dollars,
+above which donations must be reported in that reporting period (Int).
+
 \item{ReturnTypeDescription}{String of "Political Party Return".}
+
 \item{ClientFileId}{Unique identifier of the party filing the return
 (Int).}
+
 \item{CurrentClientName}{Name that the party filed the current return under
 (Chr).}
+
 \item{ReturnClientName}{Party name that should be consistent across the
 dataset (Chr).}
+
 \item{PartyGroupId}{If the party is a member of a party group, the ID code
 of that group (Int).}
+
 \item{PartyGroupName}{If the party is a member of a party group, the name
 of that group (Chr).}
+
 \item{TotalReceipts}{Total reported receipts, in whole Australian dollars
 (Int).}
+
 \item{TotalPayments}{Total reported payments, in whole Australian dollars
 (Int).}
+
 \item{TotalDebts}{Total reported debts, in whole Australian dollars (Int).}
+
 \item{DetailsOfReceiptsTotal}{Total of receipts listed for the return in
 \code{\link{returns_receipts_details}} data file (Int),}
+
 \item{DetailsOfDebtsTotal}{Total of debts listed for the return in
 \code{\link{returns_receipts_details}} data file (Int),}
+
 \item{DetailsOfDiscretionaryBenefitsTotal}{Total of discretionary benefits
-listed for the return in \code{\link{returns_receipts_details}} data
-file (Int),}
+listed for the return in \code{\link{returns_receipts_details}} data file
+(Int),}
+
+\item{ClientType}{String of "politicalparty".}
+
 \item{AddressLine1}{Address line 1 (merged from CSV file) (Chr).}
+
 \item{AddressLine2}{Address line 2 -- often blank (merged from CSV file)
 (Chr).}
+
 \item{Suburb}{Suburb (merged from CSV file) (Chr).}
+
 \item{State}{State abbreviation (merged from CSV file) (Chr).}
+
 \item{Postcode}{Postcode (merged from CSV file) (Int).}
+
 \item{FinancialYear}{Financial year of the return in the format of
 \code{YYYY-YY}.}
+
 }
 }
 \source{
@@ -53,14 +85,14 @@ file (Int),}
 returns_party
 }
 \description{
-Annual returns filed by political parties (1998-99 to 2020-22).
+Annual returns filed by political parties (1998-99 to 2021-22).
 }
 \details{
-Data is by financial year and is published by the AEC at the beginning of
-the February following the financial year.
+Data is by financial year and is published by the AEC at the beginning of the
+February following the financial year.
 
-Note that the data have been taken directly from AEC website and thus
-contain the AEC's idiosyncrasies and very occasional errors.
+Note that the data have been taken directly from AEC website and thus contain
+the AEC's idiosyncrasies and very occasional errors.
 
 Some data (addresses of parties) has been merged from the CSV files the
 \href{https://transparency.aec.gov.au/Download}{AEC provides}.

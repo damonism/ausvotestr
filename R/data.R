@@ -1,6 +1,6 @@
 #' Associated entities annual returns
 #'
-#' Annual returns filed by associated entities (1998-99 to 2020-22).
+#' Annual returns filed by associated entities (1998-99 to 2021-22).
 #'
 #' \href{https://www.aec.gov.au/Parties_and_Representatives/financial_disclosure/guides/associated-entities/index.htm}{According
 #' to the AEC} persons or entities are required to register as an associated
@@ -238,122 +238,122 @@
 #' @docType data
 "returns_thirdparty"
 
-#'Significant third party returns
+#' Significant third party returns
 #'
-#'Annual returns from significant third parties (from the 2018-19 to the 2020-22
-#'financial years.)
+#' Annual returns from significant third parties (from the 2018-19 to the
+#' 2021-22 financial years.)
 #'
-#'Part XX of the
-#'\href{https://www.legislation.gov.au/Latest/C2019C00103}{Commonwealth
-#'Electoral Act 1918} requires all registered significant third partied to lodge
-#'financial disclosure returns on an annual basis. Significant third parties
-#'were previously called political campaigners, however the name was changed in
-#'the legislation. The name of the data reflects the name of the category when
-#'it was first introduced into the legislation so as not to break any existing
-#'usage.
+#' Part XX of the
+#' \href{https://www.legislation.gov.au/Latest/C2019C00103}{Commonwealth
+#' Electoral Act 1918} requires all registered significant third partied to
+#' lodge financial disclosure returns on an annual basis. Significant third
+#' parties were previously called political campaigners, however the name was
+#' changed in the legislation. The name of the data reflects the name of the
+#' category when it was first introduced into the legislation so as not to break
+#' any existing usage.
 #'
-#'These returns set out for that financial year:
+#' These returns set out for that financial year:
 #'
-#'\itemize{
+#' \itemize{
 #'
-#'\item{the total value of receipts}
+#' \item{the total value of receipts}
 #'
-#'\item{the details of amounts received that are more than the disclosure
-#'threshold}
+#' \item{the details of amounts received that are more than the disclosure
+#' threshold}
 #'
-#'\item{the total value of payments}
+#' \item{the total value of payments}
 #'
-#'\item{the total value of debts as at 30 June}
+#' \item{the total value of debts as at 30 June}
 #'
-#'\item{the details of debts outstanding as at 30 June that total more than the
-#'disclosure threshold}
+#' \item{the details of debts outstanding as at 30 June that total more than the
+#' disclosure threshold}
 #'
-#'\item{the total amount of electoral expenditure incurred}
+#' \item{the total amount of electoral expenditure incurred}
 #'
-#'\item{the details of any discretionary benefits received from the
-#'Commonwealth, State or Territory.}
+#' \item{the details of any discretionary benefits received from the
+#' Commonwealth, State or Territory.}
 #'
-#'}
+#' }
 #'
-#'Political campaigners were first required to lodge returns for the 2018-19
-#'financial year and all lodged returns are listed.
+#' Political campaigners were first required to lodge returns for the 2018-19
+#' financial year and all lodged returns are listed.
 #'
-#'@format A \code{data.frame} with 20 variables:
+#' @format A \code{data.frame} with 20 variables:
 #'
-#'  \describe{
+#'   \describe{
 #'
-#'  \item{ViewName}{String of "Significant Third Party Return".}
+#'   \item{ViewName}{String of "Significant Third Party Return".}
 #'
-#'  \item{RegistrationCode}{Unique code for each individual return (Chr).}
+#'   \item{RegistrationCode}{Unique code for each individual return (Chr).}
 #'
-#'  \item{ReturnId}{Unique code for each individual return (Int) -- It is not
-#'  clear why both this and \code{RegistrationCode} both exist but may be for
-#'  internal AEC use.}
+#'   \item{ReturnId}{Unique code for each individual return (Int) -- It is not
+#'   clear why both this and \code{RegistrationCode} both exist but may be for
+#'   internal AEC use.}
 #'
-#'  \item{DisclosurePeriodEndDate}{End date of the financial year as a date
-#'  object (easier to use for plotting).}
+#'   \item{DisclosurePeriodEndDate}{End date of the financial year as a date
+#'   object (easier to use for plotting).}
 #'
-#'  \item{ReportingThreshold}{The threshold, in whole Australian dollars, above
-#'  which donations must be reported in that reporting period (Int).}
+#'   \item{ReportingThreshold}{The threshold, in whole Australian dollars, above
+#'   which donations must be reported in that reporting period (Int).}
 #'
-#'  \item{ReturnTypeDescription}{String of "Political Campaigner Return".}
+#'   \item{ReturnTypeDescription}{String of "Political Campaigner Return".}
 #'
-#'  \item{ReturnTypeCode}{String of "federalpoliticalcampaigner".}
+#'   \item{ReturnTypeCode}{String of "federalpoliticalcampaigner".}
 #'
-#'  \item{ClientFileId}{Unique identifier of the campaigner filing the return
-#'  (Int).}
+#'   \item{ClientFileId}{Unique identifier of the campaigner filing the return
+#'   (Int).}
 #'
-#'  \item{CurrentClientName}{Name that the campaigner filed the current return
-#'  under (Chr).}
+#'   \item{CurrentClientName}{Name that the campaigner filed the current return
+#'   under (Chr).}
 #'
-#'  \item{ReturnClientName}{Campaigner name that should be consistent across the
-#'  dataset (Chr).}
+#'   \item{ReturnClientName}{Campaigner name that should be consistent across
+#'   the dataset (Chr).}
 #'
-#'  \item{TotalReceipts}{Total reported receipts, in whole Australian dollars
-#'  (Int).}
+#'   \item{TotalReceipts}{Total reported receipts, in whole Australian dollars
+#'   (Int).}
 #'
-#'  \item{TotalPayments}{Total reported payments, in whole Australian dollars
-#'  (Int).}
+#'   \item{TotalPayments}{Total reported payments, in whole Australian dollars
+#'   (Int).}
 #'
-#'  \item{TotalDebts}{Total reported debts, in whole Australian dollars (Int).}
+#'   \item{TotalDebts}{Total reported debts, in whole Australian dollars (Int).}
 #'
-#'  \item{TotalElectoralExpenditure}{Total electoral expenditure, in whole
-#'  Australian dollars (Int).}
+#'   \item{TotalElectoralExpenditure}{Total electoral expenditure, in whole
+#'   Australian dollars (Int).}
 #'
-#'  \item{LodgedOnBehalfOf}{Any unions or body corporate the return has been
-#'  lodged on behalf of. This field is often blank (but not \code{NA}). Where
-#'  there is more than one entity the return has been lodged on behalf of, these
-#'  will be separated with a \code{<br/>} string.}
+#'   \item{LodgedOnBehalfOf}{Any unions or body corporate the return has been
+#'   lodged on behalf of. This field is often blank (but not \code{NA}). Where
+#'   there is more than one entity the return has been lodged on behalf of,
+#'   these will be separated with a \code{<br/>} string.}
 #'
-#'  \item{DetailsOfReceiptsTotal}{Total of receipts listed for the return in
-#'  \code{\link{returns_receipts_details}} data file (Int),}
+#'   \item{DetailsOfReceiptsTotal}{Total of receipts listed for the return in
+#'   \code{\link{returns_receipts_details}} data file (Int),}
 #'
-#'  \item{DetailsOfDebtsTotal}{Total of debts listed for the return in
-#'  \code{\link{returns_receipts_details}} data file (Int),}
+#'   \item{DetailsOfDebtsTotal}{Total of debts listed for the return in
+#'   \code{\link{returns_receipts_details}} data file (Int),}
 #'
-#'  \item{DetailsOfDiscretionaryBenefitsTotal}{Total of discretionary benefits
-#'  listed for the return in \code{\link{returns_receipts_details}} data file
-#'  (Int),}
+#'   \item{DetailsOfDiscretionaryBenefitsTotal}{Total of discretionary benefits
+#'   listed for the return in \code{\link{returns_receipts_details}} data file
+#'   (Int),}
 #'
-#'  \item{AddressLine1}{Address line 1 (merged from CSV file) (Chr).}
+#'   \item{AddressLine1}{Address line 1 (merged from CSV file) (Chr).}
 #'
-#'  \item{AddressLine2}{Address line 2 -- often blank (merged from CSV file)
-#'  (Chr).}
+#'   \item{AddressLine2}{Address line 2 -- often blank (merged from CSV file)
+#'   (Chr).}
 #'
-#'  \item{Suburb}{Suburb (merged from CSV file) (Chr).}
+#'   \item{Suburb}{Suburb (merged from CSV file) (Chr).}
 #'
-#'  \item{State}{State abbreviation (merged from CSV file) (Chr).}
+#'   \item{State}{State abbreviation (merged from CSV file) (Chr).}
 #'
-#'  \item{Postcode}{Postcode (merged from CSV file) (Int).}
+#'   \item{Postcode}{Postcode (merged from CSV file) (Int).}
 #'
-#'  \item{FinancialYear}{Financial year of the return in the format of
-#'  \code{YYYY-YY}.}
+#'   \item{FinancialYear}{Financial year of the return in the format of
+#'   \code{YYYY-YY}.}
 #'
-#'  }
+#'   }
 #'
-#'@source \url{https://transparency.aec.gov.au/AnnualSignificantThirdParty}
+#' @source \url{https://transparency.aec.gov.au/AnnualSignificantThirdParty}
 #'
-#'@docType data
+#' @docType data
 "returns_campaigner"
 
 
@@ -431,89 +431,153 @@
 
 #' Parties annual returns
 #'
-#' Annual returns filed by political parties (1998-99 to 2020-22).
+#' Annual returns filed by political parties (1998-99 to 2021-22).
 #'
-#' Data is by financial year and is published by the AEC at the beginning of
-#' the February following the financial year.
+#' Data is by financial year and is published by the AEC at the beginning of the
+#' February following the financial year.
 #'
-#' Note that the data have been taken directly from AEC website and thus
-#' contain the AEC's idiosyncrasies and very occasional errors.
+#' Note that the data have been taken directly from AEC website and thus contain
+#' the AEC's idiosyncrasies and very occasional errors.
 #'
 #' Some data (addresses of parties) has been merged from the CSV files the
 #' \href{https://transparency.aec.gov.au/Download}{AEC provides}.
 #'
-#'@format A \code{data.frame} with 24 variables:
-#' \describe{
+#' @format A \code{data.frame} with 25 variables:
+#'
+#'   \describe{
+#'
 #'   \item{ViewName}{String of "Political Party Annual Return".}
+#'
 #'   \item{ReturnTypeCode}{String of "federalpoliticalparty".}
+#'
 #'   \item{RegistrationCode}{Unique code for each individual return (Chr).}
+#'
 #'   \item{ReturnId}{Unique code for each individual return (Int) -- It is not
-#'         clear why both this and \code{RegistrationCode} both exist but may
-#'         be for internal AEC use.}
+#'   clear why both this and \code{RegistrationCode} both exist but may be for
+#'   internal AEC use.}
+#'
+#'   \item{DisclosurePeriodEndDate}{End date of the financial year as a date
+#'   object (easier to use for plotting).}
+#'
+#'   \item{ReportingPeriodThreshold}{The threshold, in whole Australian dollars,
+#'   above which donations must be reported in that reporting period (Int).
+#'
 #'   \item{ReturnTypeDescription}{String of "Political Party Return".}
+#'
 #'   \item{ClientFileId}{Unique identifier of the party filing the return
-#'         (Int).}
+#'   (Int).}
+#'
 #'   \item{CurrentClientName}{Name that the party filed the current return under
-#'         (Chr).}
+#'   (Chr).}
+#'
 #'   \item{ReturnClientName}{Party name that should be consistent across the
-#'         dataset (Chr).}
+#'   dataset (Chr).}
+#'
 #'   \item{PartyGroupId}{If the party is a member of a party group, the ID code
-#'         of that group (Int).}
+#'   of that group (Int).}
+#'
 #'   \item{PartyGroupName}{If the party is a member of a party group, the name
-#'         of that group (Chr).}
+#'   of that group (Chr).}
+#'
 #'   \item{TotalReceipts}{Total reported receipts, in whole Australian dollars
-#'         (Int).}
+#'   (Int).}
+#'
 #'   \item{TotalPayments}{Total reported payments, in whole Australian dollars
-#'         (Int).}
+#'   (Int).}
+#'
 #'   \item{TotalDebts}{Total reported debts, in whole Australian dollars (Int).}
+#'
 #'   \item{DetailsOfReceiptsTotal}{Total of receipts listed for the return in
-#'         \code{\link{returns_receipts_details}} data file (Int),}
+#'   \code{\link{returns_receipts_details}} data file (Int),}
+#'
 #'   \item{DetailsOfDebtsTotal}{Total of debts listed for the return in
-#'         \code{\link{returns_receipts_details}} data file (Int),}
+#'   \code{\link{returns_receipts_details}} data file (Int),}
+#'
 #'   \item{DetailsOfDiscretionaryBenefitsTotal}{Total of discretionary benefits
-#'         listed for the return in \code{\link{returns_receipts_details}} data
-#'         file (Int),}
+#'   listed for the return in \code{\link{returns_receipts_details}} data file
+#'   (Int),}
+#'
+#'   \item{ClientType}{String of "politicalparty".}
+#'
 #'   \item{AddressLine1}{Address line 1 (merged from CSV file) (Chr).}
+#'
 #'   \item{AddressLine2}{Address line 2 -- often blank (merged from CSV file)
-#'         (Chr).}
+#'   (Chr).}
+#'
 #'   \item{Suburb}{Suburb (merged from CSV file) (Chr).}
+#'
 #'   \item{State}{State abbreviation (merged from CSV file) (Chr).}
+#'
 #'   \item{Postcode}{Postcode (merged from CSV file) (Int).}
+#'
 #'   \item{FinancialYear}{Financial year of the return in the format of
-#'         \code{YYYY-YY}.}
-#' }
+#'   \code{YYYY-YY}.}
+#'
+#'   }
 #' @source \url{https://transparency.aec.gov.au/AnnualPoliticalParty}
 #' @docType data
 "returns_party"
 
 #' Donor annual returns
 #'
-#' List of annual returns from political donors (1998-99 to 2020-22),
+#' List of annual returns from political donors (1998-99 to 2021-22),
 #'
 #' During the period covered by this data the reporting requirements in the
-#' Commonwealth Electoral Act 1918 changed, which led to the discrepancy
-#' between the \code{TotalDonationsMadeToPoliticalPartiesAndCampaigners} and
+#' Commonwealth Electoral Act 1918 changed, which led to the discrepancy between
+#' the \code{TotalDonationsMadeToPoliticalPartiesAndCampaigners} and
 #' \code{TotalDonationsMadeToPoliticalParties} variables.
 #'
-#'@format A \code{data.frame} with 16 variables:
-#' \describe{
+#' @format A \code{data.frame} with 16 variables: \describe{
+#'
 #'   \item{ViewName}{String of "Donor Return" (Chr).}
-#'   \item{ReturnTypeCode}{String of either "federaldonororganisation" or "federaldonorindividual" (Chr).}
+#'
+#'   \item{ReturnTypeCode}{String of either "federaldonororganisation" or
+#'   "federaldonorindividual" (Chr).}
+#'
 #'   \item{RegistrationCode}{Unique code for each individual return (Chr).}
-#'   \item{ReturnId}{Unique code for each individual return (Int) -- Not clear why both this and \code{RegistrationCode} both exist but may be an internal AEC thing.}
-#'   \item{DisclosurePeriodEndDate}{End date of the financial year as a date object (easier to use for plotting) (Date).}
-#'   \item{ReportingPeriodThreshold}{The threshold, in whole Australian follars, above which donations must be reported in that reporting period (Int).}
-#'   \item{ReturnTypeDescription}{String of either "Organisation Donor Return" or "Individual Donor Return" (Chr).}
-#'   \item{ClientFileId}{Unique identifier of the party filing the return (Int).}
-#'   \item{CurrentClientName}{Name that the party filed the current return under (Chr).}
-#'   \item{ReturnClientName}{Party name that should be consistent across the dataset (Chr).}
-#'   \item{TotalDonationsMadeToPoliticalPartiesAndCampaigners}{Sum of donations to political parties and political campaigners, in whole Australian dollars (Int).}
-#'   \item{TotalDonationsMadeToPoliticalParties}{Sum of donations to political parties, in whole Australian dollars (Int).}
-#'   \item{TotalDonationsMadeToPoliticalCampaigners}{Sum of donations to political campaigners (the legislative requirement to report this was only introduced in 2018-19) (Int).}
-#'   \item{TotalDonationsReceived}{Sum of donations received, in whole Australian dollars (Int).}
+#'
+#'   \item{ReturnId}{Unique code for each individual return (Int) -- Not clear
+#'   why both this and \code{RegistrationCode} both exist but may be an internal
+#'   AEC thing.}
+#'
+#'   \item{DisclosurePeriodEndDate}{End date of the financial year as a date
+#'   object (easier to use for plotting) (Date).}
+#'
+#'   \item{ReportingPeriodThreshold}{The threshold, in whole Australian follars,
+#'   above which donations must be reported in that reporting period (Int).}
+#'
+#'   \item{ReturnTypeDescription}{String of either "Organisation Donor Return"
+#'   or "Individual Donor Return" (Chr).}
+#'
+#'   \item{ClientFileId}{Unique identifier of the party filing the return
+#'   (Int).}
+#'
+#'   \item{CurrentClientName}{Name that the party filed the current return under
+#'   (Chr).}
+#'
+#'   \item{ReturnClientName}{Party name that should be consistent across the
+#'   dataset (Chr).}
+#'
+#'   \item{TotalDonationsMadeToPoliticalPartiesAndCampaigners}{Sum of donations
+#'   to political parties and political campaigners, in whole Australian dollars
+#'   (Int).}
+#'
+#'   \item{TotalDonationsMadeToPoliticalParties}{Sum of donations to political
+#'   parties, in whole Australian dollars (Int).}
+#'
+#'   \item{TotalDonationsMadeToPoliticalCampaigners}{Sum of donations to
+#'   political campaigners (the legislative requirement to report this was only
+#'   introduced in 2018-19) (Int).}
+#'
+#'   \item{TotalDonationsReceived}{Sum of donations received, in whole
+#'   Australian dollars (Int).}
+#'
 #'   \item{LodgedOnBehalfOf}{Usually blank (Chr).}
-#'   \item{FinancialYear}{Financial year of the return in the format of \code{YYYY-YY} (Chr).}
-#' }
+#'
+#'   \item{FinancialYear}{Financial year of the return in the format of
+#'   \code{YYYY-YY} (Chr).}
+#'
+#'   }
 #' @source \url{https://transparency.aec.gov.au/AnnualDonor}
 #' @docType data
 "returns_donor"
@@ -593,7 +657,6 @@
 #' @format A \code{data.frame} 16 variables:
 #'
 #'   \describe{
-#'
 #'
 #'   \item{ViewName}{String of "Annual Donor Donation Made" (Chr).}
 #'
@@ -808,17 +871,20 @@
 #'
 #' This data is automatically generated each time the data is extracted.
 #'
-#' Note that the new returns data is only released on the first working day
-#' of February for the previous financial year, however amendments may be made
-#' to returns in the meantime. Data extracted after early February should
-#' therefore generally not contain new returns, but may have some different
-#' entries to the original data release.
+#' Note that the new returns data is only released on the first working day of
+#' February for the previous financial year, however amendments may be made to
+#' returns in the meantime. Data extracted after early February should therefore
+#' generally not contain new returns, but may have some different entries to the
+#' original data release.
 #'
-#'@format A \code{data.frame} with 1 row and 1 variable:
-#' \describe{
+#' @format A \code{data.frame} with 1 row and 1 variable:
+#'
+#'   \describe{
+#'
 #'   \item{Updated}{The date and time the data was last updated, as a
 #'   \code{POSIXct} object.}
-#' }
+#'
+#'   }
 #'
 #' @docType data
 "returns_updated"

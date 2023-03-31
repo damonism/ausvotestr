@@ -6,9 +6,12 @@
 \title{Data update date}
 \format{
 A \code{data.frame} with 1 row and 1 variable:
+
 \describe{
+
 \item{Updated}{The date and time the data was last updated, as a
 \code{POSIXct} object.}
+
 }
 }
 \usage{
@@ -20,10 +23,10 @@ The date and time the data was last updated, as a \code{POSIXct} object.
 \details{
 This data is automatically generated each time the data is extracted.
 
-Note that the new returns data is only released on the first working day
-of February for the previous financial year, however amendments may be made
-to returns in the meantime. Data extracted after early February should
-therefore generally not contain new returns, but may have some different
-entries to the original data release.
+Note that the new returns data is only released on the first working day of
+February for the previous financial year, however amendments may be made to
+returns in the meantime. Data extracted after early February should therefore
+generally not contain new returns, but may have some different entries to the
+original data release.
 }
 \keyword{datasets}

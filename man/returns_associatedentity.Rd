@@ -105,7 +105,7 @@ across the dataset (Chr).}
 returns_associatedentity
 }
 \description{
-Annual returns filed by associated entities (1998-99 to 2020-22).
+Annual returns filed by associated entities (1998-99 to 2021-22).
 }
 \details{
 \href{https://www.aec.gov.au/Parties_and_Representatives/financial_disclosure/guides/associated-entities/index.htm}{According
