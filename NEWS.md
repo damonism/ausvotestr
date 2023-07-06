@@ -1,6 +1,15 @@
+# ausvotesTR 0.4.0.2
+
+## 6 July 2023
+
+- Updated the data import script to run properly on Windows and fix some 
+  deprecated functions.
+- Updated the data.
+
 # ausvotesTR 0.4.0.1
 
-# 3 February 2023
+## 3 February 2023
+
 - The import script now reclassifies rows in `return_receipts_details` with 
   blank `ReceiptType` as "Unspecified". Adjust documentation to note this.
 - Note in the documentation for `return_receipts_details` that there is also

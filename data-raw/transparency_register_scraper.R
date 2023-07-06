@@ -71,7 +71,7 @@ get_returns_data <- function(page_url, json_url) {
 #### Download the zip file with the addresses ####
 
 tmp_zip <- tempfile()
-download.file("https://transparency.aec.gov.au/Download/AllAnnualData", tmp_zip)
+download.file("https://transparency.aec.gov.au/Download/AllAnnualData", tmp_zip, mode = "wb")
 if(!dir.exists("data-raw/csv")) {
   dir.create("data-raw/csv")
 }
@@ -453,7 +453,7 @@ if(askYesNo("Compare new files to old files?")) {
 
   lapply(list.files("data/", full.names = TRUE), load, envir = old_data)
 
-  lapply(ls(pattern = "^returns_"), function(x) message(x, " : ", all_equal(get(x), get(x, envir = old_data))))
+  lapply(ls(pattern = "^returns_"), function(x) message(x, " : ", all.equal(get(x), get(x, envir = old_data))))
 
 }
 
