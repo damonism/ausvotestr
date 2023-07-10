@@ -23,7 +23,7 @@ internal AEC use.}
 object (easier to use for plotting).}
 
 \item{ReportingPeriodThreshold}{The threshold, in whole Australian dollars,
-above which donations must be reported in that reporting period (Int).
+above which donations must be reported in that reporting period (Int).}
 
 \item{ReturnTypeDescription}{String of "Political Party Return".}
 
@@ -51,14 +51,14 @@ of that group (Chr).}
 \item{TotalDebts}{Total reported debts, in whole Australian dollars (Int).}
 
 \item{DetailsOfReceiptsTotal}{Total of receipts listed for the return in
-\code{\link{returns_receipts_details}} data file (Int),}
+\code{\link{returns_receipts_details}} data file (Int).}
 
 \item{DetailsOfDebtsTotal}{Total of debts listed for the return in
-\code{\link{returns_receipts_details}} data file (Int),}
+\code{\link{returns_receipts_details}} data file (Int).}
 
 \item{DetailsOfDiscretionaryBenefitsTotal}{Total of discretionary benefits
 listed for the return in \code{\link{returns_receipts_details}} data file
-(Int),}
+(Int).}
 
 \item{ClientType}{String of "politicalparty".}
 

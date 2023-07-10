@@ -295,3 +295,40 @@ search_returns_summary <- function(donor_name, by_year = FALSE, from_date = NA, 
   return(tmp_table[order(tmp_table$PartyGroupName),])
 
 }
+
+#' Search donor name
+#'
+#' Search donor and recipient returns for a specific donor name.
+#'
+#' @param name The name of the donor as a \code{\link[base]{regex}}
+#'
+#' @return A \code{data.frame} with the first column (\code{Name}) showing the
+#'   name that matched the search and the second column (\code{Returns}) showing
+#'   whether it was found in the Donor or Recipient returns.
+#' @export
+#'
+#' @examples
+#' search_donor_name("ernst")
+search_donor_name <- function(name) {
+
+  tmp_donor <- sort(unique(returns_donor_details$ReturnClientName[grepl(name, returns_donor_details$ReturnClientName, ignore.case = TRUE)]))
+  tmp_recip <- sort(unique(returns_receipts_details$ReceivedFromClientName[grepl(name, returns_receipts_details$ReceivedFromClientName, ignore.case = TRUE)]))
+
+  if(length(tmp_donor > 0)) {
+    df_donor = data.frame(Name = tmp_donor, Returns = "Donor")
+  } else {
+    df_donor = data.frame()
+  }
+
+  if(length(tmp_recip > 0)) {
+    df_recip = data.frame(Name = tmp_recip, Returns = "Recipient")
+  } else {
+    df_recip = data.frame()
+  }
+
+  if(length(tmp_donor) + length(tmp_recip) == 0) {
+    message("Nothing found.")
+  } else {
+    rbind(df_donor, df_recip)
+  }
+}
