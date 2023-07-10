@@ -1,5 +1,11 @@
 # ausvotesTR Development Version
 
+## 6 July 2023
+
+- Updated the data import script to run properly on Windows and fix some 
+  deprecated functions.
+- Updated the data.
+
 ## 31 March 2023
 
 - Documentation updates
