@@ -5,6 +5,7 @@
 - Added `search_donor_name()` function.
 - Updated the data for consistency
 - Fixed a couple of documentation errors.
+- Added a pointer as to how to run the Shiny app.
 
 ## 6 July 2023
 

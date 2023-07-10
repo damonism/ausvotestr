@@ -9,3 +9,9 @@ Contains data extracted from the Australian Electoral Commission's
 Transparency Register plus a number of convenience functions (and a bonus
 Shiny app) for analysing that data.
 }
+\details{
+To run the Shiny app, use:
+
+\code{shiny::runApp(system.file("shiny-examples", "donation-explorer", package = "ausvotesTR"),
+  display.mode = "normal")}
+}
