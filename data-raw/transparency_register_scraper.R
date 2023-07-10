@@ -400,6 +400,24 @@ returns_receipts_details <- returns_receipts_details_web |>
   select(-FinancialYear) %>%
   rename(FinancialYear = FinancialYearNew)
 
+# Identifying public funding is tricky because of the inconsistency in recording
+# of the source. In order to make it easier, we use all of the combinations we
+# can think of on ReceivedFromClientName, find the relevant ReceivedFromClientId
+# for all of those, and tag any amount received from one of those ClientIds ad
+# public funding.
+
+# This is the magic public funding regex
+public_funding_rx <- "^ECSA$|^WAEC$|^ECQ$|^AEC *$|^EFA *$|^NSW EFA *$|(electoral|election) (commissi|offic|fund)|(election|elections) act"
+
+public_funding_df <- returns_receipts_details |>
+  filter(grepl(public_funding_rx, ReceivedFromClientName, ignore.case = TRUE)) |>
+  select(ReceivedFromClientName, ReceivedFromClientId) |>
+  unique() |>
+  arrange(ReceivedFromClientId)
+
+returns_receipts_details <- returns_receipts_details |>
+  mutate(IsPublicFunding = ifelse(ReceivedFromClientId %in% unique(public_funding_df$ReceivedFromClientId), TRUE, FALSE))
+
 # Quick summary of data to check it has run correctly
 returns_receipts_details %>%
   group_by(FinancialYear) %>%

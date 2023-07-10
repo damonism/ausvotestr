@@ -33,8 +33,8 @@ which donations must be reported in that reporting period (Int).}
 \item{CurrentClientName}{Name that the campaigner filed the current return
 under (Chr).}
 
-\item{ReturnClientName}{Campaigner name that should be consistent across the
-dataset (Chr).}
+\item{ReturnClientName}{Campaigner name that should be consistent across
+the dataset (Chr).}
 
 \item{TotalReceipts}{Total reported receipts, in whole Australian dollars
 (Int).}
@@ -49,8 +49,8 @@ Australian dollars (Int).}
 
 \item{LodgedOnBehalfOf}{Any unions or body corporate the return has been
 lodged on behalf of. This field is often blank (but not \code{NA}). Where
-there is more than one entity the return has been lodged on behalf of, these
-will be separated with a \code{<br/>} string.}
+there is more than one entity the return has been lodged on behalf of,
+these will be separated with a \code{<br/>} string.}
 
 \item{DetailsOfReceiptsTotal}{Total of receipts listed for the return in
 \code{\link{returns_receipts_details}} data file (Int),}
@@ -85,18 +85,18 @@ listed for the return in \code{\link{returns_receipts_details}} data file
 returns_campaigner
 }
 \description{
-Annual returns from significant third parties (from the 2018-19 to the 2020-22
-financial years.)
+Annual returns from significant third parties (from the 2018-19 to the
+2021-22 financial years.)
 }
 \details{
 Part XX of the
 \href{https://www.legislation.gov.au/Latest/C2019C00103}{Commonwealth
-Electoral Act 1918} requires all registered significant third partied to lodge
-financial disclosure returns on an annual basis. Significant third parties
-were previously called political campaigners, however the name was changed in
-the legislation. The name of the data reflects the name of the category when
-it was first introduced into the legislation so as not to break any existing
-usage.
+Electoral Act 1918} requires all registered significant third partied to
+lodge financial disclosure returns on an annual basis. Significant third
+parties were previously called political campaigners, however the name was
+changed in the legislation. The name of the data reflects the name of the
+category when it was first introduced into the legislation so as not to break
+any existing usage.
 
 These returns set out for that financial year:
 

@@ -1,10 +1,32 @@
-# ausvotesTR 0.4.0.2
+# ausvotesTR Development Version
 
 ## 6 July 2023
 
 - Updated the data import script to run properly on Windows and fix some 
   deprecated functions.
 - Updated the data.
+
+## 31 March 2023
+
+- Documentation updates
+
+## 7 March 2023
+
+- New data extract.
+
+## 10 February 2023
+
+- Added `search_returns_url()` function, to add a URL to the specific return on 
+  the AEC website.
+- Added a quick-and-dirty URL to the return on the AEC website to the table on 
+  the Shiny app using the aforementioned function. Also added a receommendation
+  for the `DT` package.
+
+## 3 February 2023
+
+- Added a variable to `return_receipts_details` to indicate if an amount is 
+  public funding. I've done a bit of checking and I'm reasonably confident that
+  it is correct, but it's also difficult to be 100% sure.
 
 # ausvotesTR 0.4.0.1
 

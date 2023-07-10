@@ -41,7 +41,7 @@ default:
     - chmod 644 ~/.ssh/known_hosts
 
     # Install any additional R Packages
-    #    - R -e 'install.packages(c("rappdirs", "roxygen2"))'
+    - R -e 'install.packages(c("DT"))'
 
 test:
   image: rocker/tidyverse:4.2.2

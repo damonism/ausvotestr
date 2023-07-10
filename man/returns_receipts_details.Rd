@@ -54,9 +54,9 @@ Campaigner", "Third Party", "Organisation Donor" or "Associated Entity"
 
 \item{RecieptType}{One of "Donation Received", "Other Receipt",
 "Subscription", "Unspecified", "Third Party Gift" (only for third party
-returns) or "Public Funding" (note that "Public Funding" is always an
-"Other Receipt", and is generally not included in the more recent data)
-(Chr).}
+returns) or "Public Funding" (note that "Public Funding" here does not seem
+to be very reliable, and is only in old data - use \code{IsPublicFunding}
+in preference) (Chr).}
 
 \item{TransactionDate}{Date object of transaction date (Date). Note that a
 large proportion of entries \strong{do not include a date} (ie., the data
@@ -72,7 +72,14 @@ the group (see \code{\link{party_by_group}}) (Chr).}
 \code{YYYY-YY}.}
 
 \item{DisclosurePeriodEndDate}{End date of the financial year as a date
-object (easier to use for plotting) (Date).} }
+object (easier to use for plotting) (Date).}
+
+\item{IsPublicFunding}{Derived variable indicating whether the amount is
+public election funding from an electoral commission (federal or state or
+territory). This is a guestimate, but probably a pretty accurate one
+(Logical).}
+
+}
 }
 \source{
 \url{https://transparency.aec.gov.au/AnnualDetailedReceipts}
@@ -141,5 +148,11 @@ AEC data, but most of them are older and most are not political party returns
 and it is probably reasonably safe (and consistent with AEC practice) to
 consider these to be donations. These blank rows have been converted to
 "Unspecified" in the data import script.
+
+A derived logical variable \code{IsPublicFunding} is also included. This is a
+reasonable guestimate of whether an other receipt is public funding from a
+state or territory electoral commission (government grants to parties are not
+included here). Use this variable in preference over \code{ReceiptType} of
+"Public Funding", which appears problematic in the data.
 }
 \keyword{datasets}
