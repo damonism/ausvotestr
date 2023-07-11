@@ -300,35 +300,50 @@ search_returns_summary <- function(donor_name, by_year = FALSE, from_date = NA, 
 #'
 #' Search donor and recipient returns for a specific donor name.
 #'
-#' @param name The name of the donor as a \code{\link[base]{regex}}
+#' @param donor_name The name of the donor as a \code{\link[base]{regex}}
 #'
 #' @return A \code{data.frame} with the first column (\code{Name}) showing the
-#'   name that matched the search and the second column (\code{Returns}) showing
-#'   whether it was found in the Donor or Recipient returns.
+#'   name that matched the search and the second column (\code{Return}) showing
+#'   the \code{ReturnTypeDescription} of the return it was matched in, and
+#'   \code{Number} showing the number of return with that name.
 #' @export
 #'
 #' @examples
 #' search_donor_name("ernst")
-search_donor_name <- function(name) {
+#'
+#' @importFrom stats aggregate
+search_donor_name <- function(donor_name) {
 
-  tmp_donor <- sort(unique(returns_donor_details$ReturnClientName[grepl(name, returns_donor_details$ReturnClientName, ignore.case = TRUE)]))
-  tmp_recip <- sort(unique(returns_receipts_details$ReceivedFromClientName[grepl(name, returns_receipts_details$ReceivedFromClientName, ignore.case = TRUE)]))
+  # tmp_donor <- sort(unique(returns_donor_details$ReturnClientName[grepl(name, returns_donor_details$ReturnClientName, ignore.case = TRUE)]))
+  # tmp_recip <- sort(unique(returns_receipts_details$ReceivedFromClientName[grepl(name, returns_receipts_details$ReceivedFromClientName, ignore.case = TRUE)]))
 
-  if(length(tmp_donor > 0)) {
-    df_donor = data.frame(Name = tmp_donor, Returns = "Donor")
+  tmp_donor <- returns_donor_details[c("ReturnClientName", "ReturnTypeDescription", "ReturnId")][grepl(donor_name, returns_donor_details$ReturnClientName, ignore.case = TRUE),]
+  # message(dim(tmp_donor))
+  tmp_recip <- returns_receipts_details[c("ReceivedFromClientName", "ReturnTypeDescription", "ReturnId")][grepl(donor_name, returns_receipts_details$ReceivedFromClientName, ignore.case = TRUE),]
+  # message(dim(tmp_recip))
+
+  if(nrow(tmp_donor) > 0) {
+    df_donor <- aggregate(ReturnId ~ ReturnClientName + ReturnTypeDescription, length, data = tmp_donor)
+    colnames(df_donor) <- c("Name", "Return", "Number")
+    # message(dim(df_donor))
   } else {
-    df_donor = data.frame()
+    df_donor <- data.frame()
   }
 
-  if(length(tmp_recip > 0)) {
-    df_recip = data.frame(Name = tmp_recip, Returns = "Recipient")
+  if(nrow(tmp_recip) > 0) {
+    df_recip <- aggregate(ReturnId ~ ReceivedFromClientName + ReturnTypeDescription, length, data = tmp_recip)
+    colnames(df_recip) <- c("Name", "Return", "Number")
+    # message(dim(df_recip))
   } else {
-    df_recip = data.frame()
+    df_recip <- data.frame()
   }
 
-  if(length(tmp_donor) + length(tmp_recip) == 0) {
+  if(nrow(df_donor) + nrow(df_recip) == 0) {
     message("Nothing found.")
   } else {
-    rbind(df_donor, df_recip)
+    tmp_return <- rbind(df_donor, df_recip)
+    tmp_return <- tmp_return[order(tmp_return$Name),]
+    rownames(tmp_return) <- NULL
+    tmp_return
   }
 }
