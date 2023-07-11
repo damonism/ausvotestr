@@ -4,19 +4,21 @@
 \alias{search_donor_name}
 \title{Search donor name}
 \usage{
-search_donor_name(name)
+search_donor_name(donor_name)
 }
 \arguments{
-\item{name}{The name of the donor as a \code{\link[base]{regex}}}
+\item{donor_name}{The name of the donor as a \code{\link[base]{regex}}}
 }
 \value{
 A \code{data.frame} with the first column (\code{Name}) showing the
-name that matched the search and the second column (\code{Returns}) showing
-whether it was found in the Donor or Recipient returns.
+name that matched the search and the second column (\code{Return}) showing
+the \code{ReturnTypeDescription} of the return it was matched in, and
+\code{Number} showing the number of return with that name.
 }
 \description{
 Search donor and recipient returns for a specific donor name.
 }
 \examples{
 search_donor_name("ernst")
+
 }
