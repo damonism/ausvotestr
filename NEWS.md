@@ -1,5 +1,15 @@
 # ausvotesTR Development Version
 
+## 12 July 2023
+
+- Implemented a more intelligent way to detect and display changes to the 
+  imported data files. Now suggests the `arsenal` package to do this.
+- Updated the data to test the new import process.
+
+## 11 July 2023
+
+- Re-wrote the `search_donor_name()` function to make it more useful.
+
 ## 10 July 2023
 
 - Added `search_donor_name()` function.
