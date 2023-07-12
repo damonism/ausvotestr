@@ -8,7 +8,6 @@
 #'
 #' \itemize{
 #'
-#'
 #' \item{the entity is controlled by one or more registered political parties;}
 #'
 #' \item{the entity is a financial member of a registered political party;}
@@ -444,7 +443,7 @@
 #'
 #' @format A \code{data.frame} with 25 variables:
 #'
-#'   \describe{
+#'  \describe{
 #'
 #'   \item{ViewName}{String of "Political Party Annual Return".}
 #'
@@ -460,7 +459,7 @@
 #'   object (easier to use for plotting).}
 #'
 #'   \item{ReportingPeriodThreshold}{The threshold, in whole Australian dollars,
-#'   above which donations must be reported in that reporting period (Int).
+#'   above which donations must be reported in that reporting period (Int).}
 #'
 #'   \item{ReturnTypeDescription}{String of "Political Party Return".}
 #'
@@ -488,14 +487,14 @@
 #'   \item{TotalDebts}{Total reported debts, in whole Australian dollars (Int).}
 #'
 #'   \item{DetailsOfReceiptsTotal}{Total of receipts listed for the return in
-#'   \code{\link{returns_receipts_details}} data file (Int),}
+#'   \code{\link{returns_receipts_details}} data file (Int).}
 #'
 #'   \item{DetailsOfDebtsTotal}{Total of debts listed for the return in
-#'   \code{\link{returns_receipts_details}} data file (Int),}
+#'   \code{\link{returns_receipts_details}} data file (Int).}
 #'
 #'   \item{DetailsOfDiscretionaryBenefitsTotal}{Total of discretionary benefits
 #'   listed for the return in \code{\link{returns_receipts_details}} data file
-#'   (Int),}
+#'   (Int).}
 #'
 #'   \item{ClientType}{String of "politicalparty".}
 #'
@@ -513,7 +512,7 @@
 #'   \item{FinancialYear}{Financial year of the return in the format of
 #'   \code{YYYY-YY}.}
 #'
-#'   }
+#' }
 #' @source \url{https://transparency.aec.gov.au/AnnualPoliticalParty}
 #' @docType data
 "returns_party"

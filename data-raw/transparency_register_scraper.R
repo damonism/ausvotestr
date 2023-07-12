@@ -4,6 +4,7 @@ library(dplyr)
 library(tidyr)
 library(usethis)
 library(textclean)
+library(arsenal)
 
 # This script imports all of the data from the AEC transparency register, located at:
 #
@@ -462,6 +463,22 @@ returns_updated <- data.frame(Updated = Sys.time(), stringsAsFactors = FALSE)
 
 #### Import the data into the package ####
 
+check_new_extract <- function(df_name) {
+  message(df_name, " : ", appendLF = FALSE)
+  if(identical(get(df_name), get(df_name, envir = old_data))) {
+    message("Unchanged.")
+  } else {
+    message("Changed. (", nrow(get(df_name)) - nrow(get(df_name, envir = old_data)), " new rows.)")
+    if(askYesNo("Display differences?")) {
+      if(df_name %in% c("returns_donor_address", "returns_updated")) {
+        print(summary(arsenal::comparedf(get(df_name), get(df_name, envir = old_data)))[c("frame.summary.table", "comparison.summary.table")])
+      } else {
+        print(summary(arsenal::comparedf(get(df_name), get(df_name, envir = old_data), by = "ReturnId"))[c("frame.summary.table", "comparison.summary.table")])
+      }
+    }
+  }
+}
+
 if(askYesNo("Compare new files to old files?")) {
 
   # This is a very quick and dirty comparison of the new and old data
@@ -471,7 +488,7 @@ if(askYesNo("Compare new files to old files?")) {
 
   lapply(list.files("data/", full.names = TRUE), load, envir = old_data)
 
-  lapply(ls(pattern = "^returns_"), function(x) message(x, " : ", all.equal(get(x), get(x, envir = old_data))))
+  lapply(ls(pattern = "^returns_"), function(x) check_new_extract(x))
 
 }
 

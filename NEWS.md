@@ -1,5 +1,24 @@
 # ausvotesTR Development Version
 
+# ausvotesTR 0.4.1
+
+## 12 July 2023
+
+- Implemented a more intelligent way to detect and display changes to the 
+  imported data files. Now suggests the `arsenal` package to do this.
+- Updated the data to test the new import process.
+
+## 11 July 2023
+
+- Re-wrote the `search_donor_name()` function to make it more useful.
+
+## 10 July 2023
+
+- Added `search_donor_name()` function.
+- Updated the data for consistency
+- Fixed a couple of documentation errors.
+- Added a pointer as to how to run the Shiny app.
+
 ## 6 July 2023
 
 - Updated the data import script to run properly on Windows and fix some 
@@ -19,7 +38,7 @@
 - Added `search_returns_url()` function, to add a URL to the specific return on 
   the AEC website.
 - Added a quick-and-dirty URL to the return on the AEC website to the table on 
-  the Shiny app using the aforementioned function. Also added a receommendation
+  the Shiny app using the aforementioned function. Also added a recommendation
   for the `DT` package.
 
 ## 3 February 2023
