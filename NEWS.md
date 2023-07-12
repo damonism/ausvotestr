@@ -1,5 +1,7 @@
 # ausvotesTR Development Version
 
+# ausvotesTR 0.4.1
+
 ## 12 July 2023
 
 - Implemented a more intelligent way to detect and display changes to the 

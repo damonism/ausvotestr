@@ -1,12 +1,12 @@
 Package: ausvotesTR
 Type: Package
 Title: AEC Transparency Register Donations Data
-Version: 0.4.0.13
+Version: 0.4.1
 Authors@R: person("Damon", "Muller", email = "admin@ausvotes.org",
                   role = c("aut", "cre"))
 Description: Annual Returns donations data from the Australian Electoral 
   Commission (AEC) Transparency Register from the 1998-1999 to 2021-2022 
-  reporting periods (data current as of 2 February 2023).
+  reporting periods (data current as of 12 July 2023).
 License: CC0
 Depends: R(>= 2.10.0)
 Encoding: UTF-8
