@@ -23,7 +23,7 @@ and a Shiny app for quickly searching for donations by donors.
 
 ## Installation
 
-To install from GitLab:
+To install from GitHub:
 
 ```R
 remotes::install_github("damonism/ausvotesTR")

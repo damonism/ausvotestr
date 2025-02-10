@@ -17,10 +17,10 @@ data and a Shiny app for quickly searching for donations by donors.
 
 ## Installation
 
-To install from GitLab:
+To install from GitHub:
 
 ``` r
-remotes::install_gitlab("damonism/ausvotesTR")
+remotes::install_github("damonism/ausvotesTR")
 ```
 
 ## Data extraction date
@@ -38,7 +38,7 @@ Regulated entities may submit an amendment to their returns to the AEC,
 and the data in the package will reflect all of the returns and any
 amendments at the time of extraction.
 
-The current data in the package was extracted on 02 February 2023.
+The current data in the package was extracted on 10 February 2025.
 
 ## Disclosure threshold
 
@@ -49,6 +49,8 @@ The disclosure threshold for each year was:
 
 | FinancialYear | ReportingThreshold |
 |:--------------|-------------------:|
+| 2023-24       |             16,300 |
+| 2022-23       |             15,200 |
 | 2021-22       |             14,500 |
 | 2020-21       |             14,300 |
 | 2019-20       |             14,000 |
@@ -73,14 +75,3 @@ The disclosure threshold for each year was:
 | 2000-01       |              1,500 |
 | 1999-00       |              1,500 |
 | 1998-99       |              1,500 |
-
-## Todo
-
--   [ ] Add links to AEC returns from Shiny app
--   [ ] Properly document the election returns data frames
--   [x] Combine `returns_search` and `returns_search_date`
--   [x] Complete the documentation of the data (except the election
-    returns – see above)
--   [x] The Shiny app should have an option not to use dates (or should
-    use the DisclosurePeriodEndDate) as some entries are missing dates
-    and will be ignored when using `search_returns()` with a date.
