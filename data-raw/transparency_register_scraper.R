@@ -12,6 +12,8 @@ library(arsenal)
 
 tmp_FinancialYear <- read.table(header = TRUE, text = "
 FinancialYear FinancialYearNew DisclosurePeriodEndDate
+2023-24          2023-24              2024-06-30
+2022-23          2022-23              2023-06-30
 2021-22          2021-22              2022-06-30
 2020-21          2020-21              2021-06-30
 2019-20          2019-20              2020-06-30
@@ -96,28 +98,26 @@ if(!setequal(csv_files, csv_files_expected)) {
 
 ##### Political party returns #####
 message('#### returns_party ####')
-returns_party_web <- get_returns_data("https://transparency.aec.gov.au/AnnualPoliticalParty",
+returns_party <- get_returns_data("https://transparency.aec.gov.au/AnnualPoliticalParty",
                                          "https://transparency.aec.gov.au/AnnualPoliticalParty/PoliticalPartyReturnsRead")
 
-tmp_party_returns <- read.csv("data-raw/csv/Party Returns.csv", stringsAsFactors = FALSE)
-
-returns_party <- returns_party_web %>%
-  left_join(tmp_party_returns %>%
-              select(FinancialYear = Financial.Year,
-                     CurrentClientName = Name,
-                     TotalReceipts = Total.Receipts,
-                     TotalPayments = Total.Payments,
-                     TotalDebts = Total.Debts,
-                     AddressLine1 = Address.Line.1,
-                     AddressLine2 = Address.Line.2,
-                     Suburb, State, Postcode),
-            by = c("FinancialYear", "CurrentClientName", "TotalReceipts", "TotalPayments", "TotalDebts")) %>%
-  left_join(tmp_FinancialYear %>% select(-DisclosurePeriodEndDate),  # Data already has DisclosurePeriodEndDate
-            by = "FinancialYear") %>%
-  select(-FinancialYear) %>%
-  rename(FinancialYear = FinancialYearNew) %>%
-  filter(!(RegistrationCode == "P0083" & State == "TAS")) %>%  # These confuse the merge because they are 0 Totals.
-  filter(!(RegistrationCode == "P0091" & State == "NT"))
+# tmp_party_returns <- read.csv("data-raw/csv/Party Returns.csv", stringsAsFactors = FALSE)
+#
+# returns_party <- returns_party_web %>%
+#   left_join(tmp_party_returns %>%
+#               select(FinancialYear = Financial.Year,
+#                      CurrentClientName = Name,
+#                      TotalReceipts = Total.Receipts,
+#                      TotalPayments = Total.Payments,
+#                      TotalDebts = Total.Debts,
+#                      TotalDiscretionaryBenefits = Total.Discretionary.Benefits),
+#             by = c("FinancialYear", "CurrentClientName", "TotalReceipts", "TotalPayments", "TotalDebts")) %>%
+#   left_join(tmp_FinancialYear %>% select(-DisclosurePeriodEndDate),  # Data already has DisclosurePeriodEndDate
+#             by = "FinancialYear") %>%
+#   select(-FinancialYear) %>%
+#   rename(FinancialYear = FinancialYearNew) %>%
+#   filter(!(RegistrationCode == "P0083")) %>%  # These confuse the merge because they are 0 Totals.
+#   filter(!(RegistrationCode == "P0091"))
 
 # if(nrow(returns_party) == nrow(returns_party_web)) {
 #
@@ -131,11 +131,11 @@ returns_party <- returns_party_web %>%
 #
 # }
 
-if(nrow(returns_party) != nrow(returns_party_web)) {
-
-  stop("Merge of address CSV and returns_party have different numbers of rows.")
-
-}
+# if(nrow(returns_party) != nrow(returns_party_web)) {
+#
+#   stop("Merge of address CSV and returns_party have different numbers of rows.")
+#
+# }
 
 returns_party %>%
   group_by(FinancialYear) %>%
@@ -149,7 +149,7 @@ returns_party %>%
   arrange(desc(FinancialYear)) %>%
   print()
 
-rm(tmp_party_returns, returns_party_web)
+# rm(tmp_party_returns, returns_party_web)
 
 ##### Significant third party returns #####
 
@@ -165,9 +165,8 @@ returns_campaigner <- returns_campaigner_web %>%
   left_join(tmp_camp_returns %>%
               select(FinancialYear = Financial.Year,
                      CurrentClientName = Name,
-                     AddressLine1 = Address.Line.1,
-                     AddressLine2 = Address.Line.2,
-                     Suburb, State, Postcode),
+                     ABN,
+                     ACN),
             by = c("FinancialYear", "CurrentClientName")) %>%
   left_join(tmp_FinancialYear %>% select(-DisclosurePeriodEndDate),  # Data already has DisclosurePeriodEndDate
             by = "FinancialYear") %>%
@@ -215,27 +214,27 @@ returns_mp |>
 
 ##### Associated entity returns #####
 message('#### returns_associatedentity ####')
-returns_associatedentity_web <- get_returns_data("https://transparency.aec.gov.au/AnnualAssociatedEntity",
+returns_associatedentity <- get_returns_data("https://transparency.aec.gov.au/AnnualAssociatedEntity",
                                "https://transparency.aec.gov.au/AnnualAssociatedEntity/AssociatedEntityReturnsRead")
-tmp_ae_returns <- read.csv("data-raw/csv/Associated Entity Returns.csv", stringsAsFactors = FALSE)
+# tmp_ae_returns <- read.csv("data-raw/csv/Associated Entity Returns.csv", stringsAsFactors = FALSE)
+#
+# returns_associatedentity <- returns_associatedentity_web %>%
+#   left_join(tmp_ae_returns %>%
+#               select(FinancialYear = Financial.Year,
+#                      CurrentClientName = Name,
+#                      TotalReceipts = Total.Receipts,
+#                      TotalPayments = Total.Payments,
+#                      TotalDebts = Total.Debts,
+#                      AddressLine1 = Address.Line.1,
+#                      AddressLine2 = Address.Line.2,
+#                      Suburb, State, Postcode),
+#             by = c("FinancialYear", "CurrentClientName", "TotalReceipts", "TotalPayments", "TotalDebts")) %>%
+#   left_join(tmp_FinancialYear %>% select(-DisclosurePeriodEndDate),  # Data already has DisclosurePeriodEndDate
+#             by = "FinancialYear") %>%
+#   select(-FinancialYear) %>%
+#   rename(FinancialYear = FinancialYearNew)
 
-returns_associatedentity <- returns_associatedentity_web %>%
-  left_join(tmp_ae_returns %>%
-              select(FinancialYear = Financial.Year,
-                     CurrentClientName = Name,
-                     TotalReceipts = Total.Receipts,
-                     TotalPayments = Total.Payments,
-                     TotalDebts = Total.Debts,
-                     AddressLine1 = Address.Line.1,
-                     AddressLine2 = Address.Line.2,
-                     Suburb, State, Postcode),
-            by = c("FinancialYear", "CurrentClientName", "TotalReceipts", "TotalPayments", "TotalDebts")) %>%
-  left_join(tmp_FinancialYear %>% select(-DisclosurePeriodEndDate),  # Data already has DisclosurePeriodEndDate
-            by = "FinancialYear") %>%
-  select(-FinancialYear) %>%
-  rename(FinancialYear = FinancialYearNew)
-
-rm(tmp_ae_returns, returns_associatedentity_web)
+# rm(tmp_ae_returns, returns_associatedentity_web)
 
 returns_associatedentity %>%
   group_by(FinancialYear) %>%
@@ -301,24 +300,24 @@ returns_donor_details <- returns_donor_details_web %>%
   select(-FinancialYear) %>%
   rename(FinancialYear = FinancialYearNew)
 
-tmp_donor_returns <- read.csv("data-raw/csv/Donor Returns.csv", stringsAsFactors = FALSE)
+# tmp_donor_returns <- read.csv("data-raw/csv/Donor Returns.csv", stringsAsFactors = FALSE)
+#
+# returns_donor_address <- tmp_donor_returns %>%
+#   select(FinancialYear = Financial.Year,
+#          CurrentClientName = Name,
+#          AddressLine1 = Address.Line.1,
+#          AddressLine2 = Address.Line.2,
+#          Suburb, State, Postcode,
+#          LodgedOnBehalfOf = Lodged.on.behalf.of,
+#          TotalDonationsMade = Total.Donations.Made,
+#          TotalDonationsReceived = Total.Donations.Received) %>%
+#   left_join(tmp_FinancialYear %>% select(-DisclosurePeriodEndDate),  # No need for DisclosurePeriodEndDate
+#             by = "FinancialYear") %>%
+#   select(-FinancialYear) %>%
+#   rename(FinancialYear = FinancialYearNew) |>
+#   mutate(LodgedOnBehalfOf = textclean::replace_non_ascii(LodgedOnBehalfOf))  # One of the CSVs contains en-dashes
 
-returns_donor_address <- tmp_donor_returns %>%
-  select(FinancialYear = Financial.Year,
-         CurrentClientName = Name,
-         AddressLine1 = Address.Line.1,
-         AddressLine2 = Address.Line.2,
-         Suburb, State, Postcode,
-         LodgedOnBehalfOf = Lodged.on.behalf.of,
-         TotalDonationsMade = Total.Donations.Made,
-         TotalDonationsReceived = Total.Donations.Received) %>%
-  left_join(tmp_FinancialYear %>% select(-DisclosurePeriodEndDate),  # No need for DisclosurePeriodEndDate
-            by = "FinancialYear") %>%
-  select(-FinancialYear) %>%
-  rename(FinancialYear = FinancialYearNew) |>
-  mutate(LodgedOnBehalfOf = textclean::replace_non_ascii(LodgedOnBehalfOf))  # One of the CSVs contains en-dashes
-
-rm(tmp_donor_returns)
+# rm(tmp_donor_returns)
 # returns_donor <- unique(returns_donor)
 
 message("returns_donor summary:")
@@ -343,14 +342,14 @@ returns_donor_details %>%
   arrange(desc(FinancialYear)) %>%
   print()
 
-message("returns_donor_address summary:")
-returns_donor_address %>%
-  group_by(FinancialYear) %>%
-  summarise(Rows = n(),
-            TotalDonationsMade = sum(TotalDonationsMade, na.rm = TRUE),
-            TotalDonationsReceived = sum(TotalDonationsReceived, na.rm = TRUE)) %>%
-  arrange(desc(FinancialYear)) %>%
-  print()
+# message("returns_donor_address summary:")
+# returns_donor_address %>%
+#   group_by(FinancialYear) %>%
+#   summarise(Rows = n(),
+#             TotalDonationsMade = sum(TotalDonationsMade, na.rm = TRUE),
+#             TotalDonationsReceived = sum(TotalDonationsReceived, na.rm = TRUE)) %>%
+#   arrange(desc(FinancialYear)) %>%
+#   print()
 
 rm(returns_donor_web, returns_donor_details_web)
 
@@ -499,7 +498,7 @@ if(askYesNo("Write data tables to package?")) {
            returns_thirdparty,
            returns_mp,
            returns_party,
-           returns_donor, returns_donor_details, returns_donor_address,
+           returns_donor, returns_donor_details,
            returns_associatedentity_associatedparty,
            returns_updated,
            election_candidates_returns, election_donor_returns, election_donor_details,

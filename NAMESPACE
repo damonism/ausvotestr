@@ -2,7 +2,6 @@
 
 export(disclosure_threshold)
 export(party_by_group)
-export(returns_donor_merged)
 export(search_donor_name)
 export(search_donor_returns)
 export(search_recipient_returns)

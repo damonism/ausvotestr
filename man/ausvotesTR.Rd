@@ -2,6 +2,7 @@
 % Please edit documentation in R/ausvotestr.R
 \docType{package}
 \name{ausvotesTR}
+\alias{-package}
 \alias{ausvotesTR}
 \title{ausvotesTR: Australian federal political donations data.}
 \description{

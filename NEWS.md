@@ -1,4 +1,14 @@
-# ausvotesTR Development Version
+# ausvotesTR 0.5
+
+## 10 February 2025
+
+- Brought the package out of retirement, maybe for the last time.
+- The CSV files no longer provide addresses, so I have removed this data. I 
+  think I have got all the spots it was included, but I haven't done extensive
+  testing. I think I have got all the spots in the documentation where they are
+  referenced, but again, no extensive testing.
+- There are some new variables in some of the data files that haven't been
+  added to the documentation. Hopefully they are self-explanatory.
 
 # ausvotesTR 0.4.1
 

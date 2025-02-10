@@ -26,7 +26,7 @@ and a Shiny app for quickly searching for donations by donors.
 To install from GitLab:
 
 ```R
-remotes::install_gitlab("damonism/ausvotesTR")
+remotes::install_github("damonism/ausvotesTR")
 ```
 
 ## Data extraction date
@@ -55,12 +55,3 @@ The disclosure threshold for each year was:
 library(knitr)
 kable(disclosure_threshold(), format.args = list(big.mark = ','))
 ```
-
-## Todo
-- [ ] Add links to AEC returns from Shiny app
-- [ ] Properly document the election returns data frames
-- [x] Combine `returns_search` and `returns_search_date`
-- [x] Complete the documentation of the data (except the election returns -- see above)
-- [x] The Shiny app should have an option not to use dates (or should use the
-      DisclosurePeriodEndDate) as some entries are missing dates and will be
-      ignored when using `search_returns()` with a date.

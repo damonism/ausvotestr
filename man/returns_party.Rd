@@ -62,17 +62,6 @@ listed for the return in \code{\link{returns_receipts_details}} data file
 
 \item{ClientType}{String of "politicalparty".}
 
-\item{AddressLine1}{Address line 1 (merged from CSV file) (Chr).}
-
-\item{AddressLine2}{Address line 2 -- often blank (merged from CSV file)
-(Chr).}
-
-\item{Suburb}{Suburb (merged from CSV file) (Chr).}
-
-\item{State}{State abbreviation (merged from CSV file) (Chr).}
-
-\item{Postcode}{Postcode (merged from CSV file) (Int).}
-
 \item{FinancialYear}{Financial year of the return in the format of
 \code{YYYY-YY}.}
 

@@ -11,6 +11,6 @@
 #'
 #' @docType package
 #' @name ausvotesTR
-utils::globalVariables(c("returns_donor", "returns_donor_address",
+utils::globalVariables(c("returns_donor",
                          "returns_donor_details", "returns_party",
                          "returns_receipts_details"))
